@@ -5,7 +5,7 @@ class Config(object):
     TESTING = False
     CSRF_ENABLED = True
     SECRET_KEY = 'this-really-needs-to-be-changed'
-    SQLALCHEMY_DATABASE_URI = 'postgresql:///salud_dev?client_encoding=utf8'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'postgresql:///salud_dev?client_encoding=utf8')
 
 
 class ProductionConfig(Config):
