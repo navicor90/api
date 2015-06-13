@@ -3,12 +3,12 @@ from app.mod_shared.models import db
 from app.mod_profiles.models import *
 
 parser = reqparse.RequestParser()
-parser.add_argument('datetime')
-parser.add_argument('value', type=float)
-parser.add_argument('profile_id', type=int)
+parser.add_argument('datetime', required=True)
+parser.add_argument('value', type=float, required=True)
+parser.add_argument('profile_id', type=int, required=True)
 parser.add_argument('measurement_source_id', type=int)
-parser.add_argument('measurement_type_id', type=int)
-parser.add_argument('measurement_unit_id', type=int)
+parser.add_argument('measurement_type_id', type=int, required=True)
+parser.add_argument('measurement_unit_id', type=int, required=True)
 
 resource_fields = {
     'datetime': fields.DateTime,

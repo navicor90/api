@@ -3,8 +3,8 @@ from app.mod_shared.models import db
 from app.mod_profiles.models import *
 
 parser = reqparse.RequestParser()
-parser.add_argument('name', type=str)
-parser.add_argument('symbol', type=str)
+parser.add_argument('name', type=str, required=True)
+parser.add_argument('symbol', type=str, required=True)
 parser.add_argument('suffix', type=bool)
 
 resource_fields = {
