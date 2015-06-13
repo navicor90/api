@@ -1,3 +1,6 @@
+# -*- coding: latin-1 -*-
+
+import os
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -11,10 +14,57 @@ from app.mod_profiles.models import *
 from app.mod_profiles.resources import *
 from . import config
 
+def get_config_class(config_mode):
+    """
+    Determina el tipo de configuración a utilizar, a partir del modo especificado.
+
+    En base a una cadena que especifica el modo de configuración, devuelve la
+    clase apropiada que maneja ese modo de configuración.
+    Por defecto, se hace uso del modo de configuración 'production'.
+
+    Los valores posibles son (sin diferenciar minúsculas de mayúsculas):
+        * Production
+        * Staging
+        * Development
+        * Testing
+
+    Parámetros:
+    config_mode -- Modo de configuración (string)
+    """
+    # Lista de asociación entre modos de configuración y las clases que los
+    # manejan.
+    configurations = {
+                      'production':  config.ProductionConfig,
+                      'staging':     config.StagingConfig,
+                      'development': config.DevelopmentConfig,
+                      'testing':     config.TestingConfig,
+                     }
+    # Modo de configuración por defecto.
+    default_config_mode = 'production'
+
+    # Convierte el parámetro 'config_mode' a minúsculas, para su posterior
+    # comparación.
+    config_mode = config_mode.lower()
+    # Establece la clase que maneja el modo especificado, o el modo por defecto
+    # en caso de haberse especificado un modo inválido.
+    if (config_mode in configurations):
+        config_class = configurations[config_mode]
+    else:
+        config_class = configurations[default_config_mode]
+    # Devuelve la clase establecida.
+    return config_class
+
+
 output_json.func_globals['settings'] = {'ensure_ascii': False, 'encoding': 'utf8'}
 
 app = Flask(__name__)
-app.config.from_object(config.DevelopmentConfig)
+
+# Obtiene la variable de entorno FLASK_CONFIG_MODE. En caso de no encontrarse
+# seteada, el valor por defecto es 'production', por ser el más seguro.
+flask_config_mode = os.getenv('FLASK_CONFIG_MODE', 'production')
+# Configura la aplicación en base a la clase de configuración que maneja el
+# modo especificado.
+app.config.from_object(get_config_class(flask_config_mode))
 
 db.app = app
 db.init_app(app)
