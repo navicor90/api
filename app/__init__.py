@@ -5,6 +5,7 @@ sys.setdefaultencoding('utf-8')
 from flask import Flask
 from flask_restful import Api
 from flask.ext.restful.representations.json import output_json
+from flask.ext.cors import CORS
 
 from app.mod_shared.models import db
 from app.mod_profiles.models import *
@@ -18,6 +19,9 @@ app.config.from_object(config.DevelopmentConfig)
 
 db.app = app
 db.init_app(app)
+
+# Manejo global de solicitudes CORS
+cors = CORS(app)
 
 api = Api(app)
 
