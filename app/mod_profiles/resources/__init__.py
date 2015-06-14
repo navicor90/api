@@ -10,3 +10,5 @@ from measurementTypeView import MeasurementTypeView
 from measurementTypeList import MeasurementTypeList
 from measurementUnitView import MeasurementUnitView
 from measurementUnitList import MeasurementUnitList
+
+from .profileMeasurementList import ProfileMeasurementList
