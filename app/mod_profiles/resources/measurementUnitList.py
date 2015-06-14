@@ -1,17 +1,12 @@
-from flask_restful import Resource, reqparse, fields, marshal_with
+from flask_restful import Resource, reqparse, marshal_with
 from app.mod_shared.models import db
 from app.mod_profiles.models import *
+from .measurementUnitView import resource_fields
 
 parser = reqparse.RequestParser()
 parser.add_argument('name', type=str)
 parser.add_argument('symbol', type=str)
 parser.add_argument('suffix', type=bool)
-
-resource_fields = {
-    'name': fields.String,
-    'symbol': fields.String,
-    'suffix': fields.Boolean,
-}
 
 class MeasurementUnitList(Resource):
     @marshal_with(resource_fields, envelope='resource')
