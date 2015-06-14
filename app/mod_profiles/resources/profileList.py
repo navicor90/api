@@ -6,7 +6,7 @@ from .profileView import resource_fields
 parser = reqparse.RequestParser()
 parser.add_argument('last_name', type=str, required=True)
 parser.add_argument('first_name', type=str, required=True)
-parser.add_argument('gender', type=int)
+parser.add_argument('gender_id', type=int)
 parser.add_argument('birthday')
 
 class ProfileList(Resource):
@@ -20,8 +20,8 @@ class ProfileList(Resource):
         args = parser.parse_args()
         new_profile = Profile(args['last_name'],
                               args['first_name'],
-                              args['gender'],
-                              args['birthday'])
+                              args['birthday'],
+                              args['gender_id'])
         db.session.add(new_profile)
         db.session.commit()
         return new_profile, 201

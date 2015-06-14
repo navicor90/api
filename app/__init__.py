@@ -75,6 +75,8 @@ cors = CORS(app)
 
 api = Api(app)
 
+api.add_resource(GenderView, '/genders/<int:id>')
+api.add_resource(GenderList, '/genders')
 api.add_resource(ProfileView, '/profiles/<int:id>')
 api.add_resource(ProfileList, '/profiles')
 api.add_resource(MeasurementView, '/measurements/<int:id>')

@@ -1,3 +1,5 @@
+from .genderList import GenderList
+from .genderView import GenderView
 from profileView import ProfileView
 from profileList import ProfileList
 from measurementView import MeasurementView
