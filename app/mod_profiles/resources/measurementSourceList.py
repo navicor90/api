@@ -1,15 +1,11 @@
-from flask_restful import Resource, reqparse, fields, marshal_with
+from flask_restful import Resource, reqparse, marshal_with
 from app.mod_shared.models import db
 from app.mod_profiles.models import *
+from .measurementSourceView import resource_fields
 
 parser = reqparse.RequestParser()
 parser.add_argument('name', type=str)
 parser.add_argument('description', type=str)
-
-resource_fields = {
-    'name': fields.String,
-    'description': fields.String,
-}
 
 class MeasurementSourceList(Resource):
     @marshal_with(resource_fields, envelope='resource')
