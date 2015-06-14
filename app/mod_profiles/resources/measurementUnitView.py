@@ -20,6 +20,7 @@ class MeasurementUnitView(Resource):
         measurement_unit = MeasurementUnit.query.get_or_404(id)
         return measurement_unit
 
+    @marshal_with(resource_fields, envelope='resource')
     def put(self, id):
         measurement_unit = MeasurementUnit.query.get_or_404(id)
         args = parser.parse_args()
@@ -27,3 +28,4 @@ class MeasurementUnitView(Resource):
         measurement_unit.symbol(args['symbol'])
         measurement_unit.suffix(args['suffix'])
         db.session.commit()
+        return measurement_unit, 200

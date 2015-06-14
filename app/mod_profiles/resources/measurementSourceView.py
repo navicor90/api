@@ -18,9 +18,11 @@ class MeasurementSourceView(Resource):
         measurement_source = MeasurementSource.query.get_or_404(id)
         return measurement_source
 
+    @marshal_with(resource_fields, envelope='resource')
     def put(self, id):
         measurement_source = MeasurementSource.query.get_or_404(id)
         args = parser.parse_args()
         measurement_source.name(args['name'])
         measurement_source.description(args['description'])
         db.session.commit()
+        return measurement_source, 200
