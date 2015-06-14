@@ -4,7 +4,7 @@ from app.mod_profiles.models import *
 from .measurementTypeView import resource_fields
 
 parser = reqparse.RequestParser()
-parser.add_argument('name', type=str)
+parser.add_argument('name', type=str, required=True)
 parser.add_argument('description', type=str)
 
 class MeasurementTypeList(Resource):

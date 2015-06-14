@@ -4,8 +4,8 @@ from app.mod_profiles.models import *
 from .measurementUnitView import resource_fields
 
 parser = reqparse.RequestParser()
-parser.add_argument('name', type=str)
-parser.add_argument('symbol', type=str)
+parser.add_argument('name', type=str, required=True)
+parser.add_argument('symbol', type=str, required=True)
 parser.add_argument('suffix', type=bool)
 
 class MeasurementUnitList(Resource):

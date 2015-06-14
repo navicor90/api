@@ -4,8 +4,8 @@ from app.mod_profiles.models import *
 from .profileView import resource_fields
 
 parser = reqparse.RequestParser()
-parser.add_argument('last_name', type=str)
-parser.add_argument('first_name', type=str)
+parser.add_argument('last_name', type=str, required=True)
+parser.add_argument('first_name', type=str, required=True)
 parser.add_argument('gender', type=int)
 parser.add_argument('birthday')
 

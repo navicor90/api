@@ -4,12 +4,12 @@ from app.mod_profiles.models import *
 from .measurementView import resource_fields
 
 parser = reqparse.RequestParser()
-parser.add_argument('datetime')
-parser.add_argument('value', type=float)
-parser.add_argument('profile_id', type=int)
+parser.add_argument('datetime', required=True)
+parser.add_argument('value', type=float, required=True)
+parser.add_argument('profile_id', type=int, required=True)
 parser.add_argument('measurement_source_id', type=int)
-parser.add_argument('measurement_type_id', type=int)
-parser.add_argument('measurement_unit_id', type=int)
+parser.add_argument('measurement_type_id', type=int, required=True)
+parser.add_argument('measurement_unit_id', type=int, required=True)
 
 class MeasurementList(Resource):
     @marshal_with(resource_fields, envelope='resource')
