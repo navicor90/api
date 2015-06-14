@@ -17,6 +17,7 @@ class MeasurementList(Resource):
         measurements = Measurement.query.all()
         return measurements
 
+    @marshal_with(resource_fields, envelope='resource')
     def post(self):
         args = parser.parse_args()
         new_measurement = Measurement(args['datetime'],
@@ -27,3 +28,4 @@ class MeasurementList(Resource):
                                       args['measurement_unit_id'])
         db.session.add(new_measurement)
         db.session.commit()
+        return new_measurement, 201

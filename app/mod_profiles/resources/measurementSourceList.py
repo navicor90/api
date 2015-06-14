@@ -13,9 +13,11 @@ class MeasurementSourceList(Resource):
         measurement_sources = MeasurementSource.query.all()
         return measurement_sources
 
+    @marshal_with(resource_fields, envelope='resource')
     def post(self):
         args = parser.parse_args()
         new_measurement_source = MeasurementSource(args['name'],
                                                    args['description'])
         db.session.add(new_measurement_source)
         db.session.commit()
+        return new_measurement_source, 201

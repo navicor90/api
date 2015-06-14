@@ -15,6 +15,7 @@ class ProfileList(Resource):
         profiles = Profile.query.all()
         return profiles
 
+    @marshal_with(resource_fields, envelope='resource')
     def post(self):
         args = parser.parse_args()
         new_profile = Profile(args['last_name'],
@@ -23,4 +24,4 @@ class ProfileList(Resource):
                               args['birthday'])
         db.session.add(new_profile)
         db.session.commit()
-        pass
+        return new_profile, 201
