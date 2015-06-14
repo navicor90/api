@@ -24,8 +24,23 @@ class MeasurementUnitView(Resource):
     def put(self, id):
         measurement_unit = MeasurementUnit.query.get_or_404(id)
         args = parser.parse_args()
-        measurement_unit.name(args['name'])
-        measurement_unit.symbol(args['symbol'])
-        measurement_unit.suffix(args['suffix'])
+
+        # Actualiza los atributos y relaciones del objeto, en base a los
+        # argumentos recibidos.
+
+        # Actualiza el nombre, en caso de que haya sido modificado.
+        if (args['name'] is not None and
+              measurement_unit.name != args['name']):
+            measurement_unit.name = args['name']
+        # Actualiza el simbolo de la unidad de medida, en caso de que haya sido
+        # modificado.
+        if (args['symbol'] is not None and
+              measurement_unit.symbol != args['symbol']):
+            measurement_unit.symbol = args['symbol']
+        # Actualiza el estado del sufijo, en caso de que haya sido modificado.
+        if (args['suffix'] is not None and
+              measurement_unit.suffix != args['suffix']):
+            measurement_unit.suffix = args['suffix']
+
         db.session.commit()
         return measurement_unit, 200

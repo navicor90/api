@@ -26,9 +26,27 @@ class ProfileView(Resource):
     def put(self, id):
         profile = Profile.query.get_or_404(id)
         args = parser.parse_args()
-        profile.last_name(args['last_name'])
-        profile.first_name(args['first_name'])
-        profile.gender(args['gender'])
-        profile.birthday(args['birthday'])
+
+        # Actualiza los atributos y relaciones del objeto, en base a los
+        # argumentos recibidos.
+
+        # Actualiza el apellido, en caso de que haya sido modificado.
+        if (args['last_name'] is not None and
+              profile.last_name != args['last_name']):
+            profile.last_name = args['last_name']
+        # Actualiza el nombre, en caso de que haya sido modificado.
+        if (args['first_name'] is not None and
+              profile.first_name != args['first_name']):
+            profile.first_name = args['first_name']
+        # Actualiza el genero, en caso de que haya sido modificado.
+        if (args['gender'] is not None and
+              profile.gender != args['gender']):
+            profile.gender = args['gender']
+        # Actualiza la fecha de nacimiento, en caso de que haya sido
+        # modificada.
+        if (args['birthday'] is not None and
+              profile.birthday != args['birthday']):
+            profile.birthday = args['birthday']
+
         db.session.commit()
         return profile, 200
