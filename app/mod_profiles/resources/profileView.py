@@ -12,7 +12,7 @@ resource_fields = {
     'last_name': fields.String,
     'first_name': fields.String,
     'gender': fields.Integer,
-    'birthday': fields.DateTime,
+    'birthday': fields.DateTime(dt_format='iso8601'),
 }
 
 class ProfileView(Resource):
