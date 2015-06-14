@@ -30,3 +30,16 @@ class MeasurementView(Resource):
     def get(self, id):
         measurement = Measurement.query.get_or_404(id)
         return measurement
+
+    @marshal_with(resource_fields, envelope='resource')
+    def put(self, id):
+        measurement = Measurement.query.get_or_404(id)
+        args = parser.parse_args()
+        measurement.datetime(args['datetime'])
+        measurement.value(args['value'])
+        measurement.profile_id(args['profile_id'])
+        measurement.measurement_source_id(args['measurement_source_id'])
+        measurement.measurement_type_id(args['measurement_type_id'])
+        measurement.measurement_unit_id(args['measurement_unit_id'])
+        db.session.commit()
+        return measurement, 200

@@ -17,3 +17,12 @@ class MeasurementTypeView(Resource):
     def get(self, id):
         measurement_type = MeasurementType.query.get_or_404(id)
         return measurement_type
+
+    @marshal_with(resource_fields, envelope='resource')
+    def put(self, id):
+        measurement_type = MeasurementType.query.get_or_404(id)
+        args = parser.parse_args()
+        measurement_type.name(args['name'])
+        measurement_type.description(args['description'])
+        db.session.commit()
+        return measurement_type, 200

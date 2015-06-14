@@ -21,3 +21,14 @@ class ProfileView(Resource):
     def get(self, id):
         profile = Profile.query.get_or_404(id)
         return profile
+
+    @marshal_with(resource_fields, envelope='resource')
+    def put(self, id):
+        profile = Profile.query.get_or_404(id)
+        args = parser.parse_args()
+        profile.last_name(args['last_name'])
+        profile.first_name(args['first_name'])
+        profile.gender(args['gender'])
+        profile.birthday(args['birthday'])
+        db.session.commit()
+        return profile, 200
