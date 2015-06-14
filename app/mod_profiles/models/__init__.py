@@ -1,3 +1,4 @@
+from .Gender import Gender
 from .Profile import Profile
 from .Measurement import Measurement
 from .MeasurementSource import MeasurementSource
