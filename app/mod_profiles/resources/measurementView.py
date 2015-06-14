@@ -16,6 +16,7 @@ parser.add_argument('measurement_type_id', type=int, required=True)
 parser.add_argument('measurement_unit_id', type=int, required=True)
 
 resource_fields = {
+    'id': fields.Integer,
     'datetime': fields.DateTime(dt_format='iso8601'),
     'value': fields.Float,
     'profile': fields.Nested(relation_profile_fields),

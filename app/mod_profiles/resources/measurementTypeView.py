@@ -7,6 +7,7 @@ parser.add_argument('name', type=str, required=True)
 parser.add_argument('description', type=str)
 
 resource_fields = {
+    'id': fields.Integer,
     'name': fields.String,
     'description': fields.String,
 }
