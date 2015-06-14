@@ -8,6 +8,7 @@ parser.add_argument('symbol', type=str, required=True)
 parser.add_argument('suffix', type=bool)
 
 resource_fields = {
+    'id': fields.Integer,
     'name': fields.String,
     'symbol': fields.String,
     'suffix': fields.Boolean,

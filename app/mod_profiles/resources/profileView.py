@@ -9,6 +9,7 @@ parser.add_argument('gender', type=int)
 parser.add_argument('birthday')
 
 resource_fields = {
+    'id': fields.Integer,
     'last_name': fields.String,
     'first_name': fields.String,
     'gender': fields.Integer,
