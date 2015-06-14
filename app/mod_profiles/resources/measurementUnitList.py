@@ -19,6 +19,7 @@ class MeasurementUnitList(Resource):
         measurement_units = MeasurementUnit.query.all()
         return measurement_units
 
+    @marshal_with(resource_fields, envelope='resource')
     def post(self):
         args = parser.parse_args()
         new_measurement_unit = MeasurementUnit(args['name'],
@@ -26,3 +27,4 @@ class MeasurementUnitList(Resource):
                                                args['suffix'])
         db.session.add(new_measurement_unit)
         db.session.commit()
+        return new_measurement_unit, 201
