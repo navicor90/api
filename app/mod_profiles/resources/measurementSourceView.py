@@ -22,7 +22,18 @@ class MeasurementSourceView(Resource):
     def put(self, id):
         measurement_source = MeasurementSource.query.get_or_404(id)
         args = parser.parse_args()
-        measurement_source.name(args['name'])
-        measurement_source.description(args['description'])
+
+        # Actualiza los atributos y relaciones del objeto, en base a los
+        # argumentos recibidos.
+
+        # Actualiza el nombre, en caso de que haya sido modificado.
+        if (args['name'] is not None and
+              measurement_source.name != args['name']):
+            measurement_source.name = args['name']
+        # Actualiza la descripcion, en caso de que haya sido modificada.
+        if (args['description'] is not None and
+              measurement_source.description != args['description']):
+            measurement_source.description = args['description']
+
         db.session.commit()
         return measurement_source, 200

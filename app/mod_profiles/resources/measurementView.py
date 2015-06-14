@@ -35,11 +35,36 @@ class MeasurementView(Resource):
     def put(self, id):
         measurement = Measurement.query.get_or_404(id)
         args = parser.parse_args()
-        measurement.datetime(args['datetime'])
-        measurement.value(args['value'])
-        measurement.profile_id(args['profile_id'])
-        measurement.measurement_source_id(args['measurement_source_id'])
-        measurement.measurement_type_id(args['measurement_type_id'])
-        measurement.measurement_unit_id(args['measurement_unit_id'])
+
+        # Actualiza los atributos y relaciones del objeto, en base a los
+        # argumentos recibidos.
+
+        # Actualiza la fecha y hora, en caso de que haya sido modificada.
+        if (args['datetime'] is not None and
+              measurement.datetime != args['datetime']):
+            measurement.datetime = args['datetime']
+        # Actualiza el valor, en caso de que haya sido modificado.
+        if (args['value'] is not None and
+              measurement.value != args['value']):
+            measurement.value = args['value']
+        # Actualiza el perfil asociado, en caso de que haya sido modificado.
+        if (args['profile_id'] is not None and
+              measurement.profile_id != args['profile_id']):
+            measurement.profile_id = args['profile_id']
+        # Actualiza la fuente de la medicion, en caso de que haya sido
+        # modificada.
+        if (args['measurement_source_id'] is not None and
+              measurement.measurement_source_id != args['measurement_source_id']):
+            measurement.measurement_source_id = args['measurement_source_id']
+        # Actualiza el tipo de medicion, en caso de que haya sido modificado.
+        if (args['measurement_type_id'] is not None and
+              measurement.measurement_type_id != args['measurement_type_id']):
+            measurement.measurement_type_id = args['measurement_type_id']
+        # Actualiza la unidad de medida asociada, en caso de que haya sido
+        # modificada.
+        if (args['measurement_unit_id'] is not None and
+              measurement.measurement_unit_id != args['measurement_unit_id']):
+            measurement.measurement_unit_id = args['measurement_unit_id']
+
         db.session.commit()
         return measurement, 200
