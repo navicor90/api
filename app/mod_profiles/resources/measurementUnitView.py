@@ -7,14 +7,14 @@ parser.add_argument('name', type=str, required=True)
 parser.add_argument('symbol', type=str, required=True)
 parser.add_argument('suffix', type=bool)
 
-resource_fields = {
-    'id': fields.Integer,
-    'name': fields.String,
-    'symbol': fields.String,
-    'suffix': fields.Boolean,
-}
-
 class MeasurementUnitView(Resource):
+    resource_fields = {
+        'id': fields.Integer,
+        'name': fields.String,
+        'symbol': fields.String,
+        'suffix': fields.Boolean,
+    }
+
     @marshal_with(resource_fields, envelope='resource')
     def get(self, id):
         measurement_unit = MeasurementUnit.query.get_or_404(id)
