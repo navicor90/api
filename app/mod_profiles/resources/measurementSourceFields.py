@@ -10,3 +10,6 @@ class MeasurementSourceFields:
         'name': fields.String,
         'description': fields.String,
     }
+
+    required = ['id',
+                'name']

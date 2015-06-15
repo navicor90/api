@@ -11,3 +11,7 @@ class MeasurementUnitFields:
         'symbol': fields.String,
         'suffix': fields.Boolean,
     }
+
+    required = ['id',
+                'name',
+                'symbol']
