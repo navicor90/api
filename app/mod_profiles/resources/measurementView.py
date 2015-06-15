@@ -1,10 +1,10 @@
-from flask_restful import Resource, reqparse, fields, marshal_with
+# -*- coding: utf-8 -*-
+
+from flask_restful import Resource, reqparse, marshal_with
+from flask_restful_swagger import swagger
 from app.mod_shared.models import db
 from app.mod_profiles.models import *
-from .measurementSourceView import MeasurementSourceView
-from .measurementTypeView import MeasurementTypeView
-from .measurementUnitView import MeasurementUnitView
-from .profileView import ProfileView
+from .measurementFields import MeasurementFields
 
 parser = reqparse.RequestParser()
 parser.add_argument('datetime', required=True)
@@ -15,22 +15,102 @@ parser.add_argument('measurement_type_id', type=int, required=True)
 parser.add_argument('measurement_unit_id', type=int, required=True)
 
 class MeasurementView(Resource):
-    resource_fields = {
-        'id': fields.Integer,
-        'datetime': fields.DateTime(dt_format='iso8601'),
-        'value': fields.Float,
-        'profile': fields.Nested(ProfileView.resource_fields),
-        'measurement_source': fields.Nested(MeasurementSourceView.resource_fields),
-        'measurement_type': fields.Nested(MeasurementTypeView.resource_fields),
-        'measurement_unit': fields.Nested(MeasurementUnitView.resource_fields),
-    }
-
-    @marshal_with(resource_fields, envelope='resource')
+    @swagger.operation(
+        notes=u'Retorna una instancia específica de medición.'.encode('utf-8'),
+        responseClass='MeasurementFields',
+        nickname='measurementView_get',
+        parameters=[
+            {
+              "name": "id",
+              "description": u'Identificador único de la medición.'.encode('utf-8'),
+              "required": True,
+              "dataType": "int",
+              "paramType": "path"
+            }
+          ],
+        responseMessages=[
+            {
+              "code": 200,
+              "message": "Objeto encontrado."
+            },
+            {
+              "code": 404,
+              "message": "Objeto inexistente."
+            }
+          ]
+        )
+    @marshal_with(MeasurementFields.resource_fields, envelope='resource')
     def get(self, id):
         measurement = Measurement.query.get_or_404(id)
         return measurement
 
-    @marshal_with(resource_fields, envelope='resource')
+    @swagger.operation(
+        notes=u'Actualiza una instancia específica de medición, y la retorna.'.encode('utf-8'),
+        responseClass='MeasurementFields',
+        nickname='measurementView_put',
+        parameters=[
+            {
+              "name": "id",
+              "description": u'Identificador único de la medición.'.encode('utf-8'),
+              "required": True,
+              "dataType": "int",
+              "paramType": "path"
+            },
+            {
+              "name": "datetime",
+              "description": u'Fecha y hora de la medición.'.encode('utf-8'),
+              "required": True,
+              "dataType": "datetime",
+              "paramType": "body"
+            },
+            {
+              "name": "value",
+              "description": u'Valor de la medición.'.encode('utf-8'),
+              "required": True,
+              "dataType": "float",
+              "paramType": "body"
+            },
+            {
+              "name": "profile_id",
+              "description": u'Identificador único del perfil asociado.'.encode('utf-8'),
+              "required": True,
+              "dataType": "int",
+              "paramType": "body"
+            },
+            {
+              "name": "measurement_source_id",
+              "description": u'Identificador único de la fuente de medición asociada.'.encode('utf-8'),
+              "required": False,
+              "dataType": "int",
+              "paramType": "body"
+            },
+            {
+              "name": "measurement_type_id",
+              "description": u'Identificador único del tipo de medición asociado.'.encode('utf-8'),
+              "required": True,
+              "dataType": "int",
+              "paramType": "body"
+            },
+            {
+              "name": "measurement_unit_id",
+              "description": u'Identificador único de la unidad de medición asociada.'.encode('utf-8'),
+              "required": True,
+              "dataType": "int",
+              "paramType": "body"
+            }
+          ],
+        responseMessages=[
+            {
+              "code": 200,
+              "message": "Objeto actualizado exitosamente."
+            },
+            {
+              "code": 404,
+              "message": "Objeto inexistente."
+            }
+          ]
+        )
+    @marshal_with(MeasurementFields.resource_fields, envelope='resource')
     def put(self, id):
         measurement = Measurement.query.get_or_404(id)
         args = parser.parse_args()
