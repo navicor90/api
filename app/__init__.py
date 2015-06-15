@@ -7,6 +7,7 @@ sys.setdefaultencoding('utf-8')
 
 from flask import Flask
 from flask_restful import Api
+from flask_restful_swagger import swagger
 from flask.ext.restful.representations.json import output_json
 from flask.ext.cors import CORS
 
@@ -73,7 +74,8 @@ db.init_app(app)
 # Manejo global de solicitudes CORS
 cors = CORS(app)
 
-api = Api(app)
+# Crea la API y activa el soporte de Swagger para la misma.
+api = swagger.docs(Api(app))
 
 api.add_resource(GenderView, '/genders/<int:id>')
 api.add_resource(GenderList, '/genders')
