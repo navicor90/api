@@ -22,3 +22,10 @@ class MeasurementFields:
         'measurement_type': fields.Nested(MeasurementTypeFields.resource_fields),
         'measurement_unit': fields.Nested(MeasurementUnitFields.resource_fields),
     }
+
+    required = ['id',
+                'datetime',
+                'value',
+                'profile',
+                'measurement_type',
+                'measurement_unit']

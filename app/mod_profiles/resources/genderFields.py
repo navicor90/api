@@ -10,3 +10,6 @@ class GenderFields:
         'name': fields.String,
         'description': fields.String,
     }
+
+    required = ['id',
+                'name']

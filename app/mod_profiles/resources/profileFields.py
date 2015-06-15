@@ -14,3 +14,7 @@ class ProfileFields:
         'gender': fields.Nested(GenderFields.resource_fields),
         'birthday': fields.DateTime(dt_format='iso8601'),
     }
+
+    required = ['id',
+                'last_name',
+                'first_name']
