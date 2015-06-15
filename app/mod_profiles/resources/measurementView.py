@@ -1,11 +1,10 @@
 from flask_restful import Resource, reqparse, fields, marshal_with
 from app.mod_shared.models import db
 from app.mod_profiles.models import *
-from .measurementSourceView import resource_fields as relation_measurement_source_fields
-from .measurementTypeView import resource_fields as relation_measurement_type_fields
-from .measurementUnitView import resource_fields as relation_measurement_unit_fields
-from .profileView import resource_fields as relation_profile_fields
-
+from .measurementSourceView import MeasurementSourceView
+from .measurementTypeView import MeasurementTypeView
+from .measurementUnitView import MeasurementUnitView
+from .profileView import ProfileView
 
 parser = reqparse.RequestParser()
 parser.add_argument('datetime', required=True)
@@ -15,17 +14,17 @@ parser.add_argument('measurement_source_id', type=int)
 parser.add_argument('measurement_type_id', type=int, required=True)
 parser.add_argument('measurement_unit_id', type=int, required=True)
 
-resource_fields = {
-    'id': fields.Integer,
-    'datetime': fields.DateTime(dt_format='iso8601'),
-    'value': fields.Float,
-    'profile': fields.Nested(relation_profile_fields),
-    'measurement_source': fields.Nested(relation_measurement_source_fields),
-    'measurement_type': fields.Nested(relation_measurement_type_fields),
-    'measurement_unit': fields.Nested(relation_measurement_unit_fields),
-}
-
 class MeasurementView(Resource):
+    resource_fields = {
+        'id': fields.Integer,
+        'datetime': fields.DateTime(dt_format='iso8601'),
+        'value': fields.Float,
+        'profile': fields.Nested(ProfileView.resource_fields),
+        'measurement_source': fields.Nested(MeasurementSourceView.resource_fields),
+        'measurement_type': fields.Nested(MeasurementTypeView.resource_fields),
+        'measurement_unit': fields.Nested(MeasurementUnitView.resource_fields),
+    }
+
     @marshal_with(resource_fields, envelope='resource')
     def get(self, id):
         measurement = Measurement.query.get_or_404(id)

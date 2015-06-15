@@ -1,7 +1,7 @@
 from flask_restful import Resource, reqparse, marshal_with
 from app.mod_shared.models import db
 from app.mod_profiles.models import *
-from .measurementView import resource_fields
+from .measurementView import MeasurementView
 
 parser = reqparse.RequestParser()
 parser.add_argument('datetime', required=True)
@@ -12,12 +12,12 @@ parser.add_argument('measurement_type_id', type=int, required=True)
 parser.add_argument('measurement_unit_id', type=int, required=True)
 
 class MeasurementList(Resource):
-    @marshal_with(resource_fields, envelope='resource')
+    @marshal_with(MeasurementView.resource_fields, envelope='resource')
     def get(self):
         measurements = Measurement.query.all()
         return measurements
 
-    @marshal_with(resource_fields, envelope='resource')
+    @marshal_with(MeasurementView.resource_fields, envelope='resource')
     def post(self):
         args = parser.parse_args()
         new_measurement = Measurement(args['datetime'],

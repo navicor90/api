@@ -6,13 +6,13 @@ parser = reqparse.RequestParser()
 parser.add_argument('name', type=str, required=True)
 parser.add_argument('description', type=str)
 
-resource_fields = {
-    'id': fields.Integer,
-    'name': fields.String,
-    'description': fields.String,
-}
-
 class MeasurementSourceView(Resource):
+    resource_fields = {
+        'id': fields.Integer,
+        'name': fields.String,
+        'description': fields.String,
+    }
+
     @marshal_with(resource_fields, envelope='resource')
     def get(self, id):
         measurement_source = MeasurementSource.query.get_or_404(id)
