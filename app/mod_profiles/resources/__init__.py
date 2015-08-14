@@ -1,15 +1,2 @@
-from .genderList import GenderList
-from .genderView import GenderView
-from profileView import ProfileView
-from profileList import ProfileList
-from measurementView import MeasurementView
-from measurementList import MeasurementList
-from measurementSourceView import MeasurementSourceView
-from measurementSourceList import MeasurementSourceList
-from measurementTypeView import MeasurementTypeView
-from measurementTypeList import MeasurementTypeList
-from measurementUnitView import MeasurementUnitView
-from measurementUnitList import MeasurementUnitList
-
-from .profileLatestMeasurementList import ProfileLatestMeasurementList
-from .profileMeasurementList import ProfileMeasurementList
+from .lists import *
+from .views import *

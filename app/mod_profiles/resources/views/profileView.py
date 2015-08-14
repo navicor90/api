@@ -4,7 +4,7 @@ from flask_restful import Resource, reqparse, marshal_with
 from flask_restful_swagger import swagger
 from app.mod_shared.models import db
 from app.mod_profiles.models import *
-from .profileFields import ProfileFields
+from app.mod_profiles.resources.fields.profileFields import ProfileFields
 
 parser = reqparse.RequestParser()
 parser.add_argument('last_name', type=str, required=True)

@@ -4,7 +4,7 @@ from flask_restful import Resource, reqparse, marshal_with
 from flask_restful_swagger import swagger
 from app.mod_shared.models import db
 from app.mod_profiles.models import *
-from .measurementTypeFields import MeasurementTypeFields
+from app.mod_profiles.resources.fields.measurementTypeFields import MeasurementTypeFields
 
 parser = reqparse.RequestParser()
 parser.add_argument('name', type=str, required=True)

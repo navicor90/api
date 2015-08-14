@@ -4,34 +4,47 @@ from flask_restful import Resource, reqparse, marshal_with
 from flask_restful_swagger import swagger
 from app.mod_shared.models import db
 from app.mod_profiles.models import *
-from .measurementUnitFields import MeasurementUnitFields
+from app.mod_profiles.resources.fields.measurementUnitFields import MeasurementUnitFields
 
 parser = reqparse.RequestParser()
 parser.add_argument('name', type=str, required=True)
 parser.add_argument('symbol', type=str, required=True)
 parser.add_argument('suffix', type=bool)
 
-class MeasurementUnitList(Resource):
+class MeasurementUnitView(Resource):
     @swagger.operation(
-        notes=u'Retorna todas las instancias existentes de unidad de medición.'.encode('utf-8'),
+        notes=u'Retorna una instancia específica de unidad de medición.'.encode('utf-8'),
         responseClass='MeasurementUnitFields',
-        nickname='measurementUnitList_get',
+        nickname='measurementUnitView_get',
+        parameters=[
+            {
+              "name": "id",
+              "description": u'Identificador único de la unidad de medición.'.encode('utf-8'),
+              "required": True,
+              "dataType": "int",
+              "paramType": "path"
+            }
+          ],
         responseMessages=[
             {
               "code": 200,
-              "message": "Solicitud resuelta exitosamente."
+              "message": "Objeto encontrado."
+            },
+            {
+              "code": 404,
+              "message": "Objeto inexistente."
             }
           ]
         )
     @marshal_with(MeasurementUnitFields.resource_fields, envelope='resource')
-    def get(self):
-        measurement_units = MeasurementUnit.query.all()
-        return measurement_units
+    def get(self, id):
+        measurement_unit = MeasurementUnit.query.get_or_404(id)
+        return measurement_unit
 
     @swagger.operation(
-        notes=u'Crea una nueva instancia de unidad de medición, y la retorna.'.encode('utf-8'),
+        notes=u'Actualiza una instancia específica de unidad de medición, y la retorna.'.encode('utf-8'),
         responseClass='MeasurementUnitFields',
-        nickname='measurementUnitList_post',
+        nickname='measurementUnitView_put',
         parameters=[
             {
               "name": "id",
@@ -66,17 +79,36 @@ class MeasurementUnitList(Resource):
           ],
         responseMessages=[
             {
-              "code": 201,
-              "message": "Objeto creado exitosamente."
+              "code": 200,
+              "message": "Objeto actualizado exitosamente."
+            },
+            {
+              "code": 404,
+              "message": "Objeto inexistente."
             }
           ]
         )
     @marshal_with(MeasurementUnitFields.resource_fields, envelope='resource')
-    def post(self):
+    def put(self, id):
+        measurement_unit = MeasurementUnit.query.get_or_404(id)
         args = parser.parse_args()
-        new_measurement_unit = MeasurementUnit(args['name'],
-                                               args['symbol'],
-                                               args['suffix'])
-        db.session.add(new_measurement_unit)
+
+        # Actualiza los atributos y relaciones del objeto, en base a los
+        # argumentos recibidos.
+
+        # Actualiza el nombre, en caso de que haya sido modificado.
+        if (args['name'] is not None and
+              measurement_unit.name != args['name']):
+            measurement_unit.name = args['name']
+        # Actualiza el simbolo de la unidad de medida, en caso de que haya sido
+        # modificado.
+        if (args['symbol'] is not None and
+              measurement_unit.symbol != args['symbol']):
+            measurement_unit.symbol = args['symbol']
+        # Actualiza el estado del sufijo, en caso de que haya sido modificado.
+        if (args['suffix'] is not None and
+              measurement_unit.suffix != args['suffix']):
+            measurement_unit.suffix = args['suffix']
+
         db.session.commit()
-        return new_measurement_unit, 201
+        return measurement_unit, 200
