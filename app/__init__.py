@@ -10,6 +10,8 @@ from flask_restful import Api
 from flask_restful_swagger import swagger
 from flask.ext.restful.representations.json import output_json
 from flask.ext.cors import CORS
+from flask.ext.script import Manager
+from flask.ext.migrate import Migrate, MigrateCommand
 
 from app.mod_shared.models import db
 from app.mod_profiles.models import *
@@ -71,6 +73,12 @@ app.config.from_object(get_config_class(flask_config_mode))
 
 db.app = app
 db.init_app(app)
+
+# Configuración de migraciones de la base de datos.
+migrate = Migrate(app, db)
+
+manager = Manager(app)
+manager.add_command('db', MigrateCommand)
 
 # Manejo global de solicitudes CORS
 cors = CORS(app)
