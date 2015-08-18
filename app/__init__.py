@@ -13,7 +13,8 @@ from flask.ext.cors import CORS
 
 from app.mod_shared.models import db
 from app.mod_profiles.models import *
-from app.mod_profiles.resources import *
+from app.mod_profiles.resources.lists import *
+from app.mod_profiles.resources.views import *
 from . import config
 
 def get_config_class(config_mode):
@@ -93,4 +94,4 @@ api.add_resource(MeasurementUnitList, '/measurement_units')
 api.add_resource(ProfileLatestMeasurementList, '/profiles/<int:profile_id>/measurements/latest')
 api.add_resource(ProfileMeasurementList, '/profiles/<int:profile_id>/measurements')
 
-from app import views
+from . import views
