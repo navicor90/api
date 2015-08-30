@@ -7,5 +7,6 @@ from .measurementSourceList import MeasurementSourceList
 from .measurementTypeList import MeasurementTypeList
 from .measurementUnitList import MeasurementUnitList
 
+from .measurementTypeUnitsList import MeasurementTypeUnitsList
 from .profileLatestMeasurementList import ProfileLatestMeasurementList
 from .profileMeasurementList import ProfileMeasurementList
