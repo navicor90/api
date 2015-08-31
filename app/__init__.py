@@ -10,11 +10,12 @@ from flask_restful import Api
 from flask_restful_swagger import swagger
 from flask.ext.restful.representations.json import output_json
 from flask.ext.cors import CORS
+from flask.ext.httpauth import HTTPBasicAuth
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 
 from app.mod_shared.models import db
-from app.mod_profiles.models import *
+from app.mod_profiles.models import User
 from app.mod_profiles.resources.lists import *
 from app.mod_profiles.resources.views import *
 from . import config
@@ -82,6 +83,20 @@ manager.add_command('db', MigrateCommand)
 
 # Manejo global de solicitudes CORS
 cors = CORS(app)
+
+# Manejo de autenticación HTTP.
+auth = HTTPBasicAuth()
+
+@auth.verify_password
+def verify_password(username_or_token, password):
+    # Prueba la autenticación mediante token.
+    user = User.verify_auth_token(username_or_token)
+    if not user:
+        # Prueba la autenticación mediante usuario y contraseña.
+        user = User.query.filter_by(username=username_or_token).first()
+        if not user or not user.verify_password(password):
+            return False
+    return True
 
 # Crea la API y activa el soporte de Swagger para la misma.
 api = swagger.docs(Api(app))
