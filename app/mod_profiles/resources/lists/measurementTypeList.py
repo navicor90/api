@@ -5,9 +5,10 @@ from flask_restful_swagger import swagger
 from app.mod_shared.models.db import db
 from app.mod_profiles.models import MeasurementType
 from app.mod_profiles.resources.fields.measurementTypeFields import MeasurementTypeFields
+from app.mod_profiles.validators.globalValidator import string_without_int
 
 parser = reqparse.RequestParser()
-parser.add_argument('name', type=str, required=True)
+parser.add_argument('name', type=string_without_int, required=True)
 parser.add_argument('description', type=str)
 
 class MeasurementTypeList(Resource):
