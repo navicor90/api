@@ -9,7 +9,7 @@ from app.mod_profiles.validators.globalValidator import string_without_int
 
 parser = reqparse.RequestParser()
 parser.add_argument('name', type=string_without_int, required=True)
-parser.add_argument('symbol', type=strint_without_int, required=True)
+parser.add_argument('symbol', type=string_without_int, required=True)
 parser.add_argument('suffix', type=bool)
 
 class MeasurementUnitView(Resource):

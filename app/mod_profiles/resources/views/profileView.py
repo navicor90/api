@@ -5,8 +5,7 @@ from flask_restful_swagger import swagger
 from app.mod_shared.models.db import db
 from app.mod_profiles.models import Profile
 from app.mod_profiles.resources.fields.profileFields import ProfileFields
-from app.mod_profiles.validators.globalValidator import string_without_int,
-positive_int
+from app.mod_profiles.validators.globalValidator import string_without_int, positive_int
 
 parser = reqparse.RequestParser()
 parser.add_argument('last_name', type=string_without_int, required=True)
