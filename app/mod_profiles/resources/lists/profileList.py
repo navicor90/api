@@ -6,12 +6,13 @@ from app.mod_shared.models.db import db
 from app.mod_profiles.models import Profile
 from app.mod_profiles.resources.fields.profileFields import ProfileFields
 from app.mod_profiles.validators.globalValidator import string_without_int, positive_int
+from app.mod_profiles.validators.profileValidator import is_valid_birthday
 
 parser = reqparse.RequestParser()
 parser.add_argument('last_name', type=string_without_int, required=True)
 parser.add_argument('first_name', type=string_without_int, required=True)
 parser.add_argument('gender_id', type=positive_int)
-parser.add_argument('birthday')
+parser.add_argument('birthday', type=is_valid_birthday)
 
 class ProfileList(Resource):
     @swagger.operation(
