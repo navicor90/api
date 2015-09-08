@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from flask_restful import Resource, reqparse, marshal_with
 from flask_restful_swagger import swagger

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from app.mod_shared.models import db
 
 class Profile(db.Model):

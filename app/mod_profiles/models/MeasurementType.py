@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from app.mod_shared.models import db
 
 # Many-to-many relationship tables

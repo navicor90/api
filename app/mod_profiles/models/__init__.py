@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from .Gender import Gender
 from .Profile import Profile
 from .Measurement import Measurement
