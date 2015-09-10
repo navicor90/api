@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from re import match, sub
+import re
+import calendar
 from datetime import date
+
 
 def is_int(var):
     """Valida que el parámetro recibido sea un número entero
@@ -23,6 +25,7 @@ def is_int(var):
     except ValueError: 
         raise ValueError("El valor ingresado no es un entero válido")
 
+
 def positive_int(var):
     """Valida que un entero sea positivo
 
@@ -43,6 +46,7 @@ def positive_int(var):
         raise ValueError("El valor ingresado debe ser un entero positivo")
     else:
         return var
+
 
 def has_int(string):
     """Determina si una cadena de caracteres contiene un número
@@ -76,57 +80,91 @@ def string_without_int(var):
     else:
         return var
 
-def is_valid_date_format(var): 
-    if not match(r'(\d{1,2})[/|-](\d{1,2})[/|-](\d{4})', var): 
+
+def is_valid_date_format(var):
+    """ Valida que el formato de la fecha sea válido
+    >>> is_valid_date_format('1990-06-20')
+    '1990-06-20'
+
+    >>> is_valid_date_format('20-06-1990')
+    Traceback (most recent call last):
+        ...
+    ValueError: Formato de fecha no válido
+
+    >>> is_valid_date_format('1998-09-a0')
+    Traceback (most recent call last):
+        ...
+    ValueError: Formato de fecha no válido
+
+    >>> is_valid_date_format('1998-09-123')
+    Traceback (most recent call last):
+        ...
+    ValueError: Formato de fecha no válido
+    """
+    if not re.match(r'(\d{4})[-](\d{1,2})[-](\d{1,2})$', var):
         raise ValueError("Formato de fecha no válido")
     else:
         return var
 
+
 def is_valid_date(var):
+    """ Luego de comprobar si la fecha tiene un formato válido, valida si es posible construir un objeto
+    fecha en formato iso 8601
+    >>> is_valid_date('1990-06-20')
+    '1990-06-20'
+
+    >>> is_valid_date('1990-09-00')
+    Traceback (most recent call last):
+        ...
+    ValueError: La fecha presenta un error en el día
+
+    >>> is_valid_date('1990-00-10')
+    Traceback (most recent call last):
+        ...
+    ValueError: La fecha presenta un error en el mes
+
+    >>> is_valid_date('0000-09-10')
+    Traceback (most recent call last):
+        ...
+    ValueError: La fecha presenta un error en el año
+    """
     is_valid_date_format(var)
-    valid_date_str_list = sub(r'/|-', ' ', var).split()
-    try:
-        valid_date_object = date(int(valid_date_str_list[2]),
-        int(valid_date_str_list[1]), int(valid_date_str_list[0]))
-        return valid_date_object
-    except ValueError, ve:
-        if 'year' in ve.message:
-            raise ValueError("La fecha presenta un error en el año")
-        elif 'month must' in ve.message:
-            raise ValueError("La fecha presenta un error en el mes")
-        else:
-            raise ValueError("La fecha presenta un error en el día")
+    str_var = re.split(r'-', var)
+    if not (int(str_var[0]) in range(1, date.max.year)):
+        raise ValueError("La fecha presenta un error en el año")
+    elif not (int(str_var[1]) in range(1, 12)):
+        raise ValueError("La fecha presenta un error en el mes")
+    elif not (int(str_var[2]) in range(1, calendar.monthrange(int(str_var[0]), int(str_var[1]))[1])):
+        raise ValueError("La fecha presenta un error en el día")
+    else:
+        return var
 
-if __name__ == '__main__':
-    date1 = 'a0/09/1998'
-    date2 = '10/09/1998'
-    date3 = '123/09/1998'
-    date4 = '10/9/1998'
-    date5 = '10/09/199'
-    date6 = '00/09/1990'
-    date7 = '10/00/1990'
-    date8 = '10/09/0000'
-    date9 = '10/09/2016'
-    date10 = '10/09/1914'
-    print "_"*30
-    #print "La fecha {0} es válida?: {1}".format(date1, is_valid_date(date1))
-    print "_"*30
-    print "La fecha {0} es válida?: {1}".format(date2, is_valid_date(date2))
-    print "_"*30
-    #print "La fecha {0} es válida?: {1}".format(date3, is_valid_date(date3))
-    print "_"*30
-    print "La fecha {0} es válida?: {1}".format(date4, is_valid_date(date4))
-    print "_"*30
-    print "La fecha {0} es válida?: {1}".format(date5, is_valid_date(date5))
-    print "_"*30
-    print "La fecha {0} es válida?: {1}".format(date6, is_valid_date(date6))
-    print "_"*30
-    print "La fecha {0} es válida?: {1}".format(date7, is_valid_date(date7))
-    print "_"*30
-    print "La fecha {0} es válida?: {1}".format(date8, is_valid_date(date8))
-    print "_"*30
-    print "La fecha {0} es válida?: {1}".format(date9, is_valid_date(date9))
-    print "_"*30
-    print "La fecha {0} es válida?: {1}".format(date10, is_valid_date(date10))
-    print "_"*30
 
+def is_valid_previous_date(var):
+    """ Valida que la fecha previa sea correcta
+    >>> is_valid_previous_date('1990-06-20')
+    '1990-06-20'
+
+    >>> is_valid_previous_date('1914-06-20')
+    Traceback (most recent call last):
+        ...
+    ValueError: No es una fecha previa correcta
+
+    >>> is_valid_previous_date('2016-09-10')
+    Traceback (most recent call last):
+        ...
+    ValueError: No es una fecha previa correcta
+
+    """
+    is_valid_date(var)
+    min_date = date(1915, 1, 1)
+    str_date = re.split(r'-', var)
+    current_date = date(int(str_date[0]), int(str_date[1]), int(str_date[2]))
+    if not (min_date < current_date < date.today()):
+        raise ValueError("No es una fecha previa correcta")
+    else:
+        return var
+
+
+def is_valid_id(var):
+    positive_int(var)
