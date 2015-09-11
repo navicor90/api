@@ -1,4 +1,4 @@
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
 
 import os
 import sys
@@ -73,7 +73,7 @@ app.config.from_object(get_config_class(flask_config_mode))
 db.app = app
 db.init_app(app)
 
-# Configuración de migraciones de la base de datos.
+# ConfiguraciÃ³n de migraciones de la base de datos.
 migrate = Migrate(app, db)
 
 manager = Manager(app)
@@ -82,7 +82,7 @@ manager.add_command('db', MigrateCommand)
 # Manejo global de solicitudes CORS
 cors = CORS(app)
 
-# Importación del manejo de autenticación HTTP.
+# ImportaciÃ³n del manejo de autenticaciÃ³n HTTP.
 from .mod_shared.models import auth
 
 # Crea la API y activa el soporte de Swagger para la misma.
