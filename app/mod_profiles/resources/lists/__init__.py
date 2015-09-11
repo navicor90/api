@@ -10,3 +10,4 @@ from .measurementUnitList import MeasurementUnitList
 from .measurementTypeUnitsList import MeasurementTypeUnitsList
 from .profileLatestMeasurementList import ProfileLatestMeasurementList
 from .profileMeasurementList import ProfileMeasurementList
+from .userList import UserList

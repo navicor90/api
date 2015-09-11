@@ -14,7 +14,6 @@ from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 
 from app.mod_shared.models import db
-from app.mod_profiles.models import *
 from app.mod_profiles.resources.lists import *
 from app.mod_profiles.resources.views import *
 from . import config
@@ -83,6 +82,9 @@ manager.add_command('db', MigrateCommand)
 # Manejo global de solicitudes CORS
 cors = CORS(app)
 
+# Importación del manejo de autenticación HTTP.
+from .mod_shared.models import auth
+
 # Crea la API y activa el soporte de Swagger para la misma.
 api = swagger.docs(Api(app))
 
@@ -98,6 +100,9 @@ api.add_resource(MeasurementTypeView, '/measurement_types/<int:id>')
 api.add_resource(MeasurementTypeList, '/measurement_types')
 api.add_resource(MeasurementUnitView, '/measurement_units/<int:id>')
 api.add_resource(MeasurementUnitList, '/measurement_units')
+api.add_resource(UserView, '/users/<int:id>')
+api.add_resource(UserList, '/users')
+api.add_resource(Token, '/token')
 
 api.add_resource(MeasurementTypeUnitsList, '/measurement_types/<int:id>/units')
 api.add_resource(ProfileLatestMeasurementList, '/profiles/<int:profile_id>/measurements/latest')
