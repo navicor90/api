@@ -2,8 +2,7 @@
 
 from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
-from app.mod_shared.models import db
-from app.mod_profiles.models import *
+from app.mod_profiles.models import MeasurementType, Profile
 from app.mod_profiles.resources.fields.measurementFields import MeasurementFields
 
 class ProfileLatestMeasurementList(Resource):

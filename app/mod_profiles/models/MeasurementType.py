@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from app.mod_shared.models import db
+from app.mod_shared.models.db import db
 
 # Many-to-many relationship tables
 measurement_units_table = db.Table('measurement_units_table',

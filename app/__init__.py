@@ -13,7 +13,7 @@ from flask.ext.cors import CORS
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 
-from app.mod_shared.models import db
+from app.mod_shared.models.db import db
 from app.mod_profiles.resources.lists import *
 from app.mod_profiles.resources.views import *
 from . import config

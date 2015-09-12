@@ -4,7 +4,7 @@ from passlib.apps import custom_app_context as pwd_context
 from itsdangerous import (TimedJSONWebSignatureSerializer
                           as Serializer, BadSignature, SignatureExpired)
 from app.config import Config
-from app.mod_shared.models import db
+from app.mod_shared.models.db import db
 
 class User(db.Model):
     # Attributes

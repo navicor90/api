@@ -2,7 +2,7 @@
 
 from flask_restful import Resource, reqparse, marshal_with
 from flask_restful_swagger import swagger
-from app.mod_shared.models import db
+from app.mod_shared.models.db import db
 from app.mod_profiles.models import User
 from app.mod_profiles.resources.fields.userFields import UserFields
 
