@@ -5,9 +5,10 @@ from flask_restful_swagger import swagger
 from app.mod_shared.models.db import db
 from app.mod_profiles.models import MeasurementType, MeasurementUnit
 from app.mod_profiles.resources.fields.measurementUnitFields import MeasurementUnitFields
+from app.mod_profiles.validators.globalValidator import is_valid_id
 
 parser = reqparse.RequestParser()
-parser.add_argument('measurement_unit_id_list', type=int, required=True, action='append')
+parser.add_argument('measurement_unit_id_list', type=is_valid_id, required=True, action='append')
 
 class MeasurementTypeUnitsList(Resource):
     @swagger.operation(

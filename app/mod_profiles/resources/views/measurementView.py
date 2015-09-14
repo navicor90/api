@@ -5,14 +5,15 @@ from flask_restful_swagger import swagger
 from app.mod_shared.models.db import db
 from app.mod_profiles.models import Measurement
 from app.mod_profiles.resources.fields.measurementFields import MeasurementFields
+from app.mod_profiles.validators.globalValidator import is_valid_id, is_valid_datetime
 
 parser = reqparse.RequestParser()
-parser.add_argument('datetime', required=True)
+parser.add_argument('datetime', type=is_valid_datetime, required=True)
 parser.add_argument('value', type=float, required=True)
-parser.add_argument('profile_id', type=int, required=True)
-parser.add_argument('measurement_source_id', type=int)
-parser.add_argument('measurement_type_id', type=int, required=True)
-parser.add_argument('measurement_unit_id', type=int, required=True)
+parser.add_argument('profile_id', type=is_valid_id, required=True)
+parser.add_argument('measurement_source_id', type=is_valid_id)
+parser.add_argument('measurement_type_id', type=is_valid_id, required=True)
+parser.add_argument('measurement_unit_id', type=is_valid_id, required=True)
 
 class MeasurementView(Resource):
     @swagger.operation(
