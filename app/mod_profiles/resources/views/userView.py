@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from flask_restful import Resource, reqparse, marshal_with
+from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 from app.mod_shared.models.db import db
 from app.mod_profiles.models import User
 from app.mod_profiles.resources.fields.userFields import UserFields
+from app.mod_profiles.common.parsers.user import parser_put
 
-parser = reqparse.RequestParser()
-parser.add_argument('username', type=str, required=True)
-parser.add_argument('email', type=str, required=True)
-parser.add_argument('password', type=str, required=True)
-parser.add_argument('profile_id', type=int, required=True)
 
 class UserView(Resource):
     @swagger.operation(
@@ -97,7 +93,7 @@ class UserView(Resource):
     @marshal_with(UserFields.resource_fields, envelope='resource')
     def put(self, id):
         user = User.query.get_or_404(id)
-        args = parser.parse_args()
+        args = parser_put.parse_args()
 
         # Actualiza los atributos y relaciones del objeto, en base a los
         # argumentos recibidos.

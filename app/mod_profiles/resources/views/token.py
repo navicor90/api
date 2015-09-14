@@ -6,6 +6,7 @@ from flask_restful_swagger import swagger
 from app.mod_shared.models.auth import auth
 from app.mod_profiles.resources.fields.tokenFields import TokenFields
 
+
 class Token(Resource):
     # TODO: Añadir parámetros de autenticación a la documentación Swagger.
     @swagger.operation(

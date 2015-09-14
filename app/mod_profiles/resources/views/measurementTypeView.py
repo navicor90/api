@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from flask_restful import Resource, reqparse, marshal_with
+from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 from app.mod_shared.models.db import db
 from app.mod_profiles.models import MeasurementType
 from app.mod_profiles.resources.fields.measurementTypeFields import MeasurementTypeFields
-from app.mod_profiles.validators.globalValidator import string_without_int
+from app.mod_profiles.common.parsers.measurementType import parser_put
 
-parser = reqparse.RequestParser()
-parser.add_argument('name', type=string_without_int, required=True)
-parser.add_argument('description', type=str)
 
 class MeasurementTypeView(Resource):
     @swagger.operation(
@@ -82,7 +79,7 @@ class MeasurementTypeView(Resource):
     @marshal_with(MeasurementTypeFields.resource_fields, envelope='resource')
     def put(self, id):
         measurement_type = MeasurementType.query.get_or_404(id)
-        args = parser.parse_args()
+        args = parser_put.parse_args()
 
         # Actualiza los atributos y relaciones del objeto, en base a los
         # argumentos recibidos.
