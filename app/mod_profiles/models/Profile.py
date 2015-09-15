@@ -7,7 +7,6 @@ class Profile(db.Model):
     id         = db.Column(db.Integer, primary_key=True)
     last_name  = db.Column(db.String(50))
     first_name = db.Column(db.String(50))
-    gender     = db.Column(db.Integer)
     birthday   = db.Column(db.Date)
     # Foreign keys
     gender_id = db.Column(db.Integer, db.ForeignKey('gender.id'))
