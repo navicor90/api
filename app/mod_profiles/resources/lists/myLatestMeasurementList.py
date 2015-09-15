@@ -1,32 +1,24 @@
 # -*- coding: utf-8 -*-
 
+from flask import g
 from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
+from app.mod_shared.models.auth import auth
 from app.mod_profiles.common.persistence import measurement
-from app.mod_profiles.models import Profile
 from app.mod_profiles.resources.fields.measurementFields import MeasurementFields
 
-
-class ProfileLatestMeasurementList(Resource):
+class MyLatestMeasurementList(Resource):
     # Crea una copia de los campos del recurso 'MeasurementView'.
     resource_fields = MeasurementFields.resource_fields.copy()
     # Quita el perfil asociado de los campos del recurso.
     del resource_fields['profile']
 
     @swagger.operation(
+        # TODO: Añadir parámetros de autenticación a la documentación Swagger.
         notes= (u'Retorna la última instancia de medición de cada tipo de '
-                'medición, asociadas a un perfil específico.').encode('utf-8'),
+                'medición, asociadas al perfil del usuario autenticado.').encode('utf-8'),
         responseClass='MeasurementFields',
-        nickname='profileLatestMeasurementList_get',
-        parameters=[
-            {
-              "name": "profile_id",
-              "description": u'Identificador único del perfil.'.encode('utf-8'),
-              "required": True,
-              "dataType": "int",
-              "paramType": "path"
-            }
-          ],
+        nickname='myLatestMeasurementList_get',
         responseMessages=[
             {
               "code": 200,
@@ -38,10 +30,11 @@ class ProfileLatestMeasurementList(Resource):
             }
           ]
         )
+    @auth.login_required
     @marshal_with(resource_fields, envelope='resource')
-    def get(self, profile_id):
+    def get(self):
         # Obtiene el perfil.
-        profile = Profile.query.get_or_404(profile_id)
+        profile = g.user.profile
 
         # Obtiene las últimas mediciones asociadas al perfil.
         latest_measurements = measurement.get_latest_by_profile(profile)
