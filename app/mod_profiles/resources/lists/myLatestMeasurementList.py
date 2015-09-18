@@ -7,6 +7,7 @@ from app.mod_shared.models.auth import auth
 from app.mod_profiles.common.persistence import measurement
 from app.mod_profiles.resources.fields.measurementFields import MeasurementFields
 
+
 class MyLatestMeasurementList(Resource):
     # Crea una copia de los campos del recurso 'MeasurementView'.
     resource_fields = MeasurementFields.resource_fields.copy()

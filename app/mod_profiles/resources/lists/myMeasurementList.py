@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from flask import g
-from flask_restful import Resource, reqparse, marshal_with
+from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 from app.mod_shared.models.auth import auth
 from app.mod_profiles.common.persistence import measurement
 from app.mod_profiles.resources.fields.measurementFields import MeasurementFields
-
-parser = reqparse.RequestParser()
-parser.add_argument('source', type=int)
-parser.add_argument('type', type=int)
-parser.add_argument('unit', type=int)
+from app.mod_profiles.common.parsers.profileMeasurementList import parser_get
 
 
 class MyMeasurementList(Resource):
@@ -76,7 +72,7 @@ class MyMeasurementList(Resource):
         profile = g.user.profile
 
         # Obtiene los valores de los argumentos recibidos en la petición.
-        args = parser.parse_args()
+        args = parser_get.parse_args()
         measurement_source_id = args['source']
         measurement_type_id = args['type']
         measurement_unit_id = args['unit']
