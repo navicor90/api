@@ -5,7 +5,9 @@ from app.mod_profiles.validators.globalValidator import is_valid_id
 
 # Parser general
 parser = reqparse.RequestParser()
-parser.add_argument('measurement_unit_id_list', type=is_valid_id, required=True, action='append')
+parser.add_argument('source', type=is_valid_id)
+parser.add_argument('type', type=is_valid_id)
+parser.add_argument('unit', type=is_valid_id)
 
-# Parser para recurso PUT
-parser_put = parser.copy()
+# Parser para recurso GET
+parser_get = parser.copy()
