@@ -5,6 +5,7 @@ from flask_restful_swagger import swagger
 from app.mod_profiles.models import MeasurementType, Profile
 from app.mod_profiles.resources.fields.measurementFields import MeasurementFields
 
+
 class ProfileLatestMeasurementList(Resource):
     # Crea una copia de los campos del recurso 'MeasurementView'.
     resource_fields = MeasurementFields.resource_fields.copy()

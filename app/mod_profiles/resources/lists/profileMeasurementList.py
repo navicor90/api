@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from flask_restful import Resource, reqparse, marshal_with
+from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 from app.mod_profiles.models import Measurement, Profile
 from app.mod_profiles.resources.fields.measurementFields import MeasurementFields
+from app.mod_profiles.common.parsers.profileMeasurementList import parser_get
 
-parser = reqparse.RequestParser()
-parser.add_argument('source', type=int)
-parser.add_argument('type', type=int)
-parser.add_argument('unit', type=int)
 
 class ProfileMeasurementList(Resource):
     # Crea una copia de los campos del recurso 'MeasurementView'.
@@ -77,7 +74,7 @@ class ProfileMeasurementList(Resource):
         # Obtiene el perfil
         profile = Profile.query.get_or_404(profile_id)
 
-        args = parser.parse_args()
+        args = parser_get.parse_args()
         measurement_source_id = args['source']
         measurement_type_id = args['type']
         measurement_unit_id = args['unit']

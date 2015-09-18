@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from flask_restful import Resource, reqparse, marshal_with
+from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 from app.mod_shared.models.db import db
 from app.mod_profiles.models import MeasurementType
 from app.mod_profiles.resources.fields.measurementTypeFields import MeasurementTypeFields
-from app.mod_profiles.validators.globalValidator import string_without_int
+from app.mod_profiles.common.parsers.measurementType import parser_post
 
-parser = reqparse.RequestParser()
-parser.add_argument('name', type=string_without_int, required=True)
-parser.add_argument('description', type=str)
 
 class MeasurementTypeList(Resource):
     @swagger.operation(
@@ -57,7 +54,7 @@ class MeasurementTypeList(Resource):
         )
     @marshal_with(MeasurementTypeFields.resource_fields, envelope='resource')
     def post(self):
-        args = parser.parse_args()
+        args = parser_post.parse_args()
         new_measurement_type = MeasurementType(args['name'],
                                                args['description'])
         db.session.add(new_measurement_type)

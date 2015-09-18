@@ -1,19 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from flask_restful import Resource, reqparse, marshal_with
+from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 from app.mod_shared.models.db import db
 from app.mod_profiles.models import Measurement
 from app.mod_profiles.resources.fields.measurementFields import MeasurementFields
-from app.mod_profiles.validators.globalValidator import is_valid_id, is_valid_datetime
+from app.mod_profiles.common.parsers.measurement import parser_post
 
-parser = reqparse.RequestParser()
-parser.add_argument('datetime', type=is_valid_datetime, required=True)
-parser.add_argument('value', type=float, required=True)
-parser.add_argument('profile_id', type=is_valid_id, required=True)
-parser.add_argument('measurement_source_id', type=is_valid_id)
-parser.add_argument('measurement_type_id', type=is_valid_id, required=True)
-parser.add_argument('measurement_unit_id', type=is_valid_id, required=True)
 
 class MeasurementList(Resource):
     @swagger.operation(
@@ -96,7 +89,7 @@ class MeasurementList(Resource):
         )
     @marshal_with(MeasurementFields.resource_fields, envelope='resource')
     def post(self):
-        args = parser.parse_args()
+        args = parser_post.parse_args()
         new_measurement = Measurement(args['datetime'],
                                       args['value'],
                                       args['profile_id'],

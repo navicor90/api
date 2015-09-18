@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from flask_restful import Resource, reqparse, marshal_with
+from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 from app.mod_shared.models.db import db
 from app.mod_profiles.models import User
 from app.mod_profiles.resources.fields.userFields import UserFields
+from app.mod_profiles.common.parsers.user import parser_post
 
-parser = reqparse.RequestParser()
-parser.add_argument('username', type=str, required=True)
-parser.add_argument('email', type=str, required=True)
-parser.add_argument('password', type=str, required=True)
-parser.add_argument('profile_id', type=int, required=True)
 
 class UserList(Resource):
     @swagger.operation(
@@ -72,7 +68,7 @@ class UserList(Resource):
         )
     @marshal_with(UserFields.resource_fields, envelope='resource')
     def post(self):
-        args = parser.parse_args()
+        args = parser_post.parse_args()
         username = args['username']
         if User.query.filter_by(username=username).first() is not None:
             # Usuario existente.

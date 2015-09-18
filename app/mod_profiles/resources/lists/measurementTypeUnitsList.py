@@ -5,10 +5,8 @@ from flask_restful_swagger import swagger
 from app.mod_shared.models.db import db
 from app.mod_profiles.models import MeasurementType, MeasurementUnit
 from app.mod_profiles.resources.fields.measurementUnitFields import MeasurementUnitFields
-from app.mod_profiles.validators.globalValidator import is_valid_id
+from app.mod_profiles.common.parsers.measurementTypeUnitsList import parser_put
 
-parser = reqparse.RequestParser()
-parser.add_argument('measurement_unit_id_list', type=is_valid_id, required=True, action='append')
 
 class MeasurementTypeUnitsList(Resource):
     @swagger.operation(
@@ -78,7 +76,7 @@ class MeasurementTypeUnitsList(Resource):
     @marshal_with(MeasurementUnitFields.resource_fields, envelope='resource')
     def put(self, id):
         measurement_type = MeasurementType.query.get_or_404(id)
-        args = parser.parse_args()
+        args = parser_put.parse_args()
 
         # Actualiza la relación de tipo de medición con unidades de medición,
         # en base a los argumentos recibidos.
