@@ -8,6 +8,8 @@ from .measurementTypeList import MeasurementTypeList
 from .measurementUnitList import MeasurementUnitList
 
 from .measurementTypeUnitsList import MeasurementTypeUnitsList
+from .myLatestMeasurementList import MyLatestMeasurementList
+from .myMeasurementList import MyMeasurementList
 from .profileLatestMeasurementList import ProfileLatestMeasurementList
 from .profileMeasurementList import ProfileMeasurementList
 from .userList import UserList

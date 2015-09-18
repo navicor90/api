@@ -1,33 +1,28 @@
 # -*- coding: utf-8 -*-
 
+from flask import g
 from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
+from app.mod_shared.models.auth import auth
 from app.mod_profiles.common.persistence import measurement
-from app.mod_profiles.models import Profile
 from app.mod_profiles.resources.fields.measurementFields import MeasurementFields
 from app.mod_profiles.common.parsers.profileMeasurementList import parser_get
 
 
-class ProfileMeasurementList(Resource):
+class MyMeasurementList(Resource):
     # Crea una copia de los campos del recurso 'MeasurementView'.
     resource_fields = MeasurementFields.resource_fields.copy()
     # Quita el perfil asociado de los campos del recurso.
     del resource_fields['profile']
 
     @swagger.operation(
+        # TODO: Añadir parámetros de autenticación a la documentación Swagger.
         notes= (u'Retorna todas las instancias existentes de medición, '
-                'asociadas a un perfil específico, ordenadas por fecha y hora '
-                'de la medición.').encode('utf-8'),
+                'asociadas al perfil del usuario autenticado, ordenadas por '
+                'fecha y hora de la medición.').encode('utf-8'),
         responseClass='MeasurementFields',
-        nickname='profileMeasurementList_get',
+        nickname='myMeasurementList_get',
         parameters=[
-            {
-              "name": "profile_id",
-              "description": u'Identificador único del perfil.'.encode('utf-8'),
-              "required": True,
-              "dataType": "int",
-              "paramType": "path"
-            },
             {
               "name": "source",
               "description": (u'Identificador único de la fuente de medición. '
@@ -70,10 +65,11 @@ class ProfileMeasurementList(Resource):
             }
           ]
         )
+    @auth.login_required
     @marshal_with(resource_fields, envelope='resource')
-    def get(self, profile_id):
-        # Obtiene el perfil
-        profile = Profile.query.get_or_404(profile_id)
+    def get(self):
+        # Obtiene el perfil.
+        profile = g.user.profile
 
         # Obtiene los valores de los argumentos recibidos en la petición.
         args = parser_get.parse_args()
