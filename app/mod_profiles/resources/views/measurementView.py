@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import pytz
+from pytz import UTC
 from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 from app.mod_shared.models.db import db
@@ -123,15 +123,15 @@ class MeasurementView(Resource):
             # horaria UTC.
             if (current_datetime.tzinfo is None
                   or current_datetime.tzinfo.utcoffset(current_datetime) is None):
-                current_datetime = measurement.datetime.replace(tzinfo=pytz.UTC)
+                current_datetime = measurement.datetime.replace(tzinfo=UTC)
             # Comprueba si el valor nuevo de fecha y hora no tiene información
             # acerca de la zona horaria. Si es así, la configura con zona
             # horaria UTC. Sino, convierte la existente a UTC.
             if (new_datetime.tzinfo is None
                   or new_datetime.tzinfo.utcoffset(new_datetime) is None):
-                new_datetime = new_datetime.replace(tzinfo=pytz.UTC)
+                new_datetime = new_datetime.replace(tzinfo=UTC)
             else:
-                new_datetime = new_datetime.astimezone(pytz.UTC)
+                new_datetime = new_datetime.astimezone(UTC)
             # Luego de hacer comparables los valores (al agregar la información
             # de zona horaria), se actualiza la fecha y hora en caso de que el
             # nuevo valor sea distinto al actual. Se quita la información de
