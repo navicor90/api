@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import pytz
 from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 from app.mod_shared.models.db import db
@@ -113,9 +114,30 @@ class MeasurementView(Resource):
         # argumentos recibidos.
 
         # Actualiza la fecha y hora, en caso de que haya sido modificada.
-        if (args['datetime'] is not None and
-              measurement.datetime != args['datetime']):
-            measurement.datetime = args['datetime']
+        if args['datetime'] is not None:
+            # Obtiene los valores de fecha y hora, actual y nuevo.
+            current_datetime = measurement.datetime
+            new_datetime = args['datetime']
+            # Comprueba si el valor actual de fecha y hora no tiene información
+            # acerca de la zona horaria. Si es así, la configura con zona
+            # horaria UTC.
+            if (current_datetime.tzinfo is None
+                  or current_datetime.tzinfo.utcoffset(current_datetime) is None):
+                current_datetime = measurement.datetime.replace(tzinfo=pytz.UTC)
+            # Comprueba si el valor nuevo de fecha y hora no tiene información
+            # acerca de la zona horaria. Si es así, la configura con zona
+            # horaria UTC. Sino, convierte la existente a UTC.
+            if (new_datetime.tzinfo is None
+                  or new_datetime.tzinfo.utcoffset(new_datetime) is None):
+                new_datetime = new_datetime.replace(tzinfo=pytz.UTC)
+            else:
+                new_datetime = new_datetime.astimezone(pytz.UTC)
+            # Luego de hacer comparables los valores (al agregar la información
+            # de zona horaria), se actualiza la fecha y hora en caso de que el
+            # nuevo valor sea distinto al actual. Se quita la información de
+            # zona horaria, para su almacenamiento como UTC.
+            if current_datetime != new_datetime:
+                measurement.datetime = new_datetime.replace(tzinfo=None)
         # Actualiza el valor, en caso de que haya sido modificado.
         if (args['value'] is not None and
               measurement.value != args['value']):
