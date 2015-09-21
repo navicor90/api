@@ -121,4 +121,7 @@ api.add_resource(MyUserView, '/my/user')
 api.add_resource(ProfileLatestMeasurementList, '/profiles/<int:profile_id>/measurements/latest')
 api.add_resource(ProfileMeasurementList, '/profiles/<int:profile_id>/measurements')
 
+api.add_resource(FileList, '/upload')
+api.add_resource(FileView, '/upload/<str:filename>')
+
 from . import views
