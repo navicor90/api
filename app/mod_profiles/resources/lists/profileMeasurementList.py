@@ -4,7 +4,7 @@ from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 from app.mod_profiles.common.persistence import measurement
 from app.mod_profiles.models import Profile
-from app.mod_profiles.resources.fields.measurementFields import MeasurementFields
+from app.mod_profiles.common.fields.measurementFields import MeasurementFields
 from app.mod_profiles.common.parsers.profileMeasurementList import parser_get
 
 
