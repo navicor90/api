@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from datetime import date
+from datetime import date, datetime
 from dateutil.parser import parse
 from pytz import UTC
 
@@ -155,15 +155,39 @@ def is_valid_datetime(var):
         ...
     ValueError: second must be in 0..59
     """
-    datetime = parse(var)
+    datetime_var = parse(var)
 
     # Comprueba si el valor de fecha y hora tiene información acerca de la zona
     # horaria. Si es así, convierte la existente a UTC.
-    if (datetime.tzinfo is not None
-          and datetime.tzinfo.utcoffset(datetime) is not None):
-        datetime = datetime.astimezone(UTC)
+    if (datetime_var.tzinfo is not None
+          and datetime_var.tzinfo.utcoffset(datetime_var) is not None):
+        datetime_var = datetime_var.astimezone(UTC)
 
     # Se quita la información de zona horaria, para su almacenamiento como UTC.
-    datetime = datetime.replace(tzinfo=None)
+    datetime_var = datetime_var.replace(tzinfo=None)
 
-    return datetime
+    return datetime_var
+
+
+def is_valid_previous_datetime(var):
+    """ Valida que la fecha y hora sea previa a la actual.
+    >>> is_valid_previous_datetime("2001-09-21T23:33:22.386348")
+    datetime.datetime(2001, 9, 21, 23, 33, 22, 386348)
+
+    >>> is_valid_previous_datetime("1899-09-21T23:33:22.386348")
+    Traceback (most recent call last):
+        ...
+    ValueError: La fecha y hora ingresada no puede ser anterior al año 1900.
+
+    >>> is_valid_previous_datetime("3016-09-21T23:33:22.386348")
+    Traceback (most recent call last):
+        ...
+    ValueError: La fecha y hora ingresada no debe ser posterior a la fecha y hora actual.
+    """
+    datetime_var = is_valid_datetime(var)
+    if datetime_var.year < 1900:
+        raise ValueError("La fecha y hora ingresada no puede ser anterior al año 1900.")
+    elif datetime_var > datetime.utcnow():
+        raise ValueError("La fecha y hora ingresada no debe ser posterior a la fecha y hora actual.")
+    else:
+        return datetime_var
