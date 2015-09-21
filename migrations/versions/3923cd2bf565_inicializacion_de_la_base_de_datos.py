@@ -1,4 +1,4 @@
-"""empty message
+"""Inicialización de la base de datos
 
 Revision ID: 3923cd2bf565
 Revises: None
