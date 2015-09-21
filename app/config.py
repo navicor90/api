@@ -11,6 +11,8 @@ class Config(object):
     # Parámetro que indica si el parser de argumentos debe devolver la totalidad de los errores encontrados en una
     # petición a la API (True), o sólo el primer error (False).
     BUNDLE_ERRORS = True
+    # Directorio donde guardaremos el archivo
+    UPLOAD_FOLDER = '/tmp'
 
 
 class ProductionConfig(Config):
