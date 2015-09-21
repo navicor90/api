@@ -2,6 +2,7 @@
 
 from datetime import date
 from dateutil.parser import parse
+from pytz import UTC
 
 
 def is_int(var):
@@ -155,4 +156,14 @@ def is_valid_datetime(var):
     ValueError: second must be in 0..59
     """
     datetime = parse(var)
+
+    # Comprueba si el valor de fecha y hora tiene información acerca de la zona
+    # horaria. Si es así, convierte la existente a UTC.
+    if (datetime.tzinfo is not None
+          and datetime.tzinfo.utcoffset(datetime) is not None):
+        datetime = datetime.astimezone(UTC)
+
+    # Se quita la información de zona horaria, para su almacenamiento como UTC.
+    datetime = datetime.replace(tzinfo=None)
+
     return datetime
