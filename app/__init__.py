@@ -18,6 +18,7 @@ from app.mod_profiles.resources.lists import *
 from app.mod_profiles.resources.views import *
 from . import config
 
+
 def get_config_class(config_mode):
     """
     Determina el tipo de configuración a utilizar, a partir del modo especificado.
@@ -121,7 +122,7 @@ api.add_resource(MyUserView, '/my/user')
 api.add_resource(ProfileLatestMeasurementList, '/profiles/<int:profile_id>/measurements/latest')
 api.add_resource(ProfileMeasurementList, '/profiles/<int:profile_id>/measurements')
 
-api.add_resource(FileList, '/upload')
-api.add_resource(FileView, '/upload/<str:filename>')
+api.add_resource(EpicrisisView, '/upload/<string:filename>')
+api.add_resource(EpicrisisList, '/upload')
 
 from . import views

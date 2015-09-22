@@ -15,3 +15,6 @@ from .token import Token
 
 from .myProfileView import MyProfileView
 from .myUserView import MyUserView
+
+from .epicrisisView import EpicrisisView
+

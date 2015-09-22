@@ -3,7 +3,7 @@
 from flask_restful import Resource
 
 
-class FileView(Resource):
+class EpicrisisView(Resource):
     def get(self, filename):
         pass
 

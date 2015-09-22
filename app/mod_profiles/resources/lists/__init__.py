@@ -18,3 +18,5 @@ from .myMeasurementList import MyMeasurementList
 from .profileLatestMeasurementList import ProfileLatestMeasurementList
 from .profileMeasurementList import ProfileMeasurementList
 from .userList import UserList
+
+from .epicrisisList import EpicrisisList

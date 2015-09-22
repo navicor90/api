@@ -13,8 +13,8 @@ class Config(object):
     BUNDLE_ERRORS = True
     # Directorio donde guardaremos el archivo
     UPLOAD_FOLDER = '/tmp'
-    ALLOWED_FILE_EXTENSIONS = set(['png'])
-    MAX_CONTENT_LENGTH = 6 * 1024 * 1024
+    ALLOWED_IMG_EXTENSIONS = set(['png'])
+    MAX_CONT_IMG_LENGTH = 6 * 1024 * 1024
 
 
 class ProductionConfig(Config):
