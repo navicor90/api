@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from flask.helpers import flash
 
 import os
 from flask_restful import Resource, marshal_with
@@ -9,6 +10,9 @@ from app.mod_profiles.common.parsers.epicrisis import parser_post
 from app.config import Config
 from werkzeug import secure_filename
 
+from app.config import Config
+from flaskext.uploads import UploadNotAllowed
+
 
 class EpicrisisList(Resource):
 
@@ -17,6 +21,7 @@ class EpicrisisList(Resource):
 
     @marshal_with(EpicrisisFields.resource_fields, envelope='resource')
     def post(self):
+        """ Basic file upload
         args = parser_post.parse_args()
         image_file = args['image']
         print image_file.filename
@@ -33,3 +38,24 @@ class EpicrisisList(Resource):
             db.session.add(new_epicrisis)
             db.session.commit()
             return new_epicrisis, 201
+        """
+        """File upload using Flask-Uploads
+        """
+        args = parser_post.parse_args()
+        image_file = args['image']
+        print image_file
+        if not image_file:
+            flash("Debe cargar un archivo")
+        else:
+            try:
+                filename = Config.uploaded_photos.save(image_file)
+                print filename
+            except UploadNotAllowed:
+                flash("El archivo presenta un formato incorrecto")
+            else:
+                new_epicrisis = Epicrisis('archivo', args['datetime'], filename)
+                print new_epicrisis
+                db.session.add(new_epicrisis)
+                db.session.commit()
+                return new_epicrisis, 201
+

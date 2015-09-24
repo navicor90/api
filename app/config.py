@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+from flaskext.uploads import UploadSet, IMAGES
 
 class Config(object):
     DEBUG = False
@@ -12,9 +13,12 @@ class Config(object):
     # petición a la API (True), o sólo el primer error (False).
     BUNDLE_ERRORS = True
     # Directorio donde guardaremos el archivo
-    UPLOAD_FOLDER = '/tmp'
-    ALLOWED_IMG_EXTENSIONS = set(['png'])
+    #UPLOAD_FOLDER = '/tmp'
+    #ALLOWED_IMG_EXTENSIONS = set(['png'])
+    UPLOADED_PHOTOS_DEST = '/tmp/imagenes'
     MAX_CONT_IMG_LENGTH = 6 * 1024 * 1024
+    uploaded_photos = UploadSet('photos', IMAGES)
+
 
 
 class ProductionConfig(Config):
