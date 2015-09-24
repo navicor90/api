@@ -1,4 +1,4 @@
-"""empty message
+"""Creación de la relación entre MeasurementType y MeasurementUnit
 
 Revision ID: 309c776b77
 Revises: 3923cd2bf565
