@@ -4,7 +4,7 @@ from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 from app.mod_shared.models.db import db
 from app.mod_profiles.models import MeasurementSource
-from app.mod_profiles.resources.fields.measurementSourceFields import MeasurementSourceFields
+from app.mod_profiles.common.fields.measurementSourceFields import MeasurementSourceFields
 from app.mod_profiles.common.parsers.measurementSource import parser_post
 
 

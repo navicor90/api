@@ -2,9 +2,10 @@
 
 from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
+
 from app.mod_shared.models.db import db
 from app.mod_profiles.models import Profile
-from app.mod_profiles.resources.fields.profileFields import ProfileFields
+from app.mod_profiles.common.fields.profileFields import ProfileFields
 from app.mod_profiles.common.parsers.profile import parser_put
 
 
