@@ -16,9 +16,6 @@ from flaskext.uploads import UploadNotAllowed
 
 class EpicrisisList(Resource):
 
-    def get(self):
-        pass
-
     @marshal_with(EpicrisisFields.resource_fields, envelope='resource')
     def post(self):
         """ Basic file upload
@@ -44,18 +41,19 @@ class EpicrisisList(Resource):
         args = parser_post.parse_args()
         image_file = args['image']
         print image_file
-        if not image_file:
+        if image_file is None:
+            # Tendría que ser reemplazado por un response adecuado
             flash("Debe cargar un archivo")
         else:
             try:
-                filename = Config.uploaded_photos.save(image_file)
-                print filename
+                image_name = Config.uploaded_photos.save(image_file)
+                print image_name
             except UploadNotAllowed:
+                # Tendría que ser reemplazado por un response adecuado
                 flash("El archivo presenta un formato incorrecto")
             else:
-                new_epicrisis = Epicrisis('archivo', args['datetime'], filename)
-                print new_epicrisis
+                new_epicrisis = Epicrisis(image_name, args['datetime'])
                 db.session.add(new_epicrisis)
                 db.session.commit()
-                return new_epicrisis, 201
+                return new_epicrisis
 

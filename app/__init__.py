@@ -129,5 +129,8 @@ api.add_resource(ProfileMeasurementList, '/profiles/<int:profile_id>/measurement
 
 api.add_resource(EpicrisisView, '/upload/<int:id>')
 api.add_resource(EpicrisisList, '/upload')
+api.add_resource(EpicrisisDownloadView, '/upload/<int:id>/download')
+api.add_resource(EpicrisisOpenView, '/upload/<int:id>/open')
+
 
 from . import views
