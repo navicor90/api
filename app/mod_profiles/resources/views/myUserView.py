@@ -1,28 +1,21 @@
 # -*- coding: utf-8 -*-
 
+from flask import g
 from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 
+from app.mod_shared.models.auth import auth
 from app.mod_profiles.common.persistence.user import update
-from app.mod_profiles.models import User
 from app.mod_profiles.common.fields.userFields import UserFields
 from app.mod_profiles.common.parsers.user import parser_put
 
 
-class UserView(Resource):
+class MyUserView(Resource):
     @swagger.operation(
-        notes=u'Retorna una instancia específica de usuario.'.encode('utf-8'),
+        # TODO: Añadir parámetros de autenticación a la documentación Swagger.
+        notes=u'Retorna la instancia de usuario, del usuario autenticado.'.encode('utf-8'),
         responseClass='UserFields',
-        nickname='userView_get',
-        parameters=[
-            {
-              "name": "id",
-              "description": u'Identificador único del usuario.'.encode('utf-8'),
-              "required": True,
-              "dataType": "int",
-              "paramType": "path"
-            }
-          ],
+        nickname='myUserView_get',
         responseMessages=[
             {
               "code": 200,
@@ -34,23 +27,18 @@ class UserView(Resource):
             }
           ]
         )
+    @auth.login_required
     @marshal_with(UserFields.resource_fields, envelope='resource')
-    def get(self, id):
-        user = User.query.get_or_404(id)
-        return user
+    def get(self):
+        return g.user
 
     @swagger.operation(
-        notes=u'Actualiza una instancia específica de usuario, y la retorna.'.encode('utf-8'),
+        # TODO: Añadir parámetros de autenticación a la documentación Swagger.
+        notes=(u'Actualiza la instancia de usuario, del usuario autenticado, '
+               'y la retorna.').encode('utf-8'),
         responseClass='UserFields',
-        nickname='userView_put',
+        nickname='myUserView_put',
         parameters=[
-            {
-              "name": "id",
-              "description": u'Identificador único del usuario.'.encode('utf-8'),
-              "required": True,
-              "dataType": "int",
-              "paramType": "path"
-            },
             {
               "name": "username",
               "description": u'Nombre de usuario.'.encode('utf-8'),
@@ -91,10 +79,11 @@ class UserView(Resource):
             }
           ]
         )
+    @auth.login_required
     @marshal_with(UserFields.resource_fields, envelope='resource')
-    def put(self, id):
+    def put(self):
         # Obtiene el usuario.
-        user = User.query.get_or_404(id)
+        user = g.user
 
         # Obtiene los valores de los argumentos recibidos en la petición.
         args = parser_put.parse_args()
