@@ -31,13 +31,6 @@ class MeasurementUnitList(Resource):
         nickname='measurementUnitList_post',
         parameters=[
             {
-              "name": "id",
-              "description": u'Identificador único de la unidad de medición.'.encode('utf-8'),
-              "required": True,
-              "dataType": "int",
-              "paramType": "path"
-            },
-            {
               "name": "name",
               "description": u'Nombre de la unidad de medición.'.encode('utf-8'),
               "required": True,
