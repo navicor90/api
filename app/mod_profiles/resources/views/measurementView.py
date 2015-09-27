@@ -66,6 +66,13 @@ class MeasurementView(Resource):
               "paramType": "body"
             },
             {
+              "name": "analysis_id",
+              "description": u'Identificador único del análisis asociado.'.encode('utf-8'),
+              "required": True,
+              "dataType": "int",
+              "paramType": "body"
+            },
+            {
               "name": "profile_id",
               "description": u'Identificador único del perfil asociado.'.encode('utf-8'),
               "required": True,
@@ -121,6 +128,10 @@ class MeasurementView(Resource):
         if (args['value'] is not None and
               measurement.value != args['value']):
             measurement.value = args['value']
+        # Actualiza el análisis asociado, en caso de que haya sido modificado.
+        if (args['analysis_id'] is not None and
+              measurement.analysis_id != args['analysis_id']):
+            measurement.analysis_id = args['analysis_id']
         # Actualiza el perfil asociado, en caso de que haya sido modificado.
         if (args['profile_id'] is not None and
               measurement.profile_id != args['profile_id']):

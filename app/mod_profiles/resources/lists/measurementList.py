@@ -52,6 +52,13 @@ class MeasurementList(Resource):
               "paramType": "body"
             },
             {
+              "name": "analysis_id",
+              "description": u'Identificador único del análisis asociado.'.encode('utf-8'),
+              "required": True,
+              "dataType": "int",
+              "paramType": "body"
+            },
+            {
               "name": "profile_id",
               "description": u'Identificador único del perfil asociado.'.encode('utf-8'),
               "required": True,
@@ -92,6 +99,7 @@ class MeasurementList(Resource):
         args = parser_post.parse_args()
         new_measurement = Measurement(args['datetime'],
                                       args['value'],
+                                      args['analysis_id'],
                                       args['profile_id'],
                                       args['measurement_source_id'],
                                       args['measurement_type_id'],
