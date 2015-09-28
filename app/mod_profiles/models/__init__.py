@@ -12,3 +12,4 @@ from .MeasurementUnit import MeasurementUnit
 from .StorageCredential import StorageCredential
 from .StorageLocation import StorageLocation
 from .User import User
+from .StorageCredentialsSC import StorageCredentialsSC

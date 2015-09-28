@@ -21,3 +21,4 @@ from .epicrisisView import EpicrisisView
 from .epicrisisView import EpicrisisView
 from .epicrisisDownloadView import EpicrisisDownloadView
 from .epicrisisOpenView import EpicrisisOpenView
+
