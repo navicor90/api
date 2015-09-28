@@ -20,3 +20,6 @@ parser_post = parser.copy()
 
 # Parser para recurso PUT
 parser_put = parser.copy()
+
+# Parser para recurso POST con usuario autenticado
+parser_post_auth = parser.copy().remove_argument('profile_id')
