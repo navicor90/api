@@ -8,3 +8,5 @@ from .measurementTypeView import MeasurementTypeView
 from .measurementUnitView import MeasurementUnitView
 from .userView import UserView
 from .token import Token
+
+from .myProfileView import MyProfileView
