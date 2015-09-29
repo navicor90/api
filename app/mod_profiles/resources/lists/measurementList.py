@@ -31,13 +31,6 @@ class MeasurementList(Resource):
         nickname='measurementList_post',
         parameters=[
             {
-              "name": "id",
-              "description": u'Identificador único de la medición.'.encode('utf-8'),
-              "required": True,
-              "dataType": "int",
-              "paramType": "path"
-            },
-            {
               "name": "datetime",
               "description": u'Fecha y hora de la medición.'.encode('utf-8'),
               "required": True,
