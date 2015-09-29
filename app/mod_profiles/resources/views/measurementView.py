@@ -142,3 +142,37 @@ class MeasurementView(Resource):
 
         db.session.commit()
         return measurement, 200
+
+    @swagger.operation(
+        notes=u'Elimina una instancia específica de medición.'.encode('utf-8'),
+        nickname='measurementView_delete',
+        parameters=[
+            {
+              "name": "id",
+              "description": u'Identificador único de la medición.'.encode('utf-8'),
+              "required": True,
+              "dataType": "int",
+              "paramType": "path"
+            }
+          ],
+        responseMessages=[
+            {
+              "code": 204,
+              "message": "Objeto eliminado exitosamente."
+            },
+            {
+              "code": 404,
+              "message": "Objeto inexistente."
+            }
+          ]
+        )
+    @marshal_with(MeasurementFields.resource_fields, envelope='resource')
+    def delete(self, id):
+        # Obtiene la medición.
+        measurement = Measurement.query.get_or_404(id)
+
+        # Elimina la medición.
+        db.session.delete(measurement)
+        db.session.commit()
+
+        return '', 204
