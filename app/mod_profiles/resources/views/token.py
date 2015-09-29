@@ -3,6 +3,7 @@
 from flask import g
 from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
+
 from app.mod_shared.models.auth import auth
 from app.mod_profiles.common.fields.tokenFields import TokenFields
 from app.mod_profiles.common.swagger.responses.generic_responses import code_401

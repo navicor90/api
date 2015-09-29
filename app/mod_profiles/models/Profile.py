@@ -2,6 +2,7 @@
 
 from app.mod_shared.models.db import db
 
+
 class Profile(db.Model):
     # Attributes
     id         = db.Column(db.Integer, primary_key=True)
@@ -13,7 +14,6 @@ class Profile(db.Model):
     # Relationships
     gender = db.relationship('Gender',
                              backref=db.backref('profiles', lazy='dynamic'))
-
 
     def __init__(self, last_name, first_name, birthday, gender_id):
         self.last_name  = last_name

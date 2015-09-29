@@ -2,7 +2,9 @@
 
 from flask_restful import fields
 from flask_restful_swagger import swagger
+
 from .genderFields import GenderFields
+
 
 @swagger.model
 @swagger.nested(gender='GenderFields')

@@ -2,10 +2,13 @@
 
 from flask import g
 from flask.ext.httpauth import HTTPBasicAuth
+
 from app.mod_profiles.models.User import User
+
 
 # Manejo de autenticación HTTP.
 auth = HTTPBasicAuth()
+
 
 @auth.verify_password
 def verify_password(username_or_token, password):

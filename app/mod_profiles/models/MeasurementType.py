@@ -2,6 +2,7 @@
 
 from app.mod_shared.models.db import db
 
+
 # Many-to-many relationship tables
 measurement_units_table = db.Table('measurement_units_table',
                                    db.Column('measurement_unit_id',
@@ -13,6 +14,7 @@ measurement_units_table = db.Table('measurement_units_table',
                                    db.PrimaryKeyConstraint('measurement_unit_id',
                                                            'measurement_type_id')
                                   )
+
 
 class MeasurementType(db.Model):
     # Attributes
