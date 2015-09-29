@@ -113,6 +113,7 @@ api.add_resource(UserList, '/users')
 api.add_resource(Token, '/token')
 
 api.add_resource(MeasurementTypeUnitsList, '/measurement_types/<int:id>/units')
+api.add_resource(MyAnalysisList, '/my/analyses')
 api.add_resource(MyLatestMeasurementList, '/my/measurements/latest')
 api.add_resource(MyMeasurementList, '/my/measurements')
 api.add_resource(ProfileLatestMeasurementList, '/profiles/<int:profile_id>/measurements/latest')

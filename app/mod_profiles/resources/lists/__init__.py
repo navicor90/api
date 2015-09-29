@@ -12,6 +12,7 @@ from .storageCredentialList import StorageCredentialList
 from .storageLocationList import StorageLocationList
 
 from .measurementTypeUnitsList import MeasurementTypeUnitsList
+from .myAnalysisList import MyAnalysisList
 from .myLatestMeasurementList import MyLatestMeasurementList
 from .myMeasurementList import MyMeasurementList
 from .profileLatestMeasurementList import ProfileLatestMeasurementList
