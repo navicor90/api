@@ -7,6 +7,7 @@ from app.mod_shared.models.db import db
 from app.mod_profiles.models import Gender
 from app.mod_profiles.common.fields.genderFields import GenderFields
 from app.mod_profiles.common.parsers.gender import parser_put
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_200_updated, code_404
 
 
 class GenderView(Resource):
@@ -24,16 +25,10 @@ class GenderView(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto encontrado."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_found,
+            code_404
+        ]
+    )
     @marshal_with(GenderFields.resource_fields, envelope='resource')
     def get(self, id):
         gender = Gender.query.get_or_404(id)
@@ -67,16 +62,10 @@ class GenderView(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto actualizado exitosamente."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_updated,
+            code_404
+        ]
+    )
     @marshal_with(GenderFields.resource_fields, envelope='resource')
     def put(self, id):
         gender = Gender.query.get_or_404(id)

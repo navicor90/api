@@ -6,6 +6,7 @@ from flask_restful_swagger import swagger
 from app.mod_shared.models.auth import auth
 from app.mod_profiles.common.fields.measurementFields import MeasurementFields
 from app.mod_profiles.common.persistence import measurement
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found
 
 
 class MyLatestMeasurementList(Resource):
@@ -21,16 +22,9 @@ class MyLatestMeasurementList(Resource):
         responseClass='MeasurementFields',
         nickname='myLatestMeasurementList_get',
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto encontrado."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_found
+        ]
+    )
     @auth.login_required
     @marshal_with(resource_fields, envelope='resource')
     def get(self):

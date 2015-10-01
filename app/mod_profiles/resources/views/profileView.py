@@ -7,6 +7,7 @@ from app.mod_profiles.common.persistence.profile import update
 from app.mod_profiles.models import Profile
 from app.mod_profiles.common.fields.profileFields import ProfileFields
 from app.mod_profiles.common.parsers.profile import parser_put
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_200_updated, code_404
 
 
 class ProfileView(Resource):
@@ -24,16 +25,10 @@ class ProfileView(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto encontrado."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_found,
+            code_404
+        ]
+    )
     @marshal_with(ProfileFields.resource_fields, envelope='resource')
     def get(self, id):
         profile = Profile.query.get_or_404(id)
@@ -81,16 +76,10 @@ class ProfileView(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto actualizado exitosamente."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_updated,
+            code_404
+        ]
+    )
     @marshal_with(ProfileFields.resource_fields, envelope='resource')
     def put(self, id):
         # Obtiene el perfil.

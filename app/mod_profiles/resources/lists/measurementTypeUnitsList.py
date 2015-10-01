@@ -6,6 +6,7 @@ from app.mod_shared.models.db import db
 from app.mod_profiles.models import MeasurementType, MeasurementUnit
 from app.mod_profiles.common.fields.measurementUnitFields import MeasurementUnitFields
 from app.mod_profiles.common.parsers.measurementTypeUnitsList import parser_put
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_200_updated, code_404
 
 
 class MeasurementTypeUnitsList(Resource):
@@ -24,16 +25,10 @@ class MeasurementTypeUnitsList(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto encontrado."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_found,
+            code_404
+        ]
+    )
     @marshal_with(MeasurementUnitFields.resource_fields, envelope='resource')
     def get(self, id):
         measurement_type = MeasurementType.query.get_or_404(id)
@@ -63,16 +58,10 @@ class MeasurementTypeUnitsList(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto actualizado exitosamente."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_updated,
+            code_404
+        ]
+    )
     @marshal_with(MeasurementUnitFields.resource_fields, envelope='resource')
     def put(self, id):
         measurement_type = MeasurementType.query.get_or_404(id)

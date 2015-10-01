@@ -6,6 +6,7 @@ from app.mod_shared.models.db import db
 from app.mod_profiles.models import Profile
 from app.mod_profiles.common.fields.profileFields import ProfileFields
 from app.mod_profiles.common.parsers.profile import parser_post
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_ok, code_201_created
 
 
 class ProfileList(Resource):
@@ -14,12 +15,9 @@ class ProfileList(Resource):
         responseClass='ProfileFields',
         nickname='profileList_get',
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Solicitud resuelta exitosamente."
-            }
-          ]
-        )
+            code_200_ok
+        ]
+    )
     @marshal_with(ProfileFields.resource_fields, envelope='resource')
     def get(self):
         profiles = Profile.query.all()
@@ -67,12 +65,9 @@ class ProfileList(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 201,
-              "message": "Objeto creado exitosamente."
-            }
-          ]
-        )
+            code_201_created
+        ]
+    )
     @marshal_with(ProfileFields.resource_fields, envelope='resource')
     def post(self):
         args = parser_post.parse_args()

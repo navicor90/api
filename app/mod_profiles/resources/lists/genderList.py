@@ -6,6 +6,7 @@ from app.mod_shared.models.db import db
 from app.mod_profiles.models import Gender
 from app.mod_profiles.common.fields.genderFields import GenderFields
 from app.mod_profiles.common.parsers.gender import parser_post
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_ok, code_201_created
 
 
 class GenderList(Resource):
@@ -14,12 +15,9 @@ class GenderList(Resource):
         responseClass='GenderFields',
         nickname='genderList_get',
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Solicitud resuelta exitosamente."
-            }
-          ]
-        )
+            code_200_ok
+        ]
+    )
     @marshal_with(GenderFields.resource_fields, envelope='resource')
     def get(self):
         genders = Gender.query.all()
@@ -46,12 +44,9 @@ class GenderList(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 201,
-              "message": "Objeto creado exitosamente."
-            }
-          ]
-        )
+            code_201_created
+        ]
+    )
     @marshal_with(GenderFields.resource_fields, envelope='resource')
     def post(self):
         args = parser_post.parse_args()

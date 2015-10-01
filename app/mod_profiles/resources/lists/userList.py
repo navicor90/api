@@ -6,6 +6,7 @@ from app.mod_shared.models.db import db
 from app.mod_profiles.models import User
 from app.mod_profiles.common.fields.userFields import UserFields
 from app.mod_profiles.common.parsers.user import parser_post
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_ok, code_201_created
 
 
 class UserList(Resource):
@@ -14,12 +15,9 @@ class UserList(Resource):
         responseClass='UserFields',
         nickname='userList_get',
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Solicitud resuelta exitosamente."
-            }
-          ]
-        )
+            code_200_ok
+        ]
+    )
     @marshal_with(UserFields.resource_fields, envelope='resource')
     def get(self):
         users = User.query.all()
@@ -60,12 +58,9 @@ class UserList(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 201,
-              "message": "Objeto creado exitosamente."
-            }
-          ]
-        )
+            code_201_created
+        ]
+    )
     @marshal_with(UserFields.resource_fields, envelope='resource')
     def post(self):
         args = parser_post.parse_args()

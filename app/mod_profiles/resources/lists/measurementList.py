@@ -6,6 +6,7 @@ from app.mod_shared.models.db import db
 from app.mod_profiles.models import Measurement
 from app.mod_profiles.common.fields.measurementFields import MeasurementFields
 from app.mod_profiles.common.parsers.measurement import parser_post
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_ok, code_201_created
 
 
 class MeasurementList(Resource):
@@ -14,12 +15,9 @@ class MeasurementList(Resource):
         responseClass='MeasurementFields',
         nickname='measurementList_get',
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Solicitud resuelta exitosamente."
-            }
-          ]
-        )
+            code_200_ok
+        ]
+    )
     @marshal_with(MeasurementFields.resource_fields, envelope='resource')
     def get(self):
         measurements = Measurement.query.all()
@@ -81,12 +79,9 @@ class MeasurementList(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 201,
-              "message": "Objeto creado exitosamente."
-            }
-          ]
-        )
+            code_201_created
+        ]
+    )
     @marshal_with(MeasurementFields.resource_fields, envelope='resource')
     def post(self):
         args = parser_post.parse_args()
