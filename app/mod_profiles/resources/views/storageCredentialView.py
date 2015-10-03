@@ -7,6 +7,7 @@ from app.mod_shared.models.db import db
 from app.mod_profiles.models import StorageCredential
 from app.mod_profiles.common.fields.storageCredentialFields import StorageCredentialFields
 from app.mod_profiles.common.parsers.storageCredential import parser_put
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_200_updated, code_404
 
 
 class StorageCredentialView(Resource):
@@ -26,16 +27,10 @@ class StorageCredentialView(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto encontrado."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_found,
+            code_404
+        ]
+    )
     @marshal_with(StorageCredentialFields.resource_fields, envelope='resource')
     def get(self, id):
         storage_credential = StorageCredential.query.get_or_404(id)
@@ -80,16 +75,10 @@ class StorageCredentialView(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto actualizado exitosamente."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_updated,
+            code_404
+        ]
+    )
     @marshal_with(StorageCredentialFields.resource_fields, envelope='resource')
     def put(self, id):
         storage_credential = StorageCredential.query.get_or_404(id)
