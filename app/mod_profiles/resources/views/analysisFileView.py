@@ -7,6 +7,7 @@ from app.mod_shared.models.db import db
 from app.mod_profiles.models import AnalysisFile
 from app.mod_profiles.common.fields.analysisFileFields import AnalysisFileFields
 from app.mod_profiles.common.parsers.analysisFile import parser_put
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_200_updated, code_404
 
 
 class AnalysisFileView(Resource):
@@ -24,16 +25,10 @@ class AnalysisFileView(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto encontrado."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_found,
+            code_404
+        ]
+    )
     @marshal_with(AnalysisFileFields.resource_fields, envelope='resource')
     def get(self, id):
         analysis_file = AnalysisFile.query.get_or_404(id)
@@ -83,16 +78,10 @@ class AnalysisFileView(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto actualizado exitosamente."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_updated,
+            code_404
+        ]
+    )
     @marshal_with(AnalysisFileFields.resource_fields, envelope='resource')
     def put(self, id):
         analysis_file = AnalysisFile.query.get_or_404(id)

@@ -7,6 +7,7 @@ from app.mod_shared.models.db import db
 from app.mod_profiles.models import Analysis
 from app.mod_profiles.common.fields.analysisFields import AnalysisFields
 from app.mod_profiles.common.parsers.analysis import parser_post
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_ok, code_201_created
 
 
 class AnalysisList(Resource):
@@ -15,12 +16,9 @@ class AnalysisList(Resource):
         responseClass='AnalysisFields',
         nickname='analysisList_get',
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Solicitud resuelta exitosamente."
-            }
-          ]
-        )
+            code_200_ok
+        ]
+    )
     @marshal_with(AnalysisFields.resource_fields, envelope='resource')
     def get(self):
         analyses = Analysis.query.all()
@@ -54,12 +52,9 @@ class AnalysisList(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 201,
-              "message": "Objeto creado exitosamente."
-            }
-          ]
-        )
+            code_201_created
+        ]
+    )
     @marshal_with(AnalysisFields.resource_fields, envelope='resource')
     def post(self):
         args = parser_post.parse_args()
