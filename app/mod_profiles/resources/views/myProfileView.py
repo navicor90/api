@@ -14,7 +14,7 @@ from app.mod_profiles.common.swagger.responses.generic_responses import code_200
 class MyProfileView(Resource):
     @swagger.operation(
         # TODO: Añadir parámetros de autenticación a la documentación Swagger.
-        notes= (u'Retorna la instancia de perfil asociada al usuario '
+        notes=(u'Retorna la instancia de perfil asociada al usuario '
                 'autenticado.').encode('utf-8'),
         responseClass='ProfileFields',
         nickname='profileView_get',

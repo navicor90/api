@@ -18,6 +18,7 @@ from app.mod_profiles.resources.lists import *
 from app.mod_profiles.resources.views import *
 from . import config
 
+
 def get_config_class(config_mode):
     """
     Determina el tipo de configuración a utilizar, a partir del modo especificado.

@@ -3,6 +3,7 @@
 from flask import g
 from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
+
 from app.mod_shared.models.auth import auth
 from app.mod_profiles.common.fields.measurementFields import MeasurementFields
 from app.mod_profiles.common.persistence import measurement
@@ -18,7 +19,7 @@ class MyMeasurementList(Resource):
 
     @swagger.operation(
         # TODO: Añadir parámetros de autenticación a la documentación Swagger.
-        notes= (u'Retorna todas las instancias existentes de medición, '
+        notes=(u'Retorna todas las instancias existentes de medición, '
                 'asociadas al perfil del usuario autenticado, ordenadas por '
                 'fecha y hora de la medición.').encode('utf-8'),
         responseClass='MeasurementFields',
@@ -72,8 +73,8 @@ class MyMeasurementList(Resource):
         measurement_unit_id = args['unit']
 
         # Obtiene todas las mediciones asociadas al perfil.
-        measurements = measurement.get_by_profile(profile = profile,
-                                                  source_id = measurement_source_id,
-                                                  type_id = measurement_type_id,
-                                                  unit_id = measurement_unit_id)
+        measurements = measurement.get_by_profile(profile=profile,
+                                                  source_id=measurement_source_id,
+                                                  type_id=measurement_type_id,
+                                                  unit_id=measurement_unit_id)
         return measurements

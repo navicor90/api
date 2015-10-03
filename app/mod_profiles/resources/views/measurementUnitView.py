@@ -87,7 +87,7 @@ class MeasurementUnitView(Resource):
         if (args['name'] is not None and
               measurement_unit.name != args['name']):
             measurement_unit.name = args['name']
-        # Actualiza el simbolo de la unidad de medida, en caso de que haya sido
+        # Actualiza el símbolo de la unidad de medida, en caso de que haya sido
         # modificado.
         if (args['symbol'] is not None and
               measurement_unit.symbol != args['symbol']):

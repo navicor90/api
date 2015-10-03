@@ -26,7 +26,6 @@ class Measurement(db.Model):
     measurement_unit   = db.relationship('MeasurementUnit',
                                          backref=db.backref('measurements', lazy='dynamic'))
 
-
     def __init__(self, datetime, value, analysis_id, profile_id, source_id, type_id, unit_id):
         self.datetime              = datetime
         self.value                 = value

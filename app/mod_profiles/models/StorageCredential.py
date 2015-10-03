@@ -16,7 +16,6 @@ class StorageCredential(db.Model):
     storage_location = db.relationship('StorageLocation',
                                        backref=db.backref('storage_credentials', lazy='dynamic'))
 
-
     def __init__(self, token, owner_id, storage_location_id):
         self.token               = token
         self.owner_id            = owner_id

@@ -14,7 +14,6 @@ class Analysis(db.Model):
     profile = db.relationship('Profile',
                               backref=db.backref('analyses', lazy='dynamic'))
 
-
     def __init__(self, datetime, description, profile_id):
         self.datetime    = datetime
         self.description = description

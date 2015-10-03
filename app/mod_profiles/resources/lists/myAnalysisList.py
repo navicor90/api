@@ -3,6 +3,7 @@
 from flask import g
 from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
+
 from app.mod_shared.models.auth import auth
 from app.mod_shared.models.db import db
 from app.mod_profiles.common.fields.analysisFields import AnalysisFields
@@ -13,7 +14,7 @@ from app.mod_profiles.models.Analysis import Analysis
 class MyAnalysisList(Resource):
     @swagger.operation(
         # TODO: Añadir parámetros de autenticación a la documentación Swagger.
-        notes= (u'Retorna todas las instancias existentes de análisis, '
+        notes=(u'Retorna todas las instancias existentes de análisis, '
                 'asociadas al perfil del usuario autenticado.').encode('utf-8'),
         responseClass='AnalysisFields',
         nickname='myAnalysisList_get',

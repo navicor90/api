@@ -11,7 +11,6 @@ from app.mod_profiles.common.swagger.responses.generic_responses import code_200
     code_204_deleted, code_404
 
 
-
 class MeasurementView(Resource):
     @swagger.operation(
         notes=u'Retorna una instancia específica de medición.'.encode('utf-8'),
@@ -127,12 +126,12 @@ class MeasurementView(Resource):
         if (args['profile_id'] is not None and
               measurement.profile_id != args['profile_id']):
             measurement.profile_id = args['profile_id']
-        # Actualiza la fuente de la medicion, en caso de que haya sido
+        # Actualiza la fuente de la medición, en caso de que haya sido
         # modificada.
         if (args['measurement_source_id'] is not None and
               measurement.measurement_source_id != args['measurement_source_id']):
             measurement.measurement_source_id = args['measurement_source_id']
-        # Actualiza el tipo de medicion, en caso de que haya sido modificado.
+        # Actualiza el tipo de medición, en caso de que haya sido modificado.
         if (args['measurement_type_id'] is not None and
               measurement.measurement_type_id != args['measurement_type_id']):
             measurement.measurement_type_id = args['measurement_type_id']
