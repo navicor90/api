@@ -8,6 +8,7 @@ from app.mod_shared.models.auth import auth
 from app.mod_profiles.common.persistence.user import update
 from app.mod_profiles.common.fields.userFields import UserFields
 from app.mod_profiles.common.parsers.user import parser_put
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_200_updated, code_404
 
 
 class MyUserView(Resource):
@@ -17,16 +18,10 @@ class MyUserView(Resource):
         responseClass='UserFields',
         nickname='myUserView_get',
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto encontrado."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_found,
+            code_404
+        ]
+    )
     @auth.login_required
     @marshal_with(UserFields.resource_fields, envelope='resource')
     def get(self):
@@ -69,16 +64,10 @@ class MyUserView(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto actualizado exitosamente."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_updated,
+            code_404
+        ]
+    )
     @auth.login_required
     @marshal_with(UserFields.resource_fields, envelope='resource')
     def put(self):

@@ -7,6 +7,9 @@ from app.mod_shared.models.db import db
 from app.mod_profiles.models import Measurement
 from app.mod_profiles.common.fields.measurementFields import MeasurementFields
 from app.mod_profiles.common.parsers.measurement import parser_put
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_200_updated, \
+    code_204_deleted, code_404
+
 
 
 class MeasurementView(Resource):
@@ -24,16 +27,10 @@ class MeasurementView(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto encontrado."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_found,
+            code_404
+        ]
+    )
     @marshal_with(MeasurementFields.resource_fields, envelope='resource')
     def get(self, id):
         measurement = Measurement.query.get_or_404(id)
@@ -102,16 +99,10 @@ class MeasurementView(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto actualizado exitosamente."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_updated,
+            code_404
+        ]
+    )
     @marshal_with(MeasurementFields.resource_fields, envelope='resource')
     def put(self, id):
         measurement = Measurement.query.get_or_404(id)
@@ -167,16 +158,10 @@ class MeasurementView(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 204,
-              "message": "Objeto eliminado exitosamente."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_204_deleted,
+            code_404
+        ]
+    )
     @marshal_with(MeasurementFields.resource_fields, envelope='resource')
     def delete(self, id):
         # Obtiene la medición.

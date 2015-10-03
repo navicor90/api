@@ -6,6 +6,7 @@ from app.mod_profiles.common.persistence import measurement
 from app.mod_profiles.models import Profile
 from app.mod_profiles.common.fields.measurementFields import MeasurementFields
 from app.mod_profiles.common.parsers.profileMeasurementList import parser_get
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_404
 
 
 class ProfileMeasurementList(Resource):
@@ -60,16 +61,10 @@ class ProfileMeasurementList(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto encontrado."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_found,
+            code_404
+        ]
+    )
     @marshal_with(resource_fields, envelope='resource')
     def get(self, profile_id):
         # Obtiene el perfil

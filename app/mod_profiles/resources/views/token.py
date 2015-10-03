@@ -5,6 +5,8 @@ from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 from app.mod_shared.models.auth import auth
 from app.mod_profiles.common.fields.tokenFields import TokenFields
+from app.mod_profiles.common.swagger.responses.generic_responses import code_401
+from app.mod_profiles.common.swagger.responses.token import code_200 as code_200_token
 
 
 class Token(Resource):
@@ -17,16 +19,10 @@ class Token(Resource):
         responseClass='TokenFields',
         nickname='token_get',
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Token generado exitosamente."
-            },
-            {
-              "code": 401,
-              "message": "Error de autenticación."
-            }
-          ]
-        )
+            code_200_token,
+            code_401
+        ]
+    )
     @auth.login_required
     @marshal_with(TokenFields.resource_fields, envelope='resource')
     def get(self):

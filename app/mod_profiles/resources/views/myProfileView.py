@@ -8,6 +8,7 @@ from app.mod_shared.models.auth import auth
 from app.mod_profiles.common.persistence.profile import update
 from app.mod_profiles.common.fields.profileFields import ProfileFields
 from app.mod_profiles.common.parsers.profile import parser_put
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_200_updated, code_404
 
 
 class MyProfileView(Resource):
@@ -18,16 +19,10 @@ class MyProfileView(Resource):
         responseClass='ProfileFields',
         nickname='profileView_get',
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto encontrado."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_found,
+            code_404
+        ]
+    )
     @auth.login_required
     @marshal_with(ProfileFields.resource_fields, envelope='resource')
     def get(self):
@@ -71,16 +66,10 @@ class MyProfileView(Resource):
             }
           ],
         responseMessages=[
-            {
-              "code": 200,
-              "message": "Objeto actualizado exitosamente."
-            },
-            {
-              "code": 404,
-              "message": "Objeto inexistente."
-            }
-          ]
-        )
+            code_200_updated,
+            code_404
+        ]
+    )
     @auth.login_required
     @marshal_with(ProfileFields.resource_fields, envelope='resource')
     def put(self):
