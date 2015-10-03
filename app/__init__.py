@@ -133,7 +133,7 @@ api.add_resource(EpicrisisDownloadView, '/upload/<int:id>/download')
 api.add_resource(EpicrisisOpenView, '/upload/<int:id>/open')
 
 #dropbox-amazon-local
-api.add_resource(StorageCredentialAutorization, '/storage')
-api.add_resource(StorageDropboxList, '/storage_dropbox')
+#api.add_resource(StorageCredentialAutorization, '/storage')
+#api.add_resource(StorageDropboxList, '/storage_dropbox')
 
 from . import views
