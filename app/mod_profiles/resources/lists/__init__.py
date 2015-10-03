@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from .analysisFileList import AnalysisFileList
 from .analysisList import AnalysisList
+from .analysisFileList import AnalysisFileList
 from .genderList import GenderList
 from .profileList import ProfileList
 from .measurementList import MeasurementList
@@ -19,4 +19,4 @@ from .profileLatestMeasurementList import ProfileLatestMeasurementList
 from .profileMeasurementList import ProfileMeasurementList
 from .userList import UserList
 
-from .epicrisisList import EpicrisisList
+from .analysisFileUpload import AnalysisFileUpload

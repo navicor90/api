@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 
-from datetime import date, datetime
+from datetime import date
+import datetime as date_time
 
 from app import config
-
 from dateutil.parser import parse
 from pytz import UTC
 
@@ -191,12 +191,15 @@ def is_valid_previous_datetime(var):
     datetime_var = is_valid_datetime(var)
     if datetime_var.year < 1900:
         raise ValueError("La fecha y hora ingresada no puede ser anterior al año 1900.")
-    elif datetime_var > datetime.utcnow():
+    # se renombra el paquete datetime por un problema de imports
+    elif date_time.datetime.utcnow() < datetime_var:
         raise ValueError("La fecha y hora ingresada no debe ser posterior a la fecha y hora actual.")
     else:
         return datetime_var
+    """ Núnca entraría a este código
     datetime = parse(var)
     return datetime
+    """
 
 def is_valid_image_file(var):
     filename = var.filename

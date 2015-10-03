@@ -40,8 +40,9 @@ def upload_file():
     <title>Upload new File</title>
     <h1>Upload file</h1>
     <form action="/upload" method=post enctype=multipart/form-data>
-        <p><input type='file' name='image'>
-        <input type="datetime" name="datetime">
+        <p><input type='file' name='image_file'>
+        Usuario: <input type="number" name="user_id">
+        Analisis: <input type="number" name="analysis_id">
         <input type='submit' value='Upload'>
     </form>
     '''

@@ -2,15 +2,16 @@
 
 from dropbox import dropbox, exceptions
 from dropbox.files import FileMetadata, FolderMetadata, WriteMode
+from werkzeug.datastructures import FileStorage
 
 class DropboxAdapter(object):
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, token):
+        self.token = token
     """
     Debería buscar el StorageCredential activo y pedirle que cargue el archivo
     que le paso como parámeto.
     """
-    def upload_file(self, img_file, date_time):
+    def upload_file(self, img_file):
         """
         Ya en el método creo una instancia del objeto DropboxClient pasandole
         como parámetro el token que obtengo del StorageCredential
@@ -22,12 +23,20 @@ class DropboxAdapter(object):
         Para hacer una solicitud a la API de dropbox debemos armar un request
         específico. El método define la url objetivo ('/files')
         """
-        dbx = dropbox.Dropbox('')
+        dbx = dropbox.Dropbox(self.token)
         mode = WriteMode.add
         print type(img_file)
-        print type(date_time)
         try:
-            res = dbx.files_upload(img_file.read(), "/"+img_file.filename, mode, autorename=True)
-            print res
+            file_metadata = dbx.files_upload(img_file.read(), "/"+img_file.filename, mode, autorename=True)
         except exceptions.ApiError as err:
-            print "Error en la carga. ", err.message
+            print "Error en la carga a Dropbox ", err.message
+            return None
+        print file_metadata
+        print file_metadata.name
+        print file_metadata.path_lower
+        res = {
+            'path': file_metadata.path_lower,
+            'description': 'Carga del archivo {0} en Dropbox'.format(file_metadata.name),
+            'storage_location': 'Dropbox'
+        }
+        return res

@@ -128,12 +128,8 @@ api.add_resource(ProfileLatestMeasurementList, '/profiles/<int:profile_id>/measu
 api.add_resource(ProfileMeasurementList, '/profiles/<int:profile_id>/measurements')
 
 api.add_resource(EpicrisisView, '/upload/<int:id>')
-api.add_resource(EpicrisisList, '/upload')
+api.add_resource(AnalysisFileUpload, '/upload')
 api.add_resource(EpicrisisDownloadView, '/upload/<int:id>/download')
 api.add_resource(EpicrisisOpenView, '/upload/<int:id>/open')
-
-#dropbox-amazon-local
-#api.add_resource(StorageCredentialAutorization, '/storage')
-#api.add_resource(StorageDropboxList, '/storage_dropbox')
 
 from . import views
