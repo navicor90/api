@@ -29,13 +29,6 @@ class ProfileList(Resource):
         nickname='profileList_post',
         parameters=[
             {
-              "name": "id",
-              "description": u'Identificador único del perfil.'.encode('utf-8'),
-              "required": True,
-              "dataType": "int",
-              "paramType": "path"
-            },
-            {
               "name": "last_name",
               "description": u'Apellido de la persona.'.encode('utf-8'),
               "required": True,
