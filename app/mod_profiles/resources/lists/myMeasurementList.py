@@ -8,7 +8,7 @@ from app.mod_shared.models.auth import auth
 from app.mod_profiles.common.fields.measurementFields import MeasurementFields
 from app.mod_profiles.common.persistence import measurement
 from app.mod_profiles.common.parsers.profileMeasurementList import parser_get
-from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_401
 
 
 class MyMeasurementList(Resource):
@@ -57,7 +57,8 @@ class MyMeasurementList(Resource):
             }
           ],
         responseMessages=[
-            code_200_found
+            code_200_found,
+            code_401
         ]
     )
     @auth.login_required

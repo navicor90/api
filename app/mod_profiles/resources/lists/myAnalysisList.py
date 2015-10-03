@@ -8,7 +8,8 @@ from app.mod_shared.models.auth import auth
 from app.mod_shared.models.db import db
 from app.mod_profiles.common.fields.analysisFields import AnalysisFields
 from app.mod_profiles.common.parsers.analysis import parser_post_auth
-from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_201_created, code_404
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_201_created, code_401, \
+    code_404
 from app.mod_profiles.models.Analysis import Analysis
 
 
@@ -21,6 +22,7 @@ class MyAnalysisList(Resource):
         nickname='myAnalysisList_get',
         responseMessages=[
             code_200_found,
+            code_401,
             code_404
         ]
     )
@@ -57,7 +59,8 @@ class MyAnalysisList(Resource):
             }
           ],
         responseMessages=[
-            code_201_created
+            code_201_created,
+            code_401
         ]
     )
     @auth.login_required
