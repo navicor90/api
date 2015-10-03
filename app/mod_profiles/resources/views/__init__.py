@@ -14,6 +14,7 @@ from .storageCredentialView import StorageCredentialView
 from .storageLocationView import StorageLocationView
 from .token import Token
 from .userView import UserView
+from .usernameCheckView import UsernameCheckView
 
 from .analysisFileDownload import AnalysisFileDownload
 from .epicrisisView import EpicrisisView
