@@ -18,7 +18,6 @@ class AnalysisFile(db.Model):
     storage_location = db.relationship('StorageLocation',
                                        backref=db.backref('analysis_files', lazy='dynamic'))
 
-
     def __init__(self, upload_time, path, description, analysis_id, storage_location_id):
         self.upload_time          = upload_time
         self.path                 = path

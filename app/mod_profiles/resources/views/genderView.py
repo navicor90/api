@@ -78,7 +78,7 @@ class GenderView(Resource):
         if (args['name'] is not None and
               gender.name != args['name']):
             gender.name = args['name']
-        # Actualiza la descripcion, en caso de que haya sido modificada.
+        # Actualiza la descripción, en caso de que haya sido modificada.
         if (args['description'] is not None and
               gender.description != args['description']):
             gender.description = args['description']

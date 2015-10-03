@@ -18,7 +18,7 @@ class MyLatestMeasurementList(Resource):
 
     @swagger.operation(
         # TODO: Añadir parámetros de autenticación a la documentación Swagger.
-        notes= (u'Retorna la última instancia de medición de cada tipo de '
+        notes=(u'Retorna la última instancia de medición de cada tipo de '
                 'medición, asociadas al perfil del usuario autenticado.').encode('utf-8'),
         responseClass='MeasurementFields',
         nickname='myLatestMeasurementList_get',

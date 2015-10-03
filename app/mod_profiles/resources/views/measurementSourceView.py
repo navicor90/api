@@ -78,7 +78,7 @@ class MeasurementSourceView(Resource):
         if (args['name'] is not None and
               measurement_source.name != args['name']):
             measurement_source.name = args['name']
-        # Actualiza la descripcion, en caso de que haya sido modificada.
+        # Actualiza la descripción, en caso de que haya sido modificada.
         if (args['description'] is not None and
               measurement_source.description != args['description']):
             measurement_source.description = args['description']

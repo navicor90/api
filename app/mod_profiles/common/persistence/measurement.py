@@ -76,7 +76,7 @@ def get_latest_by_profile(profile):
         # Filtra las mediciones por el tipo de medición, y obtiene la primera
         # medición (que es la última en fecha y hora de medición, por haber
         # ordenado la lista en forma descendente).
-        latest_from_type = measurements.filter_by(measurement_type_id = measurement_type.id).first()
+        latest_from_type = measurements.filter_by(measurement_type_id=measurement_type.id).first()
         if latest_from_type is not None:
             # Añade la medición a la lista de últimas mediciones
             latest_measurements.append(latest_from_type)

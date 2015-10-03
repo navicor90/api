@@ -17,7 +17,7 @@ class ProfileMeasurementList(Resource):
     del resource_fields['profile']
 
     @swagger.operation(
-        notes= (u'Retorna todas las instancias existentes de medición, '
+        notes=(u'Retorna todas las instancias existentes de medición, '
                 'asociadas a un perfil específico, ordenadas por fecha y hora '
                 'de la medición.').encode('utf-8'),
         responseClass='MeasurementFields',
@@ -78,8 +78,8 @@ class ProfileMeasurementList(Resource):
         measurement_unit_id = args['unit']
 
         # Obtiene todas las mediciones asociadas al perfil.
-        measurements = measurement.get_by_profile(profile = profile,
-                                                  source_id = measurement_source_id,
-                                                  type_id = measurement_type_id,
-                                                  unit_id = measurement_unit_id)
+        measurements = measurement.get_by_profile(profile=profile,
+                                                  source_id=measurement_source_id,
+                                                  type_id=measurement_type_id,
+                                                  unit_id=measurement_unit_id)
         return measurements
