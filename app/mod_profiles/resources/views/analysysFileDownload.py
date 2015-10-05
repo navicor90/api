@@ -9,12 +9,11 @@ import StringIO
 
 
 class AnalysisFileDownload(Resource):
+    
     def get(self, id):
         analysis_file = AnalysisFile.query.get_or_404(id)
         file_path = analysis_file.path
-        print file_path
         file_name = file_path.rsplit('/')[-1]
-        print file_name
         # harcodeo esto porque no entiendo todavía como usar los datos de
         # user en el objeto g, no se como probarlo desde el navegador.
         user = User.query.get_or_404(1)

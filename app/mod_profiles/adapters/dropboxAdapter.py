@@ -25,15 +25,11 @@ class DropboxAdapter(object):
         """
         dbx = dropbox.Dropbox(self.token)
         mode = WriteMode.add
-        print type(img_file)
         try:
             file_metadata = dbx.files_upload(img_file.read(), "/"+img_file.filename, mode, autorename=True)
         except exceptions.ApiError as err:
             print "Error en la carga a Dropbox ", err.message
             return None
-        print file_metadata
-        print file_metadata.name
-        print file_metadata.path_lower
         res = {
             'path': file_metadata.path_lower,
             'description': 'Carga del archivo {0} en Dropbox'.format(file_metadata.name),
@@ -45,8 +41,6 @@ class DropboxAdapter(object):
         dbx = dropbox.Dropbox(self.token)
         try:
             fmd, res = dbx.files_download(path)
-            print "FileMetaData", fmd
-            print "Response", res
         except exceptions.HttpError as err:
             print '*** HTTP error', err.message
             return None
