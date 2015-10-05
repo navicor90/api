@@ -8,7 +8,8 @@ from app.mod_shared.models.auth import auth
 from app.mod_profiles.common.persistence.user import update
 from app.mod_profiles.common.fields.userFields import UserFields
 from app.mod_profiles.common.parsers.user import parser_put
-from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_200_updated, code_404
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_200_updated, code_401, \
+    code_404
 
 
 class MyUserView(Resource):
@@ -19,6 +20,7 @@ class MyUserView(Resource):
         nickname='myUserView_get',
         responseMessages=[
             code_200_found,
+            code_401,
             code_404
         ]
     )
@@ -65,6 +67,7 @@ class MyUserView(Resource):
           ],
         responseMessages=[
             code_200_updated,
+            code_401,
             code_404
         ]
     )

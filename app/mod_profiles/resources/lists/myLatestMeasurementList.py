@@ -7,7 +7,7 @@ from flask_restful_swagger import swagger
 from app.mod_shared.models.auth import auth
 from app.mod_profiles.common.fields.measurementFields import MeasurementFields
 from app.mod_profiles.common.persistence import measurement
-from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_401
 
 
 class MyLatestMeasurementList(Resource):
@@ -23,7 +23,8 @@ class MyLatestMeasurementList(Resource):
         responseClass='MeasurementFields',
         nickname='myLatestMeasurementList_get',
         responseMessages=[
-            code_200_found
+            code_200_found,
+            code_401
         ]
     )
     @auth.login_required
