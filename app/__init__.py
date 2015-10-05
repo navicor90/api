@@ -128,8 +128,10 @@ api.add_resource(ProfileLatestMeasurementList, '/profiles/<int:profile_id>/measu
 api.add_resource(ProfileMeasurementList, '/profiles/<int:profile_id>/measurements')
 
 api.add_resource(EpicrisisView, '/upload/<int:id>')
-api.add_resource(AnalysisFileUpload, '/upload')
 api.add_resource(EpicrisisDownloadView, '/upload/<int:id>/download')
 api.add_resource(EpicrisisOpenView, '/upload/<int:id>/open')
+
+api.add_resource(AnalysisFileUpload, '/upload')
+api.add_resource(AnalysisFileDownload, '/download/<int:id>')
 
 from . import views

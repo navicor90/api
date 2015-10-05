@@ -40,3 +40,14 @@ class DropboxAdapter(object):
             'storage_location': 'Dropbox'
         }
         return res
+
+    def download_file(self, path):
+        dbx = dropbox.Dropbox(self.token)
+        try:
+            fmd, res = dbx.files_download(path)
+            print "FileMetaData", fmd
+            print "Response", res
+        except exceptions.HttpError as err:
+            print '*** HTTP error', err.message
+            return None
+        return res

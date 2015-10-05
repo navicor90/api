@@ -10,7 +10,7 @@ from flaskext.uploads import UploadNotAllowed
 
 class YesDocAdapter(object):
 
-    def upload_file(self, img_file, token=None):
+    def upload_file(self, img_file):
         """File upload using Flask-Uploads
         """
         try:
@@ -25,3 +25,7 @@ class YesDocAdapter(object):
             'storage_location': 'YesDoc'
         }
         return res
+
+    def download_file(self, path):
+        var = open(path)
+        return var.read()

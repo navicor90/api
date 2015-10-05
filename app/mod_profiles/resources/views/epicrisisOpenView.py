@@ -10,4 +10,4 @@ class EpicrisisOpenView(Resource):
 
     def get(self, id):
         epicrisis = Epicrisis.query.get_or_404(id)
-        return send_from_directory(Config.UPLOADED_PHOTOS_DEST, epicrisis.image_name)
+        return (Config.UPLOADED_PHOTOS_DEST, epicrisis.image_name)
