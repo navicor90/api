@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from flask_restful import Resource
+from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 
 from app.mod_profiles.models import User
+from app.mod_profiles.common.fields.usernameCheckFields import UsernameCheckFields
 from app.mod_profiles.common.parsers.usernameCheck import parser_get
-from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_204_empty
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_ok
 
 
 class UsernameCheckView(Resource):
@@ -22,11 +23,14 @@ class UsernameCheckView(Resource):
             }
           ],
         responseMessages=[
-            code_200_found,
-            code_204_empty
+            code_200_ok
         ]
     )
+    @marshal_with(UsernameCheckFields.resource_fields, envelope='resource')
     def get(self):
+        # Crea la respuesta por defecto.
+        response = {'available_username': False}
+
         # Obtiene los valores de los argumentos recibidos en la petición.
         args = parser_get.parse_args()
         username = args['username']
@@ -34,10 +38,9 @@ class UsernameCheckView(Resource):
         # Busca si existe un usuario con el nombre de usuario especificado.
         user = User.query.filter_by(username=username).first()
 
-        # Si el nombre de usuario está disponible, ya que no hay un usuario que
-        # haga uso del mismo, se retorna un código 204.
-        if not user:
-            return '', 204
-        # Si el nombre de usuario se encuentra en uso actualmente, se retorna
-        # un código 200.
-        return '', 200
+        # Verifica si el nombre de usuario está disponible, al no haber un
+        # usuario que haga uso del mismo.
+        if user is None:
+            response['available_username'] = True
+
+        return response, 200
