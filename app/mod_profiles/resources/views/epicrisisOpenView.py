@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from app.mod_profiles.models.Epicrisis import Epicrisis
 from flask_restful import Resource
-from flask import send_from_directory
+
 from app.config import Config
+from app.mod_profiles.models import Epicrisis
 
 
 class EpicrisisOpenView(Resource):

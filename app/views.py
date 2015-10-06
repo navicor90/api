@@ -18,6 +18,7 @@ def allowed_file(filename):
     """
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -41,7 +42,7 @@ def upload_file():
     <form action="/upload" method=post enctype=multipart/form-data>
         <p><input type='file' name='image_file'>
         Usuario: <input type="number" name="user_id">
-        Analisis: <input type="number" name="analysis_id">
+        Análisis: <input type="number" name="analysis_id">
         <input type='submit' value='Upload'>
     </form>
     '''
@@ -51,4 +52,3 @@ def upload_file():
 def uploaded_file(filename):
     # send_from_directory sirve el archivo cargado
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-

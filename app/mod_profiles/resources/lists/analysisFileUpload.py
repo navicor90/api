@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-from app.mod_profiles.common.fields.analysisFileFields import AnalysisFileFields
-from app.mod_profiles.models.AnalysisFile import AnalysisFile
-from app.mod_shared.models.db import db
-from flask.ext.restful import marshal_with
-from flask_restful import Resource
-from app.mod_profiles.common.parsers.analysysFileUpload import parser_post
-from app.mod_profiles.adapters.fileManagerFactory import FileManagerFactory
 from flask.helpers import flash
-from app.mod_profiles.models import User
-from app.mod_profiles.common.persistence import storageLocation
+from flask_restful import Resource, marshal_with
+
+from app.mod_shared.models.db import db
+from app.mod_profiles.adapters import FileManagerFactory
+from app.mod_profiles.common.fields.analysisFileFields import AnalysisFileFields
+from app.mod_profiles.common.parsers.analysisFileUpload import parser_post
+from app.mod_profiles.models import AnalysisFile, StorageLocation, User
 
 
 class AnalysisFileUpload(Resource):
@@ -25,9 +23,14 @@ class AnalysisFileUpload(Resource):
         if image_file is None:
             # Tendría que ser reemplazado por un response adecuado
             flash("Debe cargar un archivo")
+            return '', 400
+
         file_manager = FileManagerFactory().get_file_manager(user)
         res = file_manager.upload_file(image_file)
-        storage_location = storageLocation.get_by_name(res['storage_location'])
+        storage_location = StorageLocation.query.filter_by(name=res['storage_location']).first()
+        if storage_location is None:
+            raise ValueError("No se encuentra una ubicación con la denominación especificada.")
+
         new_analysis_file = AnalysisFile(datetime.utcnow(),
                                          res['path'],
                                          res['description'],

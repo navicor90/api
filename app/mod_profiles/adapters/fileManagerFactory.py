@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from app.mod_profiles.adapters.dropboxAdapter import DropboxAdapter
-from app.mod_profiles.adapters.yesDocAdapter import YesDocAdapter
-from app.mod_profiles.models.StorageLocation import StorageLocation
-from app.mod_profiles.common.persistence import storageCredential
+from app.mod_profiles.adapters import DropboxAdapter, YesDocAdapter
 
 
 class FileManagerFactory(object):
@@ -24,15 +21,17 @@ class FileManagerFactory(object):
         :param: Recibiría el User que está relacionado con el StorageLocation
         :return: DropboxAdapter or LocalAdapter
         """
-        storage_credentials = storageCredential.get_by_user(user)
+        storage_credentials = user.storage_credentials
         storage_credential = None
         file_manager_name = None
+
         for sc in storage_credentials:
             if sc.token:
                 storage_credential = sc
+
         if storage_credential is not None:
-            storage_location = StorageLocation.query.get_or_404(storage_credential.storage_location_id)
-            file_manager_name = storage_location.name
+            file_manager_name = storage_credential.storage_location.name
+
         if file_manager_name is not None and file_manager_name == 'Dropbox':
             return DropboxAdapter(storage_credential.token)
         else:

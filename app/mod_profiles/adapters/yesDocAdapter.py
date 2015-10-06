@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from flask.helpers import flash
 import os
-from app.config import Config
+from flask.helpers import flash
 from flaskext.uploads import UploadNotAllowed
 # from werkzeug import secure_filename
 # deberíamos usarlo para asegurar el nombre del archivo
+
+from app.config import Config
 
 
 class YesDocAdapter(object):
@@ -21,7 +22,7 @@ class YesDocAdapter(object):
             return None
         res = {
             'path': Config.UPLOADED_PHOTOS_DEST+os.path.sep+fullname,
-            'description': 'Carga del archivo {0} en YesDoc'.format(fullname),
+            'description': 'Carga del archivo "{0}" en YesDoc'.format(fullname),
             'storage_location': 'YesDoc'
         }
         return res

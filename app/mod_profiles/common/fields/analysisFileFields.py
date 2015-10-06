@@ -2,6 +2,7 @@
 
 from flask_restful import fields
 from flask_restful_swagger import swagger
+
 from .analysisFields import AnalysisFields
 from .storageLocationFields import StorageLocationFields
 
