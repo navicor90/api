@@ -14,3 +14,13 @@ from .storageCredentialView import StorageCredentialView
 from .storageLocationView import StorageLocationView
 from .token import Token
 from .userView import UserView
+
+from .myProfileView import MyProfileView
+from .myUserView import MyUserView
+
+from .epicrisisView import EpicrisisView
+from .epicrisisDownloadView import EpicrisisDownloadView
+from .epicrisisOpenView import EpicrisisOpenView
+
+from .analysysFileDownload import AnalysisFileDownload
+

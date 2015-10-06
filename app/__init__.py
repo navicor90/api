@@ -13,6 +13,8 @@ from flask.ext.cors import CORS
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 
+from flaskext.uploads import configure_uploads
+
 from app.mod_shared.models.db import db
 from app.mod_profiles.resources.lists import *
 from app.mod_profiles.resources.views import *
@@ -71,6 +73,9 @@ flask_config_mode = os.getenv('FLASK_CONFIG_MODE', 'production')
 # modo especificado.
 app.config.from_object(get_config_class(flask_config_mode))
 
+# por ahora lo coloco acá pero debería ir en la parte del config.
+configure_uploads(app, config.Config.uploaded_photos)
+
 db.app = app
 db.init_app(app)
 
@@ -121,5 +126,12 @@ api.add_resource(MyProfileView, '/my/profile')
 api.add_resource(MyUserView, '/my/user')
 api.add_resource(ProfileLatestMeasurementList, '/profiles/<int:profile_id>/measurements/latest')
 api.add_resource(ProfileMeasurementList, '/profiles/<int:profile_id>/measurements')
+
+api.add_resource(EpicrisisView, '/upload/<int:id>')
+api.add_resource(EpicrisisDownloadView, '/upload/<int:id>/download')
+api.add_resource(EpicrisisOpenView, '/upload/<int:id>/open')
+
+api.add_resource(AnalysisFileUpload, '/upload')
+api.add_resource(AnalysisFileDownload, '/download/<int:id>')
 
 from . import views
