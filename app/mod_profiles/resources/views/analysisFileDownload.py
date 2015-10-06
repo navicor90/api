@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from flask import send_file
-from app.mod_profiles.adapters.fileManagerFactory import FileManagerFactory
-from app.mod_profiles.models.AnalysisFile import AnalysisFile
-from app.mod_profiles.models.User import User
-from flask.ext.restful import Resource
 import StringIO
+from flask import send_file
+from flask.ext.restful import Resource
+
+from app.mod_profiles.adapters.fileManagerFactory import FileManagerFactory
+from app.mod_profiles.models import AnalysisFile, User
 
 
 class AnalysisFileDownload(Resource):
-    
+
     def get(self, id):
         analysis_file = AnalysisFile.query.get_or_404(id)
         file_path = analysis_file.path

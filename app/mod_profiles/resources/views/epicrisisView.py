@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from flask_restful import Resource, marshal_with
-from app.mod_profiles.models import Epicrisis
-from app.config import Config
-from app.mod_profiles.common.fields.epicrisisFields import EpicrisisFields
-
-from flask import Response
-from app.mod_shared.models.db import db
 import os
-#from flaskext.uploads import
+from flask_restful import Resource, marshal_with
+
+from app.config import Config
+from app.mod_shared.models.db import db
+from app.mod_profiles.common.fields.epicrisisFields import EpicrisisFields
+from app.mod_profiles.models import Epicrisis
 
 
 class EpicrisisView(Resource):
@@ -25,4 +23,3 @@ class EpicrisisView(Resource):
         db.session.delete(image)
         db.session.commit()
         return
-

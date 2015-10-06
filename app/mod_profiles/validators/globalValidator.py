@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 from datetime import date, datetime
 from dateutil.parser import parse
 from pytz import UTC
@@ -194,6 +193,7 @@ def is_valid_previous_datetime(var):
         raise ValueError("La fecha y hora ingresada no debe ser posterior a la fecha y hora actual.")
     else:
         return datetime_var
+
 
 def is_valid_image_file(var):
     filename = var.filename

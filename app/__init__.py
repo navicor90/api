@@ -12,7 +12,6 @@ from flask.ext.restful.representations.json import output_json
 from flask.ext.cors import CORS
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
-
 from flaskext.uploads import configure_uploads
 
 from app.mod_shared.models.db import db

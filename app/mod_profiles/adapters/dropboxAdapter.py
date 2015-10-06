@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from dropbox import dropbox, exceptions
-from dropbox.files import FileMetadata, FolderMetadata, WriteMode
-from werkzeug.datastructures import FileStorage
+from dropbox.files import WriteMode
+
 
 class DropboxAdapter(object):
     def __init__(self, token):
