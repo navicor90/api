@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask_restful import reqparse
-from app.mod_profiles.validators.globalValidator import string_without_int
+from app.mod_profiles.validators.generic_validators import string_without_int
 
 # Parser general
 parser = reqparse.RequestParser()

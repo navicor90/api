@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from .analysisFileList import AnalysisFileList
-from .analysisFileUpload import AnalysisFileUpload
 from .analysisList import AnalysisList
 from .genderList import GenderList
 from .measurementList import MeasurementList

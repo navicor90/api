@@ -2,7 +2,7 @@
 
 from flask_restful import reqparse
 
-from app.mod_profiles.validators.globalValidator import is_valid_id
+from app.mod_profiles.validators.generic_validators import is_valid_id
 
 
 # Parser general

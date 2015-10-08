@@ -8,54 +8,55 @@ from app import config
 
 
 def is_int(var):
-    """Valida que el parámetro recibido sea un número entero
-    
-    >>> is_int('42')
+    """Valida que el parámetro recibido sea un número entero.
+
+    > is_int('42')
     42
 
-    >>> is_int('-2')
+    > is_int('-2')
     -2
 
-    >>> is_int('hola')
+    > is_int('hola')
     Traceback (most recent call last):
         ...
-    ValueError: El valor ingresado no es un entero válido
+    ValueError: El valor ingresado no es un entero válido.
     """
     try:
         return int(var)
     except ValueError:
-        raise ValueError("El valor ingresado no es un entero válido")
+        raise ValueError("El valor ingresado no es un entero válido.")
 
 
 def positive_int(var):
-    """Valida que un entero sea positivo
+    """Valida que un entero sea positivo.
 
-    >>> positive_int('4')
+    > positive_int('4')
     4
 
-    >>> positive_int('-4')
+    > positive_int('-4')
     Traceback (most recent call last):
         ...
-    ValueError: El valor ingresado debe ser un entero positivo
+    ValueError: El valor ingresado debe ser un entero positivo.
 
-    >>> positive_int('hola')
+    > positive_int('hola')
     Traceback (most recent call last):
         ...
-    ValueError: El valor ingresado no es un entero válido
+    ValueError: El valor ingresado no es un entero válido.
     """
     int_var = is_int(var)
     if int_var <= 0:
-        raise ValueError("El valor ingresado debe ser un entero positivo")
+        raise ValueError("El valor ingresado debe ser un entero positivo.")
     else:
         return int_var
 
 
 def has_int(string):
-    """Determina si una cadena de caracteres contiene un número
-    >>> has_int('hola')
+    """Determina si una cadena de caracteres contiene un número.
+
+    > has_int('hola')
     False
 
-    >>> has_int('ho12la')
+    > has_int('ho12la')
     True
     """
     for c in string:
@@ -68,17 +69,18 @@ def has_int(string):
 
 
 def string_without_int(var):
-    """Valida que una cadena de caracteres no tenga números
-    >>> string_without_int('hola')
+    """Valida que una cadena de caracteres no tenga números.
+
+    > string_without_int('hola')
     'hola'
 
-    >>> string_without_int('ho12la')
+    > string_without_int('ho12la')
     Traceback (most recent call last):
         ...
-    ValueError: El texto no puede contener enteros
+    ValueError: El texto no puede contener números.
     """
     if has_int(var):
-        raise ValueError("El texto no puede contener enteros")
+        raise ValueError("El texto no puede contener números.")
     else:
         return var
 
@@ -89,22 +91,25 @@ def is_valid_id(var):
 
 
 def is_valid_date(var):
-    """ Luego de comprobar si la fecha tiene un formato válido, valida si es posible construir un objeto
-    fecha en formato iso 8601
-    >>> is_valid_date('1990-06-20')
+    """Valida si la fecha ingresada es válida.
+
+    Luego de comprobar si la fecha tiene un formato válido, valida si es posible construir un
+    objeto fecha en formato ISO8601.
+
+    > is_valid_date('1990-06-20')
     datetime.date(1990, 6, 20)
 
-    >>> is_valid_date('1990-09-00')
+    > is_valid_date('1990-09-00')
     Traceback (most recent call last):
         ...
     ValueError: day is out of range for month
 
-    >>> is_valid_date('1990-00-10')
+    > is_valid_date('1990-00-10')
     Traceback (most recent call last):
         ...
     ValueError: month must be in 1..12
 
-    >>> is_valid_date('0000-09-10')
+    > is_valid_date('0000-09-10')
     Traceback (most recent call last):
         ...
     ValueError: month must be in 1..12
@@ -114,16 +119,17 @@ def is_valid_date(var):
 
 
 def is_valid_previous_date(var):
-    """ Valida que la fecha previa sea correcta
-    >>> is_valid_previous_date('1990-06-20')
+    """Valida que la fecha sea previa a la fecha actual.
+
+    > is_valid_previous_date('1990-06-20')
     datetime.date(1990, 6, 20)
 
-    >>> is_valid_previous_date('1899-06-20')
+    > is_valid_previous_date('1899-06-20')
     Traceback (most recent call last):
         ...
     ValueError: La fecha ingresada no puede ser anterior al año 1900.
 
-    >>> is_valid_previous_date('3016-09-10')
+    > is_valid_previous_date('3016-09-10')
     Traceback (most recent call last):
         ...
     ValueError: La fecha ingresada debe ser anterior a la fecha actual.
@@ -138,21 +144,22 @@ def is_valid_previous_date(var):
 
 
 def is_valid_datetime(var):
-    """Valida que tanto fecha como hora sean correctos
-    >>> is_valid_datetime("2015-09-12T13:32:22.386348")
+    """Valida que tanto fecha como hora sean válidos.
+
+    > is_valid_datetime("2015-09-12T13:32:22.386348")
     datetime.datetime(2015, 9, 12, 13, 32, 22, 386348)
 
-    >>> is_valid_datetime("2015-09-12T24:32:22.386348")
+    > is_valid_datetime("2015-09-12T24:32:22.386348")
     Traceback (most recent call last):
         ...
     ValueError: hour must be in 0..23
 
-    >>> is_valid_datetime("2015-09-12T13:70:22.386348")
+    > is_valid_datetime("2015-09-12T13:70:22.386348")
     Traceback (most recent call last):
         ...
     ValueError: minute must be in 0..59
 
-    >>> is_valid_datetime("2015-09-12T13:32:60.386348")
+    > is_valid_datetime("2015-09-12T13:32:60.386348")
     Traceback (most recent call last):
         ...
     ValueError: second must be in 0..59
@@ -172,16 +179,17 @@ def is_valid_datetime(var):
 
 
 def is_valid_previous_datetime(var):
-    """ Valida que la fecha y hora sea previa a la actual.
-    >>> is_valid_previous_datetime("2001-09-21T23:33:22.386348")
+    """Valida que la fecha y hora sea previa a la actual.
+
+    > is_valid_previous_datetime("2001-09-21T23:33:22.386348")
     datetime.datetime(2001, 9, 21, 23, 33, 22, 386348)
 
-    >>> is_valid_previous_datetime("1899-09-21T23:33:22.386348")
+    > is_valid_previous_datetime("1899-09-21T23:33:22.386348")
     Traceback (most recent call last):
         ...
     ValueError: La fecha y hora ingresada no puede ser anterior al año 1900.
 
-    >>> is_valid_previous_datetime("3016-09-21T23:33:22.386348")
+    > is_valid_previous_datetime("3016-09-21T23:33:22.386348")
     Traceback (most recent call last):
         ...
     ValueError: La fecha y hora ingresada no debe ser posterior a la fecha y hora actual.
