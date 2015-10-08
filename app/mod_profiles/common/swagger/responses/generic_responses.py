@@ -26,6 +26,11 @@ code_204_deleted = {
     "message": "Objeto eliminado exitosamente."
 }
 
+code_204_empty = {
+    "code": 204,
+    "message": "No hay datos que concuerden con la solicitud efectuada."
+}
+
 code_401 = {
     "code": 401,
     "message": "Error de autenticación."
