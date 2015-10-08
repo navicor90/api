@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from flask import g
 from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 
+from app.mod_shared.models.auth import auth
 from app.mod_shared.models.db import db
-from app.mod_profiles.models import AnalysisFile
+from app.mod_profiles.adapters.fileManagerFactory import FileManagerFactory
+from app.mod_profiles.models import AnalysisFile, StorageLocation
 from app.mod_profiles.common.fields.analysisFileFields import AnalysisFileFields
 from app.mod_profiles.common.parsers.analysisFile import parser_post
 from app.mod_profiles.common.swagger.responses.generic_responses import code_200_ok, code_201_created
@@ -65,14 +68,25 @@ class AnalysisFileList(Resource):
             code_201_created
         ]
     )
+    @auth.login_required
     @marshal_with(AnalysisFileFields.resource_fields, envelope='resource')
     def post(self):
         args = parser_post.parse_args()
+
+        user = g.user
+        image_file = args['image_file']
+
+        file_manager = FileManagerFactory().get_file_manager(user)
+        res = file_manager.upload_file(image_file)
+        storage_location = StorageLocation.query.filter_by(name=res['storage_location']).first()
+        if storage_location is None:
+            raise ValueError("No se encuentra una ubicación con la denominación especificada.")
+
         new_analysis_file = AnalysisFile(datetime.utcnow(),
-                                         args['path'],
+                                         res['path'],
                                          args['description'],
                                          args['analysis_id'],
-                                         args['storage_location_id'])
+                                         storage_location.id)
         db.session.add(new_analysis_file)
         db.session.commit()
         return new_analysis_file, 201

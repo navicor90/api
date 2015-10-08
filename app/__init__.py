@@ -95,6 +95,7 @@ api = swagger.docs(Api(app))
 
 api.add_resource(AnalysisView, '/analysis/<int:id>')
 api.add_resource(AnalysisList, '/analysis')
+api.add_resource(AnalysisFileDownload, '/analysis_files/<int:id>/download')
 api.add_resource(AnalysisFileView, '/analysis_files/<int:id>')
 api.add_resource(AnalysisFileList, '/analysis_files')
 api.add_resource(GenderView, '/genders/<int:id>')
@@ -129,8 +130,5 @@ api.add_resource(ProfileMeasurementList, '/profiles/<int:profile_id>/measurement
 api.add_resource(EpicrisisView, '/upload/<int:id>')
 api.add_resource(EpicrisisDownloadView, '/upload/<int:id>/download')
 api.add_resource(EpicrisisOpenView, '/upload/<int:id>/open')
-
-api.add_resource(AnalysisFileUpload, '/upload')
-api.add_resource(AnalysisFileDownload, '/download/<int:id>')
 
 from . import views
