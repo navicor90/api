@@ -2,7 +2,6 @@
 
 from .Analysis import Analysis
 from .AnalysisFile import AnalysisFile
-from .Epicrisis import Epicrisis
 from .Gender import Gender
 from .Profile import Profile
 from .Measurement import Measurement
