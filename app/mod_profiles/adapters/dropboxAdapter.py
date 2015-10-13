@@ -44,4 +44,4 @@ class DropboxAdapter(object):
         except exceptions.HttpError as err:
             print '*** HTTP error', err.message
             return None
-        return res
+        return res.content
