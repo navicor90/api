@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import StringIO
+from StringIO import StringIO
 from flask import g, send_file
 from flask.ext.restful import Resource
 
@@ -19,7 +19,7 @@ class AnalysisFileDownload(Resource):
         user = g.user
         file_manager = FileManagerFactory().get_file_manager(user)
         file_str = file_manager.download_file(file_path)
-        str_in_out = StringIO.StringIO()
+        str_in_out = StringIO()
         str_in_out.write(file_str)
         str_in_out.seek(0)
         return send_file(str_in_out, attachment_filename=file_name, as_attachment=True)

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import os
+
 from app.mod_profiles.adapters import DropboxAdapter, YesDocAdapter
 
 
@@ -9,7 +11,7 @@ class FileManagerFactory(object):
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
             cls._instance = super(FileManagerFactory, cls).__new__(cls, *args,
-            **kwargs)
+                                                                   **kwargs)
         return cls._instance
 
     def get_file_manager(self, user):
@@ -28,11 +30,18 @@ class FileManagerFactory(object):
         for sc in storage_credentials:
             if sc.token:
                 storage_credential = sc
+                break
 
         if storage_credential is not None:
             file_manager_name = storage_credential.storage_location.name
+            token = storage_credential.token
+        else:
+            file_manager_name = 'Dropbox'
+            token = os.environ.get('DROPBOX_STORAGE_TOKEN', '')
 
-        if file_manager_name is not None and file_manager_name == 'Dropbox':
-            return DropboxAdapter(storage_credential.token)
+        if (file_manager_name is not None
+                and file_manager_name == 'Dropbox'
+                and token is not None):
+            return DropboxAdapter(token)
         else:
             return YesDocAdapter()

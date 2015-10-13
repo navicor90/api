@@ -19,10 +19,9 @@ class Config(object):
     UPLOADED_PHOTOS_DEST = '/tmp/imagenes'
     MAX_CONT_IMG_LENGTH = 6 * 1024 * 1024
     uploaded_photos = UploadSet('photos', IMAGES)
-    # Para la configuración de la autenticación con dropbox
-    app_key = 'INSERT_APP_KEY'
-    app_secret = 'INSERT_APP_SECRET'
-
+    # Claves, pública y privada, de autenticación de la aplicación en Dropbox.
+    DROPBOX_APP_KEY = 'i7u47ht1t730nar'
+    DROPBOX_APP_SECRET = os.environ.get('DROPBOX_APP_SECRET', '')
 
 
 class ProductionConfig(Config):
