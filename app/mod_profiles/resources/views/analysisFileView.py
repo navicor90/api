@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 
+from flask import g
 from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 
+from app.mod_shared.models.auth import auth
 from app.mod_shared.models.db import db
 from app.mod_profiles.models import AnalysisFile
 from app.mod_profiles.common.fields.analysisFileFields import AnalysisFileFields
 from app.mod_profiles.common.parsers.analysisFile import parser_put
-from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_200_updated, code_404
+from app.mod_profiles.common.persistence import analysisFile
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_200_updated, \
+    code_204_deleted, code_401, code_403, code_404
 
 
 class AnalysisFileView(Resource):
@@ -110,3 +114,44 @@ class AnalysisFileView(Resource):
 
         db.session.commit()
         return analysis_file, 200
+
+    @swagger.operation(
+        notes=u'Elimina una instancia específica de archivo de análisis.'.encode('utf-8'),
+        nickname='analysisFileView_delete',
+        parameters=[
+            {
+              "name": "id",
+              "description": u'Identificador único de la medición.'.encode('utf-8'),
+              "required": True,
+              "dataType": "int",
+              "paramType": "path"
+            }
+          ],
+        responseMessages=[
+            code_204_deleted,
+            code_401,
+            code_403,
+            code_404
+        ]
+    )
+    @auth.login_required
+    @marshal_with(AnalysisFileFields.resource_fields, envelope='resource')
+    def delete(self, id):
+        # Obtiene la medición.
+        analysis_file = AnalysisFile.query.get_or_404(id)
+
+        # Obtiene el usuario autenticado.
+        user = g.user
+
+        # Verifica que el usuario sea el dueño del archivo de análisis especificado.
+        if user.id != analysis_file.analysis.profile.user.id:
+            return '', 403
+
+        # Elimina el archivo asociado de la ubicación de almacenamiento.
+        analysisFile.delete_file(analysis_file)
+
+        # Elimina el archivo de análisis.
+        db.session.delete(analysis_file)
+        db.session.commit()
+
+        return '', 204

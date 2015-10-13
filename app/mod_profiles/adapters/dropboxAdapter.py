@@ -45,3 +45,12 @@ class DropboxAdapter(object):
             print '*** HTTP error', err.message
             return None
         return res.content
+
+    def delete_file(self, path):
+        dbx = dropbox.Dropbox(self.token)
+        try:
+            file_metadata = dbx.files_delete(path)
+        except exceptions.ApiError as err:
+            print '*** API error', err.message
+            return None
+        return file_metadata.name
