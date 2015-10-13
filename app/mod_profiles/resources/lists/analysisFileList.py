@@ -11,7 +11,7 @@ from app.mod_profiles.adapters.fileManagerFactory import FileManagerFactory
 from app.mod_profiles.models import AnalysisFile, StorageLocation
 from app.mod_profiles.common.fields.analysisFileFields import AnalysisFileFields
 from app.mod_profiles.common.parsers.analysisFile import parser_post
-from app.mod_profiles.common.swagger.responses.generic_responses import code_200_ok, code_201_created
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_ok, code_201_created, code_401
 
 
 class AnalysisFileList(Resource):
@@ -35,37 +35,30 @@ class AnalysisFileList(Resource):
         nickname='analysisFileList_post',
         parameters=[
             {
-              "name": "path",
-              "description": u'Ruta al archivo de análisis.'.encode('utf-8'),
-              "required": True,
-              "dataType": "string",
-              "paramType": "body"
+                "name": "image_file",
+                "description": u'Archivo de análisis.'.encode('utf-8'),
+                "required": True,
+                "dataType": "file",
+                "paramType": "form"
             },
             {
-              "name": "description",
-              "description": u'Descripción del archivo de análisis.'.encode('utf-8'),
-              "required": False,
-              "dataType": "string",
-              "paramType": "body"
+                "name": "description",
+                "description": u'Descripción del archivo de análisis.'.encode('utf-8'),
+                "required": False,
+                "dataType": "string",
+                "paramType": "body"
             },
             {
-              "name": "analysis_id",
-              "description": u'Identificador único del análisis asociado.'.encode('utf-8'),
-              "required": True,
-              "dataType": "int",
-              "paramType": "body"
-            },
-            {
-              "name": "storage_location_id",
-              "description": (u'Identificador único de la ubicación de '
-                              'almacenamiento asociada.').encode('utf-8'),
-              "required": True,
-              "dataType": "int",
-              "paramType": "body"
+                "name": "analysis_id",
+                "description": u'Identificador único del análisis asociado.'.encode('utf-8'),
+                "required": True,
+                "dataType": "int",
+                "paramType": "body"
             }
-          ],
+        ],
         responseMessages=[
-            code_201_created
+            code_201_created,
+            code_401
         ]
     )
     @auth.login_required
