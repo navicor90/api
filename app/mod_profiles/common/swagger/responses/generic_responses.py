@@ -36,6 +36,11 @@ code_401 = {
     "message": "Error de autenticación."
 }
 
+code_403 = {
+    "code": 403,
+    "message": "No está autorizado a llevar a cabo la solicitud efectuada."
+}
+
 code_404 = {
     "code": 404,
     "message": "Objeto inexistente."
