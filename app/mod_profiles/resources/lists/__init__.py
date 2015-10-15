@@ -2,6 +2,7 @@
 
 from .analysisFileList import AnalysisFileList
 from .analysisList import AnalysisList
+from .analysisPermissionList import AnalysisPermissionList
 from .genderList import GenderList
 from .measurementList import MeasurementList
 from .measurementSourceList import MeasurementSourceList
@@ -11,6 +12,7 @@ from .measurementUnitList import MeasurementUnitList
 from .myAnalysisList import MyAnalysisList
 from .myLatestMeasurementList import MyLatestMeasurementList
 from .myMeasurementList import MyMeasurementList
+from .permissionTypeList import PermissionTypeList
 from .profileLatestMeasurementList import ProfileLatestMeasurementList
 from .profileList import ProfileList
 from .profileMeasurementList import ProfileMeasurementList
