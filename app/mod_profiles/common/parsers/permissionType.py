@@ -8,7 +8,7 @@ from app.mod_profiles.validators.generic_validators import string_without_int
 # Parser general
 parser = reqparse.RequestParser()
 parser.add_argument('name', type=string_without_int, required=True)
-parser.add_argument('description', type=str, required=True)
+parser.add_argument('description', type=str)
 parser.add_argument('can_view_analysis_files', type=bool, required=True)
 parser.add_argument('can_view_measurements', type=bool, required=True)
 parser.add_argument('can_edit_analysis_files', type=bool, required=True)

@@ -12,6 +12,7 @@ from .measurementUnitList import MeasurementUnitList
 from .myAnalysisList import MyAnalysisList
 from .myLatestMeasurementList import MyLatestMeasurementList
 from .myMeasurementList import MyMeasurementList
+from .permissionTypeList import PermissionTypeList
 from .profileLatestMeasurementList import ProfileLatestMeasurementList
 from .profileList import ProfileList
 from .profileMeasurementList import ProfileMeasurementList
