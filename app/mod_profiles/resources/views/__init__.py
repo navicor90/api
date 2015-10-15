@@ -10,6 +10,7 @@ from .measurementUnitView import MeasurementUnitView
 from .measurementView import MeasurementView
 from .myProfileView import MyProfileView
 from .myUserView import MyUserView
+from .permissionView import PermissionView
 from .profileView import ProfileView
 from .storageCredentialView import StorageCredentialView
 from .storageLocationView import StorageLocationView

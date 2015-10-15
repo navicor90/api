@@ -2,6 +2,7 @@
 
 from .analysisFileList import AnalysisFileList
 from .analysisList import AnalysisList
+from .analysisPermissionList import AnalysisPermissionList
 from .genderList import GenderList
 from .measurementList import MeasurementList
 from .measurementSourceList import MeasurementSourceList
