@@ -33,7 +33,7 @@ class MyAnalysisList(Resource):
         profile = g.user.profile
 
         # Obtiene todos los análisis asociados al perfil.
-        analyses = profile.analyses
+        analyses = profile.analyses.all()
         return analyses
 
     @swagger.operation(
