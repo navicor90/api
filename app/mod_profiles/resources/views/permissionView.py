@@ -76,7 +76,7 @@ class PermissionView(Resource):
 
         # Verifica que el usuario autenticado sea el dueño del análisis
         # asociado al permiso especificado.
-        if g.user.id != permission.analysis.profile.user.id:
+        if g.user.id != permission.analysis.profile.user.first().id:
             return '', 403
 
         # Obtiene los valores de los argumentos recibidos en la petición.
@@ -121,7 +121,7 @@ class PermissionView(Resource):
 
         # Verifica que el usuario autenticado sea el dueño del análisis
         # asociado al permiso especificado.
-        if g.user.id != permission.analysis.profile.user.id:
+        if g.user.id != permission.analysis.profile.user.first().id:
             return '', 403
 
         # Elimina el permiso.

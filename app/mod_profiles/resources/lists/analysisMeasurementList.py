@@ -44,7 +44,7 @@ class AnalysisMeasurementList(Resource):
 
         # Verifica que el usuario autenticado sea el dueño del análisis
         # especificado.
-        if g.user.id != analysis.profile.user.id:
+        if g.user.id != analysis.profile.user.first().id:
             return '', 403
 
         # Obtiene todas las mediciones asociadas al análisis.

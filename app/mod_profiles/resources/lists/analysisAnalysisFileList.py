@@ -44,7 +44,7 @@ class AnalysisAnalysisFileList(Resource):
 
         # Verifica que el usuario autenticado sea el dueño del análisis
         # especificado.
-        if g.user.id != analysis.profile.user.id:
+        if g.user.id != analysis.profile.user.first().id:
             return '', 403
 
         # Obtiene todos los archivos de análisis asociados al análisis.
