@@ -17,5 +17,5 @@ parser_post.remove_argument('analysis_id')
 
 # Parser para recurso PUT
 parser_put = parser.copy()
-parser_post.remove_argument('analysis_id')
-parser_post.remove_argument('user_id')
+parser_put.remove_argument('analysis_id')
+parser_put.remove_argument('user_id')

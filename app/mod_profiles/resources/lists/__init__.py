@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from .analysisAnalysisFileList import AnalysisAnalysisFileList
 from .analysisFileList import AnalysisFileList
 from .analysisList import AnalysisList
+from .analysisMeasurementList import AnalysisMeasurementList
 from .analysisPermissionList import AnalysisPermissionList
 from .genderList import GenderList
 from .measurementList import MeasurementList

@@ -144,7 +144,7 @@ class AnalysisFileView(Resource):
         user = g.user
 
         # Verifica que el usuario sea el dueño del archivo de análisis especificado.
-        if user.id != analysis_file.analysis.profile.user.id:
+        if user.id != analysis_file.analysis.profile.user.first().id:
             return '', 403
 
         # Elimina el archivo asociado de la ubicación de almacenamiento.
