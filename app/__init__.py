@@ -93,13 +93,13 @@ from .mod_shared.models import auth
 # Crea la API y activa el soporte de Swagger para la misma.
 api = swagger.docs(Api(app))
 
-api.add_resource(AnalysisAnalysisFileList, '/analysis/<int:id>/files')
+api.add_resource(AnalysisAnalysisFileList, '/analysis/<int:analysis_id>/files')
 api.add_resource(AnalysisView, '/analysis/<int:id>')
 api.add_resource(AnalysisList, '/analysis')
 api.add_resource(AnalysisFileDownload, '/analysis_files/<int:id>/download')
 api.add_resource(AnalysisFileView, '/analysis_files/<int:id>')
 api.add_resource(AnalysisFileList, '/analysis_files')
-api.add_resource(AnalysisMeasurementList, '/analysis/<int:id>/measurements')
+api.add_resource(AnalysisMeasurementList, '/analysis/<int:analysis_id>/measurements')
 api.add_resource(AnalysisPermissionList, '/analysis/<int:analysis_id>/permissions')
 api.add_resource(GenderView, '/genders/<int:id>')
 api.add_resource(GenderList, '/genders')
