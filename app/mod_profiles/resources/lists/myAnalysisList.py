@@ -17,7 +17,8 @@ class MyAnalysisList(Resource):
     @swagger.operation(
         # TODO: Añadir parámetros de autenticación a la documentación Swagger.
         notes=(u'Retorna todas las instancias existentes de análisis, '
-                'asociadas al perfil del usuario autenticado.').encode('utf-8'),
+               'asociadas al perfil del usuario autenticado, ordenadas por '
+               'fecha y hora del análisis.').encode('utf-8'),
         responseClass='AnalysisFields',
         nickname='myAnalysisList_get',
         responseMessages=[
@@ -32,8 +33,9 @@ class MyAnalysisList(Resource):
         # Obtiene el perfil.
         profile = g.user.profile
 
-        # Obtiene todos los análisis asociados al perfil.
-        analyses = profile.analyses.all()
+        # Obtiene todos los análisis asociados al perfil, y los ordena por
+        # fecha y hora.
+        analyses = profile.analyses.order_by(Analysis.datetime).all()
         return analyses
 
     @swagger.operation(
