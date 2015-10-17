@@ -137,7 +137,7 @@ class AnalysisFileView(Resource):
     @auth.login_required
     @marshal_with(AnalysisFileFields.resource_fields, envelope='resource')
     def delete(self, id):
-        # Obtiene la medición.
+        # Obtiene el archivo de análisis.
         analysis_file = AnalysisFile.query.get_or_404(id)
 
         # Obtiene el usuario autenticado.
