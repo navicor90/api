@@ -94,6 +94,8 @@ from .mod_shared.models import auth
 api = swagger.docs(Api(app))
 
 api.add_resource(AnalysisAnalysisFileList, '/analysis/<int:analysis_id>/files')
+api.add_resource(AnalysisAnalysisCommentList, '/analysis/<int:analysis_id>/comments')
+api.add_resource(AnalysisCommentView, '/analysis_comments/<int:analysis_comment_id>')
 api.add_resource(AnalysisView, '/analysis/<int:analysis_id>')
 api.add_resource(AnalysisList, '/analysis')
 api.add_resource(AnalysisFileDownload, '/analysis_files/<int:id>/download')
