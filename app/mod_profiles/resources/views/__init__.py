@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from .analysisCommentView import AnalysisCommentView
 from .analysisView import AnalysisView
 from .analysisFileDownload import AnalysisFileDownload
 from .analysisFileView import AnalysisFileView

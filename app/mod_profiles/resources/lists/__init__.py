@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from .analysisAnalysisCommentList import AnalysisAnalysisCommentList
 from .analysisAnalysisFileList import AnalysisAnalysisFileList
 from .analysisFileList import AnalysisFileList
 from .analysisList import AnalysisList

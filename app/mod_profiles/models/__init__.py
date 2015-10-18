@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from .Analysis import Analysis
+from .AnalysisComment import AnalysisComment
 from .AnalysisFile import AnalysisFile
 from .Gender import Gender
 from .Permission import Permission
