@@ -54,3 +54,12 @@ class DropboxAdapter(object):
             print '*** API error', err.message
             return None
         return file_metadata.name
+
+    def get_thumbnail(self, path):
+        dbx = dropbox.Dropbox(self.token)
+        try:
+            fmd, res = dbx.files_get_thumbnail(path)
+        except exceptions.ApiError as err:
+            print '*** API error', err.message
+            return None
+        return res.content
