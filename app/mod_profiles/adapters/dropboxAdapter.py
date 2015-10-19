@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import requests
 from dropbox import dropbox, exceptions
 from dropbox.files import WriteMode
 
@@ -56,10 +57,17 @@ class DropboxAdapter(object):
         return file_metadata.name
 
     def get_thumbnail(self, path):
-        dbx = dropbox.Dropbox(self.token)
+        #dbx = dropbox.Dropbox(self.token)
         try:
-            fmd, res = dbx.files_get_thumbnail(path)
-        except exceptions.ApiError as err:
-            print '*** API error', err.message
+            #fmd, res = dbx.files_get_thumbnail(path)
+            # En la versión actual de Dropbox SDK (3.37), no funciona el método
+            # para obtener el thumbnail del archivo, por lo que se solicita
+            # directamente a la API, sin hacer uso del SDK.
+            headers = {'Authorization': 'Bearer ' + self.token,
+                       'Dropbox-API-Arg': '{"path": "' + path + '", "format": "jpeg", "size": "w640h480"}'}
+            res = requests.post("https://content.dropboxapi.com/2/files/get_thumbnail",
+                                headers=headers)
+        except:
+            # print '*** API error', err.message
             return None
         return res.content
