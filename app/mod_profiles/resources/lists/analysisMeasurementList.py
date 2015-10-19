@@ -7,6 +7,7 @@ from flask_restful_swagger import swagger
 from app.mod_shared.models.auth import auth
 from app.mod_profiles.models import Analysis
 from app.mod_profiles.common.fields.measurementFields import MeasurementFields
+from app.mod_profiles.common.persistence import permission
 from app.mod_profiles.common.swagger.responses.generic_responses import code_200_ok, code_403, code_404
 
 
@@ -42,9 +43,9 @@ class AnalysisMeasurementList(Resource):
         # Obtiene el análisis.
         analysis = Analysis.query.get_or_404(analysis_id)
 
-        # Verifica que el usuario autenticado sea el dueño del análisis
-        # especificado.
-        if g.user.id != analysis.profile.user.first().id:
+        # Verifica que el usuario autenticado tenga permiso para ver las
+        # mediciones del análisis especificado.
+        if not permission.get_permission_by_user(analysis, g.user, 'view_measurements'):
             return '', 403
 
         # Obtiene todas las mediciones asociadas al análisis.

@@ -10,8 +10,9 @@ from app.mod_profiles.common.fields.measurementFields import MeasurementFields
 from app.mod_profiles.common.persistence import measurement
 from app.mod_profiles.common.parsers.measurement import parser_post_auth
 from app.mod_profiles.common.parsers.profileMeasurementList import parser_get
-from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_201_created, code_401
-from app.mod_profiles.models import Measurement
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_201_created, code_401, \
+    code_403
+from app.mod_profiles.models import Measurement, Analysis
 
 
 class MyMeasurementList(Resource):
@@ -133,20 +134,37 @@ class MyMeasurementList(Resource):
             }
           ],
         responseMessages=[
-            code_201_created
+            code_201_created,
+            code_401,
+            code_403
         ]
     )
     @auth.login_required
     @marshal_with(MeasurementFields.resource_fields, envelope='resource')
     def post(self):
+        # Obtiene los valores de los argumentos recibidos en la petición.
         args = parser_post_auth.parse_args()
-        new_measurement = Measurement(args['datetime'],
-                                      args['value'],
-                                      args['analysis_id'],
+        datetime = args['datetime']
+        value = args['value']
+        analysis_id = args['analysis_id']
+        measurement_source_id = args['measurement_source_id']
+        measurement_type_id = args['measurement_type_id']
+        measurement_unit_id = args['measurement_unit_id']
+
+        # Obtiene el análisis.
+        analysis = Analysis.query.get_or_404(analysis_id)
+
+        # Verifica que el usuario sea el dueño del análisis especificado.
+        if g.user.id != analysis.profile.user.first().id:
+            return '', 403
+
+        new_measurement = Measurement(datetime,
+                                      value,
+                                      analysis.id,
                                       g.user.profile.id,
-                                      args['measurement_source_id'],
-                                      args['measurement_type_id'],
-                                      args['measurement_unit_id'])
+                                      measurement_source_id,
+                                      measurement_type_id,
+                                      measurement_unit_id)
         db.session.add(new_measurement)
         db.session.commit()
         return new_measurement, 201

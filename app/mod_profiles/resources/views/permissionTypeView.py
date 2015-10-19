@@ -75,14 +75,16 @@ class PermissionTypeView(Resource):
                 "required": True,
                 "dataType": "boolean",
                 "paramType": "body"
-            },{
+            },
+            {
                 "name": "can_edit_analysis_files",
                 "description": (u'Permiso para editar los archivos del '
                                 'análisis.').encode('utf-8'),
                 "required": True,
                 "dataType": "boolean",
                 "paramType": "body"
-            },{
+            },
+            {
                 "name": "can_edit_measurements",
                 "description": (u'Permiso para editar las mediciones del '
                                 'análisis.').encode('utf-8'),

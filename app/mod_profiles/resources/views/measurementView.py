@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 
+from flask import g
 from flask_restful import Resource, marshal_with
 from flask_restful_swagger import swagger
 
+from app.mod_shared.models.auth import auth
 from app.mod_shared.models.db import db
 from app.mod_profiles.models import Measurement
 from app.mod_profiles.common.fields.measurementFields import MeasurementFields
 from app.mod_profiles.common.parsers.measurement import parser_put
+from app.mod_profiles.common.persistence import permission
 from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_200_updated, \
-    code_204_deleted, code_404
+    code_204_deleted, code_401, code_403, code_404
 
 
 class MeasurementView(Resource):
@@ -99,13 +102,23 @@ class MeasurementView(Resource):
           ],
         responseMessages=[
             code_200_updated,
+            code_401,
+            code_403,
             code_404
         ]
     )
+    @auth.login_required
     @marshal_with(MeasurementFields.resource_fields, envelope='resource')
     def put(self, id):
         measurement = Measurement.query.get_or_404(id)
         args = parser_put.parse_args()
+
+        # Verifica que el usuario autenticado tenga permiso para editar las
+        # mediciones del análisis asociado a la medición especificada, en caso
+        # de que exista.
+        if (measurement.analysis is not None and
+                not permission.get_permission_by_user(measurement.analysis, g.user, 'edit_measurements')):
+            return '', 403
 
         # Actualiza los atributos y relaciones del objeto, en base a los
         # argumentos recibidos.
@@ -158,13 +171,23 @@ class MeasurementView(Resource):
           ],
         responseMessages=[
             code_204_deleted,
+            code_401,
+            code_403,
             code_404
         ]
     )
+    @auth.login_required
     @marshal_with(MeasurementFields.resource_fields, envelope='resource')
     def delete(self, id):
         # Obtiene la medición.
         measurement = Measurement.query.get_or_404(id)
+
+        # Verifica que el usuario autenticado tenga permiso para editar las
+        # mediciones del análisis asociado a la medición especificada, en caso
+        # de que exista.
+        if (measurement.analysis is not None and
+                not permission.get_permission_by_user(measurement.analysis, g.user, 'edit_measurements')):
+            return '', 403
 
         # Elimina la medición.
         db.session.delete(measurement)

@@ -60,7 +60,7 @@ class PermissionView(Resource):
                 "dataType": "int",
                 "paramType": "body"
             },
-          ],
+        ],
         responseMessages=[
             code_200_updated,
             code_401,
