@@ -99,6 +99,7 @@ api.add_resource(AnalysisCommentView, '/analysis_comments/<int:analysis_comment_
 api.add_resource(AnalysisView, '/analysis/<int:analysis_id>')
 api.add_resource(AnalysisList, '/analysis')
 api.add_resource(AnalysisFileDownload, '/analysis_files/<int:id>/download')
+api.add_resource(AnalysisFileThumbnail, '/analysis_files/<int:analysis_file_id>/thumbnail')
 api.add_resource(AnalysisFileView, '/analysis_files/<int:id>')
 api.add_resource(AnalysisFileList, '/analysis_files')
 api.add_resource(AnalysisMeasurementList, '/analysis/<int:analysis_id>/measurements')

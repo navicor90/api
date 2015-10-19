@@ -3,6 +3,7 @@
 from .analysisCommentView import AnalysisCommentView
 from .analysisView import AnalysisView
 from .analysisFileDownload import AnalysisFileDownload
+from .analysisFileThumbnail import AnalysisFileThumbnail
 from .analysisFileView import AnalysisFileView
 from .genderView import GenderView
 from .measurementSourceView import MeasurementSourceView
