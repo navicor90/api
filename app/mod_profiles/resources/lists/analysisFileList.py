@@ -8,10 +8,12 @@ from flask_restful_swagger import swagger
 from app.mod_shared.models.auth import auth
 from app.mod_shared.models.db import db
 from app.mod_profiles.adapters.fileManagerFactory import FileManagerFactory
-from app.mod_profiles.models import AnalysisFile, StorageLocation
+from app.mod_profiles.models import Analysis, AnalysisFile, StorageLocation
 from app.mod_profiles.common.fields.analysisFileFields import AnalysisFileFields
 from app.mod_profiles.common.parsers.analysisFile import parser_post
-from app.mod_profiles.common.swagger.responses.generic_responses import code_200_ok, code_201_created, code_401
+from app.mod_profiles.common.persistence import permission
+from app.mod_profiles.common.swagger.responses.generic_responses import code_200_ok, code_201_created, code_401, \
+    code_403
 
 
 class AnalysisFileList(Resource):
@@ -58,18 +60,28 @@ class AnalysisFileList(Resource):
         ],
         responseMessages=[
             code_201_created,
-            code_401
+            code_401,
+            code_403
         ]
     )
     @auth.login_required
     @marshal_with(AnalysisFileFields.resource_fields, envelope='resource')
     def post(self):
+        # Obtiene los valores de los argumentos recibidos en la petición.
         args = parser_post.parse_args()
-
-        user = g.user
         image_file = args['image_file']
+        description = args['description']
+        analysis_id = args['analysis_id']
 
-        file_manager = FileManagerFactory().get_file_manager(user)
+        # Obtiene el análisis especificado.
+        analysis = Analysis.query.get_or_404(analysis_id)
+
+        # Verifica que el usuario autenticado tenga permiso para editar los
+        # archivos de análisis, del análisis especificado.
+        if not permission.get_permission_by_user(analysis, g.user, 'edit_analysis_files'):
+            return '', 403
+
+        file_manager = FileManagerFactory().get_file_manager(g.user)
         res = file_manager.upload_file(image_file)
         storage_location = StorageLocation.query.filter_by(name=res['storage_location']).first()
         if storage_location is None:
@@ -77,8 +89,8 @@ class AnalysisFileList(Resource):
 
         new_analysis_file = AnalysisFile(datetime.utcnow(),
                                          res['path'],
-                                         args['description'],
-                                         args['analysis_id'],
+                                         description,
+                                         analysis.id,
                                          storage_location.id)
         db.session.add(new_analysis_file)
         db.session.commit()

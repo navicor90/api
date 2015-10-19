@@ -9,7 +9,7 @@ from app.mod_shared.models.db import db
 from app.mod_profiles.models import AnalysisFile
 from app.mod_profiles.common.fields.analysisFileFields import AnalysisFileFields
 from app.mod_profiles.common.parsers.analysisFile import parser_put
-from app.mod_profiles.common.persistence import analysisFile
+from app.mod_profiles.common.persistence import analysisFile, permission
 from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_200_updated, \
     code_204_deleted, code_401, code_403, code_404
 
@@ -30,12 +30,21 @@ class AnalysisFileView(Resource):
           ],
         responseMessages=[
             code_200_found,
+            code_401,
+            code_403,
             code_404
         ]
     )
+    @auth.login_required
     @marshal_with(AnalysisFileFields.resource_fields, envelope='resource')
     def get(self, id):
         analysis_file = AnalysisFile.query.get_or_404(id)
+
+        # Verifica que el usuario autenticado tenga permiso para ver los
+        # archivos de análisis, del análisis asociado.
+        if not permission.get_permission_by_user(analysis_file.analysis, g.user, 'view_analysis_files'):
+            return '', 403
+
         return analysis_file
 
     @swagger.operation(
@@ -83,13 +92,21 @@ class AnalysisFileView(Resource):
           ],
         responseMessages=[
             code_200_updated,
+            code_401,
+            code_403,
             code_404
         ]
     )
+    @auth.login_required
     @marshal_with(AnalysisFileFields.resource_fields, envelope='resource')
     def put(self, id):
         analysis_file = AnalysisFile.query.get_or_404(id)
         args = parser_put.parse_args()
+
+        # Verifica que el usuario autenticado tenga permiso para editar los
+        # archivos de análisis, del análisis asociado.
+        if not permission.get_permission_by_user(analysis_file.analysis, g.user, 'edit_analysis_files'):
+            return '', 403
 
         # Actualiza los atributos del objeto, en base a los argumentos
         # recibidos.
@@ -140,11 +157,9 @@ class AnalysisFileView(Resource):
         # Obtiene el archivo de análisis.
         analysis_file = AnalysisFile.query.get_or_404(id)
 
-        # Obtiene el usuario autenticado.
-        user = g.user
-
-        # Verifica que el usuario sea el dueño del archivo de análisis especificado.
-        if user.id != analysis_file.analysis.profile.user.first().id:
+        # Verifica que el usuario autenticado tenga permiso para editar los
+        # archivos de análisis, del análisis asociado.
+        if not permission.get_permission_by_user(analysis_file.analysis, g.user, 'edit_analysis_files'):
             return '', 403
 
         # Elimina el archivo asociado de la ubicación de almacenamiento.

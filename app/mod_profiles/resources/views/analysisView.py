@@ -74,13 +74,21 @@ class AnalysisView(Resource):
           ],
         responseMessages=[
             code_200_updated,
+            code_401,
+            code_403,
             code_404
         ]
     )
+    @auth.login_required
     @marshal_with(AnalysisFields.resource_fields, envelope='resource')
     def put(self, analysis_id):
         analysis = Analysis.query.get_or_404(analysis_id)
         args = parser_put.parse_args()
+
+        # Verifica que el usuario autenticado sea el dueño del análisis
+        # especificado.
+        if g.user.id != analysis.profile.user.first().id:
+            return '', 403
 
         # Actualiza los atributos del objeto, en base a los argumentos
         # recibidos.
@@ -128,11 +136,9 @@ class AnalysisView(Resource):
         # Obtiene el análisis.
         analysis = Analysis.query.get_or_404(analysis_id)
 
-        # Obtiene el usuario autenticado.
-        user = g.user
-
-        # Verifica que el usuario sea el dueño del archivo de análisis especificado.
-        if user.id != analysis.profile.user.first().id:
+        # Verifica que el usuario autenticado sea el dueño del archivo de
+        # análisis especificado.
+        if g.user.id != analysis.profile.user.first().id:
             return '', 403
 
         # Elimina todas las mediciones asociadas al análisis.
