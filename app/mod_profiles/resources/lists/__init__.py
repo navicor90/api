@@ -15,6 +15,7 @@ from .measurementUnitList import MeasurementUnitList
 from .myAnalysisList import MyAnalysisList
 from .myLatestMeasurementList import MyLatestMeasurementList
 from .myMeasurementList import MyMeasurementList
+from .myStorageCredentialList import MyStorageCredentialList
 from .permissionTypeList import PermissionTypeList
 from .profileLatestMeasurementList import ProfileLatestMeasurementList
 from .profileList import ProfileList
