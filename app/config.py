@@ -42,4 +42,4 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     TESTING = True
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'postgresql:///salud_test?client_encoding=utf8')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('TESTING_DATABASE_URL', 'postgresql:///salud_test?client_encoding=utf8')

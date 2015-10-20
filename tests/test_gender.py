@@ -94,11 +94,3 @@ class GenderModelTestCase(unittest.TestCase):
                 headers={'Content-Type': 'application/json'}):
             res = self.app.full_dispatch_request()
             self.assertTrue(res.status_code == 404)
-    """
-        Faltaría hacer prubas para los otros mensajes de error.
-        Probaría un recurso usando user y token (autenticación).
-        Pruebas de las fechas para testing de regresión.
-        Probar coverage.
-        Ver si se puede agregar integración continua.
-        Pruebas de carga con alguna herramienta.
-    """
