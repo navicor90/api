@@ -30,7 +30,7 @@ class AnalysisPermissionList(Resource):
         analysis = Analysis.query.get_or_404(analysis_id)
 
         # Obtiene los permisos del análisis.
-        analysis_permissions = analysis.permissions
+        analysis_permissions = analysis.permissions.all()
         return analysis_permissions
 
     @swagger.operation(
@@ -85,7 +85,7 @@ class AnalysisPermissionList(Resource):
         user_id = args['user_id']
 
         # Obtiene los permisos del análisis.
-        analysis_permissions = analysis.permissions
+        analysis_permissions = analysis.permissions.all()
 
         # Verifica que el análisis no tenga un permiso existente asociado al
         # mismo usuario especificado en la solicitud.
