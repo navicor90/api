@@ -6,6 +6,9 @@ python:
 install:
     - pip install -r requirements.txt
 
+env:
+    - FLASK_CONFIG_MODE="testing"
+
 before_script:
     - psql -c 'create database salud_test;' -U postgres
     - mkdir -p shippable/testresults
