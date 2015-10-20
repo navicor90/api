@@ -33,6 +33,7 @@ def update(user, username=None, email=None, password=None, profile_id=None):
         user.email = email
     # Actualiza la contraseña, en caso de que haya sido modificado.
     if (password is not None and
+          len(password) > 0 and
           not user.verify_password(password)):
         user.hash_password(password)
     # Actualiza el perfil asociado, en caso de que haya sido modificado.

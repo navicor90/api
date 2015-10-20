@@ -17,3 +17,5 @@ parser_post = parser.copy()
 
 # Parser para recurso PUT
 parser_put = parser.copy()
+parser_put.remove_argument('password')
+parser_put.add_argument('password', type=str)
