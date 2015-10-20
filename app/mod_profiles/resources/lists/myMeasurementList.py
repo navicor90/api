@@ -107,7 +107,7 @@ class MyMeasurementList(Resource):
             {
               "name": "analysis_id",
               "description": u'Identificador único del análisis asociado.'.encode('utf-8'),
-              "required": True,
+              "required": False,
               "dataType": "int",
               "paramType": "body"
             },
@@ -151,16 +151,16 @@ class MyMeasurementList(Resource):
         measurement_type_id = args['measurement_type_id']
         measurement_unit_id = args['measurement_unit_id']
 
-        # Obtiene el análisis.
-        analysis = Analysis.query.get_or_404(analysis_id)
-
-        # Verifica que el usuario sea el dueño del análisis especificado.
-        if g.user.id != analysis.profile.user.first().id:
-            return '', 403
+        # Obtiene el análisis especificado.
+        if analysis_id is not None:
+            analysis = Analysis.query.get_or_404(analysis_id)
+            # Verifica que el usuario sea el dueño del análisis especificado.
+            if g.user.id != analysis.profile.user.first().id:
+                return '', 403
 
         new_measurement = Measurement(datetime,
                                       value,
-                                      analysis.id,
+                                      analysis_id,
                                       g.user.profile.id,
                                       measurement_source_id,
                                       measurement_type_id,
