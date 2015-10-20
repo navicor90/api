@@ -209,3 +209,15 @@ def is_valid_image_file(var):
         raise ValueError("El formato de archivo no corresponde, pruebe con \"jpg\"")
     return var
 
+
+def is_boolean(var):
+    true_values = ['true', '1']
+    false_values = ['false', '0']
+
+    var = str(var).lower()
+    if var in true_values:
+        return True
+    elif var in false_values:
+        return False
+
+    raise ValueError("El valor ingresado debe ser booleano.")
