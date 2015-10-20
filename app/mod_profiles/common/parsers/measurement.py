@@ -9,7 +9,7 @@ from app.mod_profiles.validators.generic_validators import is_valid_id, is_valid
 parser = reqparse.RequestParser()
 parser.add_argument('datetime', type=is_valid_previous_datetime, required=True)
 parser.add_argument('value', type=float, required=True)
-parser.add_argument('analysis_id', type=is_valid_id, required=True)
+parser.add_argument('analysis_id', type=is_valid_id)
 parser.add_argument('profile_id', type=is_valid_id, required=True)
 parser.add_argument('measurement_source_id', type=is_valid_id)
 parser.add_argument('measurement_type_id', type=is_valid_id, required=True)

@@ -67,7 +67,7 @@ class MeasurementView(Resource):
             {
               "name": "analysis_id",
               "description": u'Identificador único del análisis asociado.'.encode('utf-8'),
-              "required": True,
+              "required": False,
               "dataType": "int",
               "paramType": "body"
             },
