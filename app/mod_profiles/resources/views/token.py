@@ -27,6 +27,6 @@ class Token(Resource):
     @auth.login_required
     @marshal_with(TokenFields.resource_fields, envelope='resource')
     def get(self):
-        token = g.user.generate_auth_token(600)
-        new_token = {'token': token.decode('ascii'), 'duration': 600}
+        token = g.user.generate_auth_token(3600)
+        new_token = {'token': token.decode('ascii'), 'duration': 3600}
         return new_token
