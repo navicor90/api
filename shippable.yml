@@ -5,3 +5,10 @@ python:
 
 install:
     - pip install -r requirements.txt
+
+before_script:
+    - psql -c 'create database salud_test;' -U postgres
+    - mkdir -p shippable/testresults
+
+script:
+    - nosetests tests --with-xunit --xunit-file=shippable/testresults/nosetests.xml
