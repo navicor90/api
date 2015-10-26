@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from app.mod_profiles.models.Measurement import Measurement
-from app.mod_profiles.models.MeasurementType import MeasurementType
-from app.mod_profiles.models.Profile import Profile
+from app.mod_profiles.models import Measurement, MeasurementType, Profile
 
 
 def get_by_profile(profile, source_id=None, type_id=None, unit_id=None):

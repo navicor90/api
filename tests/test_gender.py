@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import json
-import nose
 from nose.tools import *
-from app import app, db
-from app.mod_profiles.models.Gender import Gender
 import unittest
+
+from app import app, db
+from app.mod_profiles.models import Gender
 
 
 class GenderModelTestCase(unittest.TestCase):

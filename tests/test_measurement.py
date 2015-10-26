@@ -1,16 +1,11 @@
 # -*- coding: utf-8 -*-
-import unittest
-from app import app, db
-from app.mod_profiles.models.Analysis import Analysis
-from app.mod_profiles.models.Gender import Gender
-from app.mod_profiles.models.MeasurementSource import MeasurementSource
-from app.mod_profiles.models.MeasurementType import MeasurementType
-from app.mod_profiles.models.MeasurementUnit import MeasurementUnit
-from app.mod_profiles.models.Profile import Profile
-from app.mod_profiles.models.User import User
-from app.mod_profiles.models.Measurement import Measurement
+
 import json
-from sqlalchemy.sql.expression import text
+import unittest
+
+from app import app, db
+from app.mod_profiles.models import Analysis, Gender, Measurement, MeasurementSource, \
+    MeasurementType, MeasurementUnit, Profile, User
 
 
 class MeasurementResourceTestCase(unittest.TestCase):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from app.mod_shared.models.db import db
-from app.mod_profiles.models.Profile import Profile
+from app.mod_profiles.models import Profile
 
 
 def update(profile, first_name=None, last_name=None, birthday=None, gender_id=None):
