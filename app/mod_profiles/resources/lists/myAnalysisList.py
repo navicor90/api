@@ -10,7 +10,7 @@ from app.mod_profiles.common.fields.analysisFields import AnalysisFields
 from app.mod_profiles.common.parsers.analysis import parser_post_auth
 from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_201_created, code_401, \
     code_404
-from app.mod_profiles.models.Analysis import Analysis
+from app.mod_profiles.models import Analysis
 
 
 class MyAnalysisList(Resource):

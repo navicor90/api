@@ -3,7 +3,7 @@
 from flask import g
 from flask.ext.httpauth import HTTPBasicAuth
 
-from app.mod_profiles.models.User import User
+from app.mod_profiles.models import User
 
 
 # Manejo de autenticación HTTP.
