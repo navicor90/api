@@ -1,4 +1,6 @@
-"""Creacion de grupos de usuarios
+# -*- coding: utf-8 -*-
+
+"""Creación de grupos de usuarios
 
 Revision ID: 113f8662d7a9
 Revises: 3c6208d72ac0
