@@ -1,15 +1,13 @@
-# -*- coding: utf-8 -*-
+"""Creacion de grupos de usuarios
 
-"""Creación de grupos de usuarios
-
-Revision ID: 4ff3c8c6ba6f
+Revision ID: 113f8662d7a9
 Revises: 3c6208d72ac0
-Create Date: 2015-10-25 19:41:11.034707
+Create Date: 2015-10-26 13:18:45.100003
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '4ff3c8c6ba6f'
+revision = '113f8662d7a9'
 down_revision = '3c6208d72ac0'
 
 from alembic import op

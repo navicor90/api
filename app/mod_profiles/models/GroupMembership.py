@@ -17,9 +17,9 @@ class GroupMembership(db.Model):
                                             backref=db.backref('memberships', lazy='dynamic'))
     group_membership_type = db.relationship('GroupMembershipType',
                                             backref=db.backref('memberships', lazy='dynamic'))
-    permission_type       = db.relationship('Group',
+    permission_type       = db.relationship('PermissionType',
                                             backref=db.backref('memberships', lazy='dynamic'))
-    profile               = db.relationship('Group',
+    profile               = db.relationship('Profile',
                                             backref=db.backref('memberships', lazy='dynamic'))
 
     def __init__(self, is_admin, group_id, group_membership_type_id, permission_type_id, profile_id):
