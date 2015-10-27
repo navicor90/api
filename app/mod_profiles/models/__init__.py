@@ -4,6 +4,9 @@ from .Analysis import Analysis
 from .AnalysisComment import AnalysisComment
 from .AnalysisFile import AnalysisFile
 from .Gender import Gender
+from .Group import Group
+from .GroupMembership import GroupMembership
+from .GroupMembershipType import GroupMembershipType
 from .Permission import Permission
 from .PermissionType import PermissionType
 from .Profile import Profile
