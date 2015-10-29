@@ -7,7 +7,8 @@ from flask_restful_swagger import swagger
 
 from app.mod_shared.models.auth import auth
 from app.mod_shared.models.db import db
-from app.mod_profiles.models import Group, GroupMembership, GroupMembershipType, PermissionType, User
+from app.mod_profiles.models import Group, GroupMembership, GroupMembershipType, NotificationNewGroupMembership, \
+    PermissionType, User
 from app.mod_profiles.common.fields.groupMembershipFields import GroupMembershipFields
 from app.mod_profiles.common.parsers.groupMembership import parser_post_auth
 from app.mod_profiles.common.persistence import group as group_persistence
@@ -157,5 +158,12 @@ class GroupGroupMembershipList(Resource):
                                                g.user.profile.id
                                                )
         db.session.add(new_group_membership)
+
+        # Crea la notificación dirigida al nuevo miembro del grupo.
+        notification = NotificationNewGroupMembership(user.profile.id,
+                                                      new_group_membership.id,
+                                                      g.user.profile.id)
+        db.session.add(notification)
+
         db.session.commit()
         return new_group_membership, 201
