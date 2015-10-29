@@ -9,6 +9,7 @@ from app.mod_shared.models.db import db
 from app.mod_profiles.models import AnalysisComment
 from app.mod_profiles.common.fields.analysisCommentFields import AnalysisCommentFields
 from app.mod_profiles.common.parsers.analysisComment import parser_put_auth
+from app.mod_profiles.common.persistence import permission
 from app.mod_profiles.common.swagger.responses.generic_responses import code_200_found, code_200_updated, \
     code_401, code_403, code_404
 
@@ -29,12 +30,22 @@ class AnalysisCommentView(Resource):
         ],
         responseMessages=[
             code_200_found,
+            code_401,
+            code_403,
             code_404
         ]
     )
+    @auth.login_required
     @marshal_with(AnalysisCommentFields.resource_fields, envelope='resource')
     def get(self, analysis_comment_id):
+        # Obtiene el comentario de análisis.
         analysis_comment = AnalysisComment.query.get_or_404(analysis_comment_id)
+
+        # Verifica que el usuario autenticado tenga permiso para ver los
+        # comentarios del análisis asociado.
+        if not permission.get_permission_by_user(analysis_comment.analysis, g.user, 'view_comments'):
+            return '', 403
+
         return analysis_comment
 
     @swagger.operation(

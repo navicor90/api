@@ -14,7 +14,8 @@ def get_permission_by_user(analysis, user, action):
     :param user: Instancia de usuario que pretende ejecutar la acción.
     :param action: Acción a ejecutar por el usuario, sobre el análisis. Los
     valores posibles son 'view_analysis_files', 'edit_analysis_files',
-    'view_measurements' y 'edit_measurements'.
+    'view_comments', 'edit_comments', 'view_measurements' y
+    'edit_measurements'.
     :return: Valor booleano que indica si el usuario puede efectuar la acción
     indicada sobre un análisis específico.
     """
@@ -42,8 +43,10 @@ def get_permission_by_user(analysis, user, action):
 
     permissions = {
         'view_analysis_files': analysis_permission.can_view_analysis_files,
+        'view_comments': analysis_permission.can_view_comments,
         'view_measurements': analysis_permission.can_view_measurements,
         'edit_analysis_files': analysis_permission.can_edit_analysis_files,
+        'edit_comments': analysis_permission.can_edit_comments,
         'edit_measurements': analysis_permission.can_edit_measurements,
     }
 

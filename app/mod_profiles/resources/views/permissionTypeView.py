@@ -69,6 +69,14 @@ class PermissionTypeView(Resource):
                 "paramType": "body"
             },
             {
+                "name": "can_view_comments",
+                "description": (u'Permiso para visualizar los comentarios del '
+                                'análisis.').encode('utf-8'),
+                "required": True,
+                "dataType": "boolean",
+                "paramType": "body"
+            },
+            {
                 "name": "can_view_measurements",
                 "description": (u'Permiso para visualizar las mediciones del '
                                 'análisis.').encode('utf-8'),
@@ -79,6 +87,14 @@ class PermissionTypeView(Resource):
             {
                 "name": "can_edit_analysis_files",
                 "description": (u'Permiso para editar los archivos del '
+                                'análisis.').encode('utf-8'),
+                "required": True,
+                "dataType": "boolean",
+                "paramType": "body"
+            },
+            {
+                "name": "can_edit_comments",
+                "description": (u'Permiso para editar los comentarios del '
                                 'análisis.').encode('utf-8'),
                 "required": True,
                 "dataType": "boolean",
@@ -108,8 +124,10 @@ class PermissionTypeView(Resource):
         name = args['name']
         description = args['description']
         can_view_analysis_files = args['can_view_analysis_files']
+        can_view_comments = args['can_view_comments']
         can_view_measurements = args['can_view_measurements']
         can_edit_analysis_files = args['can_edit_analysis_files']
+        can_edit_comments = args['can_edit_comments']
         can_edit_measurements = args['can_edit_measurements']
 
         # Actualiza los atributos y relaciones del objeto, en base a los
@@ -128,6 +146,11 @@ class PermissionTypeView(Resource):
         if (can_view_analysis_files is not None and
                 permission_type.can_view_analysis_files != can_view_analysis_files):
             permission_type.can_view_analysis_files = can_view_analysis_files
+        # Actualiza el permiso de visualización de comentarios del análisis, en
+        # caso de que haya sido modificado.
+        if (can_view_comments is not None and
+                permission_type.can_view_comments != can_view_comments):
+            permission_type.can_view_comments = can_view_comments
         # Actualiza el permiso de visualización de mediciones del análisis, en
         # caso de que haya sido modificado.
         if (can_view_measurements is not None and
@@ -138,6 +161,11 @@ class PermissionTypeView(Resource):
         if (can_edit_analysis_files is not None and
                 permission_type.can_edit_analysis_files != can_edit_analysis_files):
             permission_type.can_edit_analysis_files = can_edit_analysis_files
+        # Actualiza el permiso de edición de comentarios del análisis, en
+        # caso de que haya sido modificado.
+        if (can_edit_comments is not None and
+                permission_type.can_edit_comments != can_edit_comments):
+            permission_type.can_edit_comments = can_edit_comments
         # Actualiza el permiso de edición de mediciones del análisis, en
         # caso de que haya sido modificado.
         if (can_edit_measurements is not None and

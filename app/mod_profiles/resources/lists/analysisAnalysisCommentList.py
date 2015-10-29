@@ -10,6 +10,7 @@ from app.mod_shared.models.db import db
 from app.mod_profiles.models import Analysis, AnalysisComment
 from app.mod_profiles.common.fields.analysisCommentFields import AnalysisCommentFields
 from app.mod_profiles.common.parsers.analysisComment import parser_post_auth
+from app.mod_profiles.common.persistence import permission
 from app.mod_profiles.common.swagger.responses.generic_responses import code_200_ok, code_201_created, code_401, \
     code_403, code_404
 
@@ -37,6 +38,7 @@ class AnalysisAnalysisCommentList(Resource):
         ],
         responseMessages=[
             code_200_ok,
+            code_401,
             code_403,
             code_404
         ]
@@ -47,9 +49,9 @@ class AnalysisAnalysisCommentList(Resource):
         # Obtiene el análisis.
         analysis = Analysis.query.get_or_404(analysis_id)
 
-        # Verifica que el usuario autenticado sea el dueño del análisis
-        # especificado.
-        if g.user.id != analysis.profile.user.first().id:
+        # Verifica que el usuario autenticado tenga permiso para ver los
+        # comentarios del análisis especificado.
+        if not permission.get_permission_by_user(analysis, g.user, 'view_comments'):
             return '', 403
 
         # Obtiene todos los comentarios de análisis asociados al análisis, y
@@ -82,7 +84,8 @@ class AnalysisAnalysisCommentList(Resource):
         ],
         responseMessages=[
             code_201_created,
-            code_401
+            code_401,
+            code_403
         ]
     )
     @auth.login_required
@@ -90,6 +93,11 @@ class AnalysisAnalysisCommentList(Resource):
     def post(self, analysis_id):
         # Obtiene el análisis.
         analysis = Analysis.query.get_or_404(analysis_id)
+
+        # Verifica que el usuario autenticado tenga permiso para editar los
+        # comentarios del análisis especificado.
+        if not permission.get_permission_by_user(analysis, g.user, 'edit_comments'):
+            return '', 403
 
         # Obtiene los valores de los argumentos recibidos en la petición.
         args = parser_post_auth.parse_args()

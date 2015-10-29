@@ -52,20 +52,38 @@ class PermissionTypeList(Resource):
                 "paramType": "body"
             },
             {
+                "name": "can_view_comments",
+                "description": (u'Permiso para visualizar los comentarios del '
+                                'análisis.').encode('utf-8'),
+                "required": True,
+                "dataType": "boolean",
+                "paramType": "body"
+            },
+            {
                 "name": "can_view_measurements",
                 "description": (u'Permiso para visualizar las mediciones del '
                                 'análisis.').encode('utf-8'),
                 "required": True,
                 "dataType": "boolean",
                 "paramType": "body"
-            },{
+            },
+            {
                 "name": "can_edit_analysis_files",
                 "description": (u'Permiso para editar los archivos del '
                                 'análisis.').encode('utf-8'),
                 "required": True,
                 "dataType": "boolean",
                 "paramType": "body"
-            },{
+            },
+            {
+                "name": "can_edit_comments",
+                "description": (u'Permiso para editar los comentarios del '
+                                'análisis.').encode('utf-8'),
+                "required": True,
+                "dataType": "boolean",
+                "paramType": "body"
+            },
+            {
                 "name": "can_edit_measurements",
                 "description": (u'Permiso para editar las mediciones del '
                                 'análisis.').encode('utf-8'),
@@ -84,8 +102,10 @@ class PermissionTypeList(Resource):
         new_permission_type = PermissionType(args['name'],
                                              args['description'],
                                              args['can_view_analysis_files'],
+                                             args['can_view_comments'],
                                              args['can_view_measurements'],
                                              args['can_edit_analysis_files'],
+                                             args['can_edit_comments'],
                                              args['can_edit_measurements'],
                                              )
         db.session.add(new_permission_type)
