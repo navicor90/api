@@ -3,14 +3,14 @@
 """Creación de permisos para comentarios de análisis
 
 Revision ID: 4312431622eb
-Revises: 3c6208d72ac0
+Revises: 18d670de1948
 Create Date: 2015-10-24 13:04:41.610208
 
 """
 
 # revision identifiers, used by Alembic.
 revision = '4312431622eb'
-down_revision = '3c6208d72ac0'
+down_revision = '18d670de1948'
 
 from alembic import op
 import sqlalchemy as sa
