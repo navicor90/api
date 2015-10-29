@@ -6,7 +6,7 @@ from flask_restful_swagger import swagger
 
 from app.mod_shared.models.auth import auth
 from app.mod_shared.models.db import db
-from app.mod_profiles.models import Analysis, Permission
+from app.mod_profiles.models import Analysis, NotificationNewSharedAnalysis, Permission, User
 from app.mod_profiles.common.fields.permissionFields import PermissionFields
 from app.mod_profiles.common.parsers.permission import parser_post
 from app.mod_profiles.common.swagger.responses.generic_responses import code_200_ok, code_201_created, code_401, \
@@ -84,6 +84,9 @@ class AnalysisPermissionList(Resource):
         permission_type_id = args['permission_type_id']
         user_id = args['user_id']
 
+        # Obtiene el usuario especificado.
+        user = User.query.get_or_404(user_id)
+
         # Obtiene los permisos del análisis.
         analysis_permissions = analysis.permissions.all()
 
@@ -99,7 +102,14 @@ class AnalysisPermissionList(Resource):
         new_permission = Permission(analysis_id,
                                     permission_type_id,
                                     user_id)
-
         db.session.add(new_permission)
+
+        # Crea la notificación dirigida a quien se le ha compartido el análisis.
+        notification = NotificationNewSharedAnalysis(user.profile.id,
+                                                     new_permission.id,
+                                                     g.user.profile.id
+                                                     )
+        db.session.add(notification)
+
         db.session.commit()
         return new_permission, 201
