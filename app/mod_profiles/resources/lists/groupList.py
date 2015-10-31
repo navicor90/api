@@ -7,7 +7,7 @@ from flask_restful_swagger import swagger
 from app.mod_shared.models.auth import auth
 from app.mod_shared.models.db import db
 from app.mod_profiles.common.fields.groupFields import GroupFields
-from app.mod_profiles.common.parsers.gender import parser_post
+from app.mod_profiles.common.parsers.group import parser_post
 from app.mod_profiles.common.swagger.responses.generic_responses import code_201_created, code_404
 from app.mod_profiles.models import Group, GroupMembership, GroupMembershipType, PermissionType
 
