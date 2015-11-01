@@ -155,7 +155,7 @@ class GroupGroupMembershipList(Resource):
                                                group.id,
                                                group_membership_type.id,
                                                permission_type.id,
-                                               g.user.profile.id
+                                               user.profile.id
                                                )
         db.session.add(new_group_membership)
         db.session.flush()
