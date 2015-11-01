@@ -11,7 +11,12 @@ class NotificationNewGroupMembership(Notification):
     group_membership_id = db.Column(db.Integer, db.ForeignKey('group_membership.id'))
     profile_id          = db.Column(db.Integer, db.ForeignKey('profile.id'))
     # Relationships
-    group_membership = db.relationship('GroupMembership')
+    group_membership = db.relationship('GroupMembership',
+                                       backref=db.backref('notifications',
+                                                          lazy='dynamic',
+                                                          cascade='all, delete-orphan',
+                                                          )
+                                       )
     profile          = db.relationship('Profile')
 
     __mapper_args__ = {

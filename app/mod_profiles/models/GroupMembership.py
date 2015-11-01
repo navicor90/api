@@ -14,7 +14,11 @@ class GroupMembership(db.Model):
     profile_id               = db.Column(db.Integer, db.ForeignKey('profile.id'))
     # Relationships
     group                 = db.relationship('Group',
-                                            backref=db.backref('memberships', lazy='dynamic'))
+                                            backref=db.backref('memberships',
+                                                               lazy='dynamic',
+                                                               cascade='all, delete-orphan',
+                                                               )
+                                            )
     group_membership_type = db.relationship('GroupMembershipType',
                                             backref=db.backref('memberships', lazy='dynamic'))
     permission_type       = db.relationship('PermissionType',

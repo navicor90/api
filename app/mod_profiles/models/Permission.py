@@ -12,7 +12,11 @@ class Permission(db.Model):
     user_id            = db.Column(db.Integer, db.ForeignKey('user.id'))
     # Relationships
     analysis        = db.relationship('Analysis',
-                                      backref=db.backref('permissions', lazy='dynamic'))
+                                      backref=db.backref('permissions',
+                                                         lazy='dynamic',
+                                                         cascade='all, delete-orphan',
+                                                         )
+                                      )
     permission_type = db.relationship('PermissionType',
                                       backref=db.backref('permissions', lazy='dynamic'))
     user            = db.relationship('User',

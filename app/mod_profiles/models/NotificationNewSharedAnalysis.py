@@ -11,7 +11,12 @@ class NotificationNewSharedAnalysis(Notification):
     permission_id = db.Column(db.Integer, db.ForeignKey('permission.id'))
     profile_id    = db.Column(db.Integer, db.ForeignKey('profile.id'))
     # Relationships
-    permission = db.relationship('Permission')
+    permission = db.relationship('Permission',
+                                 backref=db.backref('notifications',
+                                                    lazy='dynamic',
+                                                    cascade='all, delete-orphan',
+                                                    )
+                                 )
     profile    = db.relationship('Profile')
 
     __mapper_args__ = {
