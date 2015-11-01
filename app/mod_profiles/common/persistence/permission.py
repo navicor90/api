@@ -50,4 +50,11 @@ def get_permission_by_user(analysis, user, action):
         'edit_measurements': analysis_permission.can_edit_measurements,
     }
 
-    return permissions.get(action.lower(), False)
+    # Obtiene el permiso correspondiente a la acción.
+    # En vez de usar el parámetro del método 'get' para indicar el valor por
+    # defecto en caso de que la acción sea incorrecta, se utiliza una
+    # comparación con 'False'. Esta solución permite resolver los casos en que
+    # el permiso del diccionario 'permissions' retorne 'None', y lo considera
+    # como 'False'.
+    permission = permissions.get(action.lower()) or False
+    return permission
