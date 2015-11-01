@@ -81,6 +81,7 @@ class GroupList(Resource):
         new_group = Group(name,
                           description)
         db.session.add(new_group)
+        db.session.flush()
 
         # Crea la membresía asociada al nuevo grupo y al perfil del usuario
         # autenticado.
