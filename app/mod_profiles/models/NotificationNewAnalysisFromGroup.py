@@ -11,8 +11,18 @@ class NotificationNewAnalysisFromGroup(Notification):
     analysis_id = db.Column(db.Integer, db.ForeignKey('analysis.id'))
     group_id    = db.Column(db.Integer, db.ForeignKey('group.id'))
     # Relationships
-    analysis = db.relationship('Analysis')
-    group    = db.relationship('Group')
+    analysis = db.relationship('Analysis',
+                               backref=db.backref('notifications',
+                                                  lazy='dynamic',
+                                                  cascade='all, delete-orphan'
+                                                  )
+                               )
+    group    = db.relationship('Group',
+                               backref=db.backref('notifications',
+                                                  lazy='dynamic',
+                                                  cascade='all, delete-orphan',
+                                                  )
+                               )
 
     __mapper_args__ = {
         'polymorphic_identity': 'notificationNewAnalysisFromGroup',

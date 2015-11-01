@@ -14,7 +14,11 @@ class AnalysisFile(db.Model):
     storage_location_id = db.Column(db.Integer, db.ForeignKey('storage_location.id'))
     # Relationships
     analysis         = db.relationship('Analysis',
-                                       backref=db.backref('analysis_files', lazy='dynamic'))
+                                       backref=db.backref('analysis_files',
+                                                          lazy='dynamic',
+                                                          cascade='all, delete-orphan',
+                                                          )
+                                       )
     storage_location = db.relationship('StorageLocation',
                                        backref=db.backref('analysis_files', lazy='dynamic'))
 

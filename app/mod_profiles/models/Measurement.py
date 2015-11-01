@@ -16,7 +16,11 @@ class Measurement(db.Model):
     measurement_unit_id   = db.Column(db.Integer, db.ForeignKey('measurement_unit.id'))
     # Relationships
     analysis           = db.relationship('Analysis',
-                                         backref=db.backref('measurements', lazy='dynamic'))
+                                         backref=db.backref('measurements',
+                                                            lazy='dynamic',
+                                                            cascade='all',
+                                                            )
+                                         )
     profile            = db.relationship('Profile',
                                          backref=db.backref('measurements', lazy='dynamic'))
     measurement_source = db.relationship('MeasurementSource',

@@ -13,7 +13,11 @@ class AnalysisComment(db.Model):
     profile_id  = db.Column(db.Integer, db.ForeignKey('profile.id'))
     # Relationships
     analysis = db.relationship('Analysis',
-                               backref=db.backref('analysis_comments', lazy='dynamic'))
+                               backref=db.backref('analysis_comments',
+                                                  lazy='dynamic',
+                                                  cascade='all, delete-orphan',
+                                                  )
+                               )
     profile  = db.relationship('Profile',
                                backref=db.backref('analysis_comments', lazy='dynamic'))
 
