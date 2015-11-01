@@ -141,17 +141,11 @@ class AnalysisView(Resource):
         if g.user.id != analysis.profile.user.first().id:
             return '', 403
 
-        # Elimina todas las mediciones asociadas al análisis.
-        measurements = analysis.measurements.all()
-        for measurement in measurements:
-            db.session.delete(measurement)
-
         # Elimina todos los archivos de análisis asociados al análisis.
         analysis_files = analysis.analysis_files.all()
         for analysis_file in analysis_files:
             # Elimina el archivo asociado de la ubicación de almacenamiento.
             analysisFile.delete_file(analysis_file)
-            db.session.delete(analysis_file)
 
         # Elimina el análisis.
         db.session.delete(analysis)

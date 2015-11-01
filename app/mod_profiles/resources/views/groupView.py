@@ -140,13 +140,6 @@ class GroupView(Resource):
         if not group_persistence.is_group_admin(group, g.user):
             return '', 403
 
-        # Obtiene todas las membresías del grupo
-        group_memberships = group.memberships.all()
-
-        # Elimina todas las membresías asociadas al grupo.
-        for membership in group_memberships:
-            db.session.delete(membership)
-
         # Elimina el grupo.
         db.session.delete(group)
         db.session.commit()
