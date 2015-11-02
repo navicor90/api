@@ -17,6 +17,7 @@ from .measurementTypeUnitsList import MeasurementTypeUnitsList
 from .measurementUnitList import MeasurementUnitList
 from .myAnalysisList import MyAnalysisList
 from .myGroupList import MyGroupList
+from .myGroupMembershipList import MyGroupMembershipList
 from .myLatestMeasurementList import MyLatestMeasurementList
 from .myMeasurementList import MyMeasurementList
 from .myNotificationList import MyNotificationList
