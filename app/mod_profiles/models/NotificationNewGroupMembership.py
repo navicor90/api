@@ -32,7 +32,7 @@ class NotificationNewGroupMembership(Notification):
         return u'¡Te han agregado a un grupo!'
 
     def get_description(self):
-        description = u"%s te ha agregado al grupo \"%s\"." % (
+        description = u'%s te ha agregado al grupo "%s".' % (
             self.profile.first_name + " " + self.profile.last_name,
             self.group_membership.group.name,
         )

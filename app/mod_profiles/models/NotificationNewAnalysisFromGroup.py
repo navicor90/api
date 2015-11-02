@@ -37,8 +37,8 @@ class NotificationNewAnalysisFromGroup(Notification):
         return u'¡Han cargado un nuevo análisis en un grupo!'
 
     def get_description(self):
-        description = (u"Un nuevo análisis, con el nombre \"%s\", ha sido "
-                       "cargado en el grupo \"%s\".") % (
+        description = (u'Un nuevo análisis, con el nombre "%s", ha sido '
+                       'cargado en el grupo "%s".') % (
             self.analysis.description,
             self.group.name,
         )
