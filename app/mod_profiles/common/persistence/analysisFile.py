@@ -20,7 +20,7 @@ def delete_file(analysis_file):
         raise ValueError("El archivo de análisis especificado es incorrecto.")
 
     # Obtiene el usuario asociado al archivo de análisis.
-    user = analysis_file.analysis.profile.user
+    user = analysis_file.analysis.profile.user.first()
 
     # Obtiene la ubicación de almacenamiento asociado al archivo de análisis.
     file_manager = FileManagerFactory().get_file_manager(user)
