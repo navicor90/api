@@ -32,7 +32,7 @@ class NotificationNewSharedAnalysis(Notification):
         return u'¡Han compartido un análisis contigo!'
 
     def get_description(self):
-        description = u"%s ha compartido el análisis \"%s\" contigo." % (
+        description = u'%s ha compartido el análisis "%s" contigo.' % (
             self.profile.first_name + " " + self.profile.last_name,
             self.permission.analysis.description,
         )
