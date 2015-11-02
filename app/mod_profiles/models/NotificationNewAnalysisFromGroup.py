@@ -34,7 +34,10 @@ class NotificationNewAnalysisFromGroup(Notification):
         self.group_id    = group_id
 
     def get_title(self):
-        return u'¡Han cargado un nuevo análisis en un grupo!'
+        title = u'¡%s ha cargado un nuevo análisis en un grupo!' % (
+            self.analysis.profile.first_name + ' ' + self.analysis.profile.last_name,
+        )
+        return title
 
     def get_description(self):
         description = (u'Un nuevo análisis, con el nombre "%s", ha sido '
