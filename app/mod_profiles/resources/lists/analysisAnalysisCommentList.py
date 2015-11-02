@@ -7,7 +7,7 @@ from flask_restful_swagger import swagger
 
 from app.mod_shared.models.auth import auth
 from app.mod_shared.models.db import db
-from app.mod_profiles.models import Analysis, AnalysisComment
+from app.mod_profiles.models import Analysis, AnalysisComment, NotificationNewAnalysisComment
 from app.mod_profiles.common.fields.analysisCommentFields import AnalysisCommentFields
 from app.mod_profiles.common.parsers.analysisComment import parser_post_auth
 from app.mod_profiles.common.persistence import permission
@@ -108,7 +108,16 @@ class AnalysisAnalysisCommentList(Resource):
                                                comment,
                                                analysis.id,
                                                g.user.profile.id)
-
         db.session.add(new_analysis_comment)
+        db.session.flush()
+
+        # Verifica que el usuario autenticado no sea el dueño del análisis.
+        if g.user.id != analysis.profile.user.first().id:
+            # Crea la notificación dirigida al dueño del análisis.
+            notification = NotificationNewAnalysisComment(analysis.profile.id,
+                                                          new_analysis_comment.id
+                                                          )
+            db.session.add(notification)
+
         db.session.commit()
         return new_analysis_comment, 201
