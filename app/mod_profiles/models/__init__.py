@@ -9,6 +9,7 @@ from .Group import Group
 from .GroupMembership import GroupMembership
 from .GroupMembershipType import GroupMembershipType
 from .Notification import Notification
+from .NotificationNewAnalysisComment import NotificationNewAnalysisComment
 from .NotificationNewAnalysisFromGroup import NotificationNewAnalysisFromGroup
 from .NotificationNewGroupMembership import NotificationNewGroupMembership
 from .NotificationNewSharedAnalysis import NotificationNewSharedAnalysis
