@@ -3,6 +3,7 @@
 from .Analysis import Analysis
 from .AnalysisComment import AnalysisComment
 from .AnalysisFile import AnalysisFile
+from .AnalysisFileEncryption import AnalysisFileEncryption
 from .Gender import Gender
 from .Group import Group
 from .GroupMembership import GroupMembership

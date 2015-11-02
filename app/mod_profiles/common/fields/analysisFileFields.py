@@ -16,11 +16,15 @@ class AnalysisFileFields:
         'upload_time': fields.DateTime(dt_format='iso8601'),
         'path': fields.String,
         'description': fields.String,
+        'is_encrypted': fields.Boolean,
         'analysis': fields.Nested(AnalysisFields.resource_fields),
         'storage_location': fields.Nested(StorageLocationFields.resource_fields),
     }
 
-    required = ['id',
-                'path',
-                'analysis',
-                'storage_location']
+    required = [
+        'id',
+        'path',
+        'is_encrypted',
+        'analysis',
+        'storage_location'
+    ]
