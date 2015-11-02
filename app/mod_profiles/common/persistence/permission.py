@@ -41,13 +41,16 @@ def get_permission_by_user(analysis, user, action):
     if analysis_permission is None:
         return False
 
+    # Obtiene el tipo de permiso asociado.
+    permission_type = analysis_permission.permission_type
+
     permissions = {
-        'view_analysis_files': analysis_permission.can_view_analysis_files,
-        'view_comments': analysis_permission.can_view_comments,
-        'view_measurements': analysis_permission.can_view_measurements,
-        'edit_analysis_files': analysis_permission.can_edit_analysis_files,
-        'edit_comments': analysis_permission.can_edit_comments,
-        'edit_measurements': analysis_permission.can_edit_measurements,
+        'view_analysis_files': permission_type.can_view_analysis_files,
+        'view_comments': permission_type.can_view_comments,
+        'view_measurements': permission_type.can_view_measurements,
+        'edit_analysis_files': permission_type.can_edit_analysis_files,
+        'edit_comments': permission_type.can_edit_comments,
+        'edit_measurements': permission_type.can_edit_measurements,
     }
 
     # Obtiene el permiso correspondiente a la acción.
