@@ -26,7 +26,10 @@ class NotificationNewAnalysisComment(Notification):
         self.analysis_comment_id = analysis_comment_id
 
     def get_title(self):
-        return u'¡Han comentado un análisis tuyo!'
+        title = u'¡%s ha comentado un análisis tuyo!' % (
+            self.analysis_comment.profile.first_name + ' ' + self.analysis_comment.profile.last_name,
+        )
+        return title
 
     def get_description(self):
         description = u'%s ha comentado en el análisis "%s".' % (
