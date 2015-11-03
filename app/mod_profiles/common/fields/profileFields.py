@@ -15,8 +15,11 @@ class ProfileFields:
         'first_name': fields.String,
         'gender': fields.Nested(GenderFields.resource_fields),
         'birthday': fields.DateTime(dt_format='iso8601'),
+        'is_health_professional': fields.Boolean
     }
 
-    required = ['id',
-                'last_name',
-                'first_name']
+    required = [
+        'id',
+        'last_name',
+        'first_name'
+    ]

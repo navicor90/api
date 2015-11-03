@@ -23,7 +23,7 @@ class MeasurementResourceTestCase(unittest.TestCase):
 
     def test_measurement_post(self):
         g1 = Gender(name='femenino', description='Sexo femenino.')
-        p1 = Profile(last_name='Correa', first_name='Laura', birthday='1998-08-20', gender_id='1')
+        p1 = Profile(last_name='Correa', first_name='Laura', birthday='1998-08-20', gender_id='1', is_health_professional=False)
         ms1 = MeasurementSource(name='Manual', description='Ingreso manual de la medida.')
         mu1 = MeasurementUnit(name='Kilogramo', symbol='kg', suffix='True', )
         mt1 = MeasurementType(name='Peso', description='Medida de peso de una persona')

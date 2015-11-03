@@ -4,7 +4,7 @@ from app.mod_shared.models.db import db
 from app.mod_profiles.models import Profile
 
 
-def update(profile, first_name=None, last_name=None, birthday=None, gender_id=None):
+def update(profile, first_name=None, last_name=None, birthday=None, gender_id=None, is_health_professional=None):
     """Actualiza la información de una instancia de perfil, y la retorna.
 
     Actualiza los atributos y relaciones de una instancia de perfil, en base a
@@ -15,6 +15,8 @@ def update(profile, first_name=None, last_name=None, birthday=None, gender_id=No
     :param last_name: Apellido de la persona.
     :param birthday: Fecha de nacimiento de la persona, en formato ISO 8601.
     :param gender_id: Identificador único del género asociado al perfil.
+    :param is_health_professional: Variable booleana que indica si el perfil es
+     de un profesional médico.
     :return: Perfil actualizado.
     """
 
@@ -39,6 +41,11 @@ def update(profile, first_name=None, last_name=None, birthday=None, gender_id=No
     if (gender_id is not None and
           profile.gender_id != gender_id):
         profile.gender_id = gender_id
+    # Actualiza si el perfil es de un profesional médico, en caso de que haya
+    # sido modificado.
+    if (is_health_professional is not None and
+          profile.is_health_professional != is_health_professional):
+        profile.is_health_professional = is_health_professional
 
     db.session.commit()
 
