@@ -114,6 +114,7 @@ class PermissionView(Resource):
             code_404
         ]
     )
+    @auth.login_required
     @marshal_with(PermissionFields.resource_fields, envelope='resource')
     def delete(self, permission_id):
         # Obtiene el permiso.
