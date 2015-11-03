@@ -16,7 +16,7 @@ class MyProfileView(Resource):
     @swagger.operation(
         # TODO: Añadir parámetros de autenticación a la documentación Swagger.
         notes=(u'Retorna la instancia de perfil asociada al usuario '
-                'autenticado.').encode('utf-8'),
+               'autenticado.').encode('utf-8'),
         responseClass='ProfileFields',
         nickname='profileView_get',
         responseMessages=[
@@ -39,34 +39,43 @@ class MyProfileView(Resource):
         nickname='profileView_put',
         parameters=[
             {
-              "name": "last_name",
-              "description": u'Apellido de la persona.'.encode('utf-8'),
-              "required": True,
-              "dataType": "string",
-              "paramType": "body"
+                "name": "last_name",
+                "description": u'Apellido de la persona.'.encode('utf-8'),
+                "required": True,
+                "dataType": "string",
+                "paramType": "body"
             },
             {
-              "name": "first_name",
-              "description": u'Nombre de la persona.'.encode('utf-8'),
-              "required": True,
-              "dataType": "string",
-              "paramType": "body"
+                "name": "first_name",
+                "description": u'Nombre de la persona.'.encode('utf-8'),
+                "required": True,
+                "dataType": "string",
+                "paramType": "body"
             },
             {
-              "name": "birthday",
-              "description": u'Fecha de nacimiento de la persona, en formato ISO 8601.'.encode('utf-8'),
-              "required": False,
-              "dataType": "datetime",
-              "paramType": "body"
+                "name": "birthday",
+                "description": u'Fecha de nacimiento de la persona, en formato ISO 8601.'.encode('utf-8'),
+                "required": False,
+                "dataType": "datetime",
+                "paramType": "body"
             },
             {
-              "name": "gender_id",
-              "description": u'Identificador único del género asociado.'.encode('utf-8'),
-              "required": False,
-              "dataType": "int",
-              "paramType": "body"
-            }
-          ],
+                "name": "gender_id",
+                "description": u'Identificador único del género asociado.'.encode('utf-8'),
+                "required": False,
+                "dataType": "int",
+                "paramType": "body"
+            },
+            {
+                "name": "is_health_professional",
+                "description": (u'Variable booleana que indica si el perfil '
+                                'es de un profesional médico. Por defecto, es'
+                                'falso.').encode('utf-8'),
+                "required": False,
+                "dataType": "boolean",
+                "paramType": "body"
+            },
+        ],
         responseMessages=[
             code_200_updated,
             code_401,
@@ -85,6 +94,7 @@ class MyProfileView(Resource):
         last_name = args['last_name']
         birthday = args['birthday']
         gender_id = args['gender_id']
+        is_health_professional = args['is_health_professional'] or False
 
         # Actualiza los atributos y relaciones del objeto, en base a los
         # argumentos recibidos.
@@ -93,7 +103,8 @@ class MyProfileView(Resource):
             first_name=first_name,
             last_name=last_name,
             birthday=birthday,
-            gender_id=gender_id
+            gender_id=gender_id,
+            is_health_professional=is_health_professional,
         )
 
         return updated_profile, 200
