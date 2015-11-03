@@ -8,10 +8,12 @@ from flask_restful import reqparse
 from app.mod_profiles.adapters.fileManagerFactory import FileManagerFactory
 from app.mod_profiles.common.persistence import encryption, permission
 from app.mod_profiles.models import AnalysisFile, User
+from app.mod_profiles.validators.generic_validators import is_boolean
 
 
 # Parser de token.
 parser = reqparse.RequestParser()
+parser.add_argument('download', type=is_boolean)
 parser.add_argument('token', type=str, required=True)
 
 
@@ -23,6 +25,7 @@ class AnalysisFileThumbnailByQuery(Resource):
 
         # Obtiene los valores de los argumentos recibidos en la petición.
         args = parser.parse_args()
+        download = args['download'] or False
         token = args['token']
 
         # Comprueba el token recibido.
@@ -64,4 +67,4 @@ class AnalysisFileThumbnailByQuery(Resource):
         str_in_out = StringIO()
         str_in_out.write(file_str)
         str_in_out.seek(0)
-        return send_file(str_in_out, attachment_filename=file_name)
+        return send_file(str_in_out, attachment_filename=file_name, as_attachment=download)
