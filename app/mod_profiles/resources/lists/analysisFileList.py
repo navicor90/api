@@ -107,7 +107,7 @@ class AnalysisFileList(Resource):
             # Encripta el archivo haciendo uso de la clave secreta.
             image_file = encryption.encrypt_file(image_file, secret_key)
 
-        file_manager = FileManagerFactory().get_file_manager(g.user)
+        file_manager = FileManagerFactory().get_file_manager(analysis.profile.user.first())
         res = file_manager.upload_file(image_file)
         storage_location = StorageLocation.query.filter_by(name=res['storage_location']).first()
         if storage_location is None:

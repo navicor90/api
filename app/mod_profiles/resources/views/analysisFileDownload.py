@@ -24,7 +24,7 @@ class AnalysisFileDownload(Resource):
         file_path = analysis_file.path
         file_name = file_path.rsplit('/')[-1]
         user = g.user
-        file_manager = FileManagerFactory().get_file_manager(user)
+        file_manager = FileManagerFactory().get_file_manager(analysis_file.analysis.profile.user.first())
         file_str = file_manager.download_file(file_path)
 
         if analysis_file.is_encrypted:

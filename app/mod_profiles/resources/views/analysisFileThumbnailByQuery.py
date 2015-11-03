@@ -40,7 +40,7 @@ class AnalysisFileThumbnailByQuery(Resource):
 
         file_path = analysis_file.path
         file_name = file_path.rsplit('/')[-1]
-        file_manager = FileManagerFactory().get_file_manager(user)
+        file_manager = FileManagerFactory().get_file_manager(analysis_file.analysis.profile.user.first())
 
         # Verifica si el archivo de análisis está encriptado. De ser así,
         # recupera el archivo original. Sino, solicita su thumbnail a la
