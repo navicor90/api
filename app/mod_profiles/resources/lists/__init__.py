@@ -22,6 +22,7 @@ from .myLatestMeasurementList import MyLatestMeasurementList
 from .myMeasurementList import MyMeasurementList
 from .myNotificationList import MyNotificationList
 from .mySharedAnalysesList import MySharedAnalysesList
+from .mySharedAnalysisProfileList import MySharedAnalysisProfileList
 from .myStorageCredentialList import MyStorageCredentialList
 from .permissionTypeList import PermissionTypeList
 from .profileLatestMeasurementList import ProfileLatestMeasurementList
