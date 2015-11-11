@@ -5,7 +5,7 @@ import unittest
 
 from app import app, db
 from app.mod_profiles.models import Analysis, Gender, Measurement, MeasurementSource, \
-    MeasurementType, MeasurementUnit, Profile, User
+    MeasurementType, MeasurementUnit, Profile, TypeUnitValidation, User
 
 
 class MeasurementResourceTestCase(unittest.TestCase):
@@ -34,8 +34,8 @@ class MeasurementResourceTestCase(unittest.TestCase):
                          source_id='1', type_id='1', unit_id=1)
         db.session.add_all([g1, p1, ms1, mu1, mt1, u1, a1, m1])
         db.session.commit()
-        mt1.measurement_units.append(mu1)
-        db.session.add(mt1)
+        type_unit_validation = TypeUnitValidation(1, 200, mt1.id, mu1.id)
+        db.session.add(type_unit_validation)
         db.session.commit()
         with self.app.test_request_context(
                 '/measurements/1',

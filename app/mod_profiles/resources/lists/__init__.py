@@ -13,7 +13,6 @@ from .groupMembershipTypeList import GroupMembershipTypeList
 from .measurementList import MeasurementList
 from .measurementSourceList import MeasurementSourceList
 from .measurementTypeList import MeasurementTypeList
-from .measurementTypeUnitsList import MeasurementTypeUnitsList
 from .measurementUnitList import MeasurementUnitList
 from .myAnalysisList import MyAnalysisList
 from .myGroupList import MyGroupList
@@ -30,4 +29,5 @@ from .profileList import ProfileList
 from .profileMeasurementList import ProfileMeasurementList
 from .storageCredentialList import StorageCredentialList
 from .storageLocationList import StorageLocationList
+from .typeUnitValidationList import TypeUnitValidationList
 from .userList import UserList

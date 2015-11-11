@@ -22,6 +22,7 @@ from .permissionView import PermissionView
 from .profileView import ProfileView
 from .storageCredentialView import StorageCredentialView
 from .storageLocationView import StorageLocationView
+from .typeUnitValidationView import TypeUnitValidationView
 from .token import Token
 from .userView import UserView
 from .usernameCheckView import UsernameCheckView
