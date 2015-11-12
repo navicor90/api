@@ -45,5 +45,9 @@ class NotificationNewAnalysisComment(Notification):
     def get_detail_object_id(self):
         return self.analysis_comment.analysis.id
 
+    @staticmethod
+    def get_notification_type():
+        return 'message'
+
     def __repr__(self):
         return '<NotificationNewAnalysisComment: %r>' % self.id

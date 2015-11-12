@@ -48,5 +48,9 @@ class NotificationNewSharedAnalysis(Notification):
     def get_detail_object_id(self):
         return self.permission.analysis.id
 
+    @staticmethod
+    def get_notification_type():
+        return 'event'
+
     def __repr__(self):
         return '<NotificationNewSharedAnalysis: %r>' % self.id

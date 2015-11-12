@@ -18,6 +18,7 @@ class NotificationFields:
         'description': fields.String,
         'detail_object_type': fields.String,
         'detail_object_id': fields.Integer,
+        'notification_type': fields.String,
     }
 
     required = [
@@ -29,4 +30,5 @@ class NotificationFields:
         'description',
         'detail_object_type',
         'detail_object_id',
+        'notification_type',
     ]

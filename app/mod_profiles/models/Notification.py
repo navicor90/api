@@ -42,5 +42,8 @@ class Notification(db.Model):
     def get_detail_object_id(self):
         raise NotImplementedError(u'Método no implementado.')
 
+    def get_notification_type(self):
+        raise NotImplementedError(u'Método no implementado.')
+
     def __repr__(self):
         return '<Notification: %r>' % self.id

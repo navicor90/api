@@ -35,6 +35,16 @@ class MyNotificationList(Resource):
                 "paramType": "query"
             },
             {
+                "name": "type",
+                "description": (u'Tipo de notificaciones a retornar. Los '
+                                'tipos posibles son "event" y "message". '
+                                'Por defecto, se retornan todas las '
+                                'notificaciones.').encode('utf-8'),
+                "required": False,
+                "dataType": "string",
+                "paramType": "query"
+            },
+            {
                 "name": "unread",
                 "description": (u'Variable booleana que indica si sólo se '
                                 'deben retornar notificaciones no leídas. Por '
@@ -57,8 +67,9 @@ class MyNotificationList(Resource):
 
         # Obtiene los valores de los argumentos recibidos en la petición.
         args = parser_get.parse_args()
-        unread = args['unread']
         quantity = args['quantity']
+        notification_type = args['type']
+        unread = args['unread']
 
         # Obtiene todas las notificaciones asociadas al perfil, y las ordena en
         # forma descendente por fecha y hora de creación.
@@ -68,11 +79,16 @@ class MyNotificationList(Resource):
         if (unread is not None
                 and unread):
             notifications = notifications.filter_by(read_datetime=None)
-        # Limita la cantidad de notificaciones a retornar.
-        if quantity is not None:
-            notifications = notifications.limit(quantity)
 
         notifications = notifications.all()
+
+        # Filtra las notificaciones según el tipo de notificación.
+        if notification_type is not None:
+            notifications = [notification for notification in notifications
+                             if notification.get_notification_type() == str(notification_type).lower()]
+        # Limita la cantidad de notificaciones a retornar.
+        if quantity is not None:
+            notifications = notifications[:quantity]
 
         constructed_notifications = []
 
@@ -86,6 +102,7 @@ class MyNotificationList(Resource):
                 'description': notification.get_description(),
                 'detail_object_type': notification.get_detail_object_type(),
                 'detail_object_id': notification.get_detail_object_id(),
+                'notification_type': notification.get_notification_type(),
             }
             constructed_notifications.append(constructed_notification)
 
