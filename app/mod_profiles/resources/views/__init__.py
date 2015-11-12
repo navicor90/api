@@ -20,6 +20,7 @@ from .myUserView import MyUserView
 from .notificationView import NotificationView
 from .permissionTypeView import PermissionTypeView
 from .permissionView import PermissionView
+from .profileGravatarView import ProfileGravatarView
 from .profileView import ProfileView
 from .storageCredentialView import StorageCredentialView
 from .storageLocationView import StorageLocationView
