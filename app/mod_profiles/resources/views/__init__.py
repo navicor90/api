@@ -14,6 +14,7 @@ from .measurementSourceView import MeasurementSourceView
 from .measurementTypeView import MeasurementTypeView
 from .measurementUnitView import MeasurementUnitView
 from .measurementView import MeasurementView
+from .myGravatarView import MyGravatarView
 from .myProfileView import MyProfileView
 from .myUserView import MyUserView
 from .notificationView import NotificationView
@@ -24,5 +25,6 @@ from .storageCredentialView import StorageCredentialView
 from .storageLocationView import StorageLocationView
 from .typeUnitValidationView import TypeUnitValidationView
 from .token import Token
+from .userGravatarView import UserGravatarView
 from .userView import UserView
 from .usernameCheckView import UsernameCheckView
