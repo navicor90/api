@@ -54,5 +54,9 @@ class NotificationNewAnalysisFromGroup(Notification):
     def get_detail_object_id(self):
         return self.analysis.id
 
+    @staticmethod
+    def get_notification_type():
+        return 'event'
+
     def __repr__(self):
         return '<NotificationNewAnalysisFromGroup: %r>' % self.id

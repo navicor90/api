@@ -48,5 +48,9 @@ class NotificationNewGroupMembership(Notification):
     def get_detail_object_id(self):
         return self.group_membership.group.id
 
+    @staticmethod
+    def get_notification_type():
+        return 'event'
+
     def __repr__(self):
         return '<NotificationNewGroupMembership: %r>' % self.id
