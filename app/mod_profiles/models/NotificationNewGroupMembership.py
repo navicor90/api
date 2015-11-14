@@ -9,7 +9,6 @@ class NotificationNewGroupMembership(Notification):
     id = db.Column(db.Integer, db.ForeignKey('notification.id'), primary_key=True)
     # Foreign keys
     group_membership_id = db.Column(db.Integer, db.ForeignKey('group_membership.id'))
-    profile_id          = db.Column(db.Integer, db.ForeignKey('profile.id'))
     # Relationships
     group_membership = db.relationship('GroupMembership',
                                        backref=db.backref('notifications',
@@ -17,26 +16,26 @@ class NotificationNewGroupMembership(Notification):
                                                           cascade='all, delete-orphan',
                                                           )
                                        )
-    profile          = db.relationship('Profile')
 
     __mapper_args__ = {
         'polymorphic_identity': 'notificationNewGroupMembership',
     }
 
-    def __init__(self, notification_owner_id, group_membership_id, profile_id):
-        Notification.__init__(self, notification_owner_id)
+    def __init__(self, notification_owner_id, notification_author_id, group_membership_id):
+        Notification.__init__(self, notification_owner_id, notification_author_id)
         self.group_membership_id = group_membership_id
-        self.profile_id          = profile_id
 
     def get_title(self):
+        author = self.notification_author
         title = u'¡%s te ha agregado a un grupo!' % (
-            self.profile.first_name + ' ' + self.profile.last_name,
+            author.first_name + ' ' + author.last_name,
         )
         return title
 
     def get_description(self):
+        author = self.notification_author
         description = u'%s te ha agregado al grupo "%s".' % (
-            self.profile.first_name + " " + self.profile.last_name,
+            author.first_name + ' ' + author.last_name,
             self.group_membership.group.name,
         )
         return description

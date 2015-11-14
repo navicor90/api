@@ -107,8 +107,8 @@ class AnalysisPermissionList(Resource):
 
         # Crea la notificación dirigida a quien se le ha compartido el análisis.
         notification = NotificationNewSharedAnalysis(user.profile.id,
+                                                     g.user.profile.id,
                                                      new_permission.id,
-                                                     g.user.profile.id
                                                      )
         db.session.add(notification)
 

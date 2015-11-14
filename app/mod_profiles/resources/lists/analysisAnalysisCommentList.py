@@ -115,6 +115,7 @@ class AnalysisAnalysisCommentList(Resource):
         if g.user.id != analysis.profile.user.first().id:
             # Crea la notificación dirigida al dueño del análisis.
             notification = NotificationNewAnalysisComment(analysis.profile.id,
+                                                          g.user.profile.id,
                                                           new_analysis_comment.id
                                                           )
             db.session.add(notification)

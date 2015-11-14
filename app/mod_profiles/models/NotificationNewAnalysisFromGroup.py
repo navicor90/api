@@ -28,14 +28,15 @@ class NotificationNewAnalysisFromGroup(Notification):
         'polymorphic_identity': 'notificationNewAnalysisFromGroup',
     }
 
-    def __init__(self, notification_owner_id, analysis_id, group_id):
-        Notification.__init__(self, notification_owner_id)
+    def __init__(self, notification_owner_id, notification_author_id, analysis_id, group_id):
+        Notification.__init__(self, notification_owner_id, notification_author_id)
         self.analysis_id = analysis_id
         self.group_id    = group_id
 
     def get_title(self):
+        author = self.notification_author
         title = u'¡%s ha cargado un nuevo análisis en un grupo!' % (
-            self.analysis.profile.first_name + ' ' + self.analysis.profile.last_name,
+            author.first_name + ' ' + author.last_name,
         )
         return title
 

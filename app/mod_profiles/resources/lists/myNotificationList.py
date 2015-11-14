@@ -98,6 +98,7 @@ class MyNotificationList(Resource):
                 'id': notification.id,
                 'created_datetime': notification.created_datetime,
                 'read_datetime': notification.read_datetime,
+                'notification_author': notification.notification_author,
                 'title': notification.get_title(),
                 'description': notification.get_description(),
                 'detail_object_type': notification.get_detail_object_type(),

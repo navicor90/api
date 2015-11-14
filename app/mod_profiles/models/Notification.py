@@ -12,20 +12,25 @@ class Notification(db.Model):
     read_datetime    = db.Column(db.DateTime)
     type             = db.Column(db.String(50))
     # Foreign keys
-    notification_owner_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
+    notification_author_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
+    notification_owner_id  = db.Column(db.Integer, db.ForeignKey('profile.id'))
     # Relationships
-    notification_owner = db.relationship('Profile',
-                                         backref=db.backref('notifications', lazy='dynamic'))
+    notification_author = db.relationship('Profile',
+                                          foreign_keys=[notification_author_id])
+    notification_owner  = db.relationship('Profile',
+                                          backref=db.backref('notifications', lazy='dynamic'),
+                                          foreign_keys=[notification_owner_id])
 
     __mapper_args__ = {
         'polymorphic_identity': 'notification',
         'polymorphic_on': type
     }
 
-    def __init__(self, notification_owner_id):
-        self.created_datetime      = datetime.utcnow()
-        self.read_datetime         = None
-        self.notification_owner_id = notification_owner_id
+    def __init__(self, notification_owner_id, notification_author_id):
+        self.created_datetime       = datetime.utcnow()
+        self.read_datetime          = None
+        self.notification_author_id = notification_author_id
+        self.notification_owner_id  = notification_owner_id
 
     def set_as_read(self):
         self.read_datetime = datetime.utcnow()

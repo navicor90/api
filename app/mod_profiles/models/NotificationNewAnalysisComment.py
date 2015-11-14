@@ -21,19 +21,21 @@ class NotificationNewAnalysisComment(Notification):
         'polymorphic_identity': 'notificationNewAnalysisComment',
     }
 
-    def __init__(self, notification_owner_id, analysis_comment_id):
-        Notification.__init__(self, notification_owner_id)
+    def __init__(self, notification_owner_id, notification_author_id, analysis_comment_id):
+        Notification.__init__(self, notification_owner_id, notification_author_id)
         self.analysis_comment_id = analysis_comment_id
 
     def get_title(self):
+        author = self.notification_author
         title = u'¡%s ha comentado un análisis tuyo!' % (
-            self.analysis_comment.profile.first_name + ' ' + self.analysis_comment.profile.last_name,
+            author.first_name + ' ' + author.last_name,
         )
         return title
 
     def get_description(self):
+        author = self.notification_author
         description = u'%s ha comentado en el análisis "%s".' % (
-            self.analysis_comment.profile.first_name + " " + self.analysis_comment.profile.last_name,
+            author.first_name + " " + author.last_name,
             self.analysis_comment.analysis.description,
         )
         return description

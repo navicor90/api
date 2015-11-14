@@ -162,8 +162,8 @@ class GroupGroupMembershipList(Resource):
 
         # Crea la notificación dirigida al nuevo miembro del grupo.
         notification = NotificationNewGroupMembership(user.profile.id,
+                                                      g.user.profile.id,
                                                       new_group_membership.id,
-                                                      g.user.profile.id
                                                       )
         db.session.add(notification)
 
