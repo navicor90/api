@@ -16,6 +16,7 @@ from .measurementUnitView import MeasurementUnitView
 from .measurementView import MeasurementView
 from .myGravatarView import MyGravatarView
 from .myProfileView import MyProfileView
+from .myStatisticsView import MyStatisticsView
 from .myUserView import MyUserView
 from .notificationView import NotificationView
 from .permissionTypeView import PermissionTypeView
