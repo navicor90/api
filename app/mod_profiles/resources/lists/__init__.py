@@ -3,6 +3,7 @@
 from .analysisAnalysisCommentList import AnalysisAnalysisCommentList
 from .analysisAnalysisFileList import AnalysisAnalysisFileList
 from .analysisFileList import AnalysisFileList
+from .analysisGroupPermissionList import AnalysisGroupPermissionList
 from .analysisList import AnalysisList
 from .analysisMeasurementList import AnalysisMeasurementList
 from .analysisPermissionList import AnalysisPermissionList

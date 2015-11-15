@@ -9,6 +9,7 @@ from .analysisFileView import AnalysisFileView
 from .genderView import GenderView
 from .groupMembershipTypeView import GroupMembershipTypeView
 from .groupMembershipView import GroupMembershipView
+from .groupPermissionView import GroupPermissionView
 from .groupView import GroupView
 from .measurementSourceView import MeasurementSourceView
 from .measurementTypeView import MeasurementTypeView

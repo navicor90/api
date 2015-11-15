@@ -8,6 +8,7 @@ from .Gender import Gender
 from .Group import Group
 from .GroupMembership import GroupMembership
 from .GroupMembershipType import GroupMembershipType
+from .GroupPermission import GroupPermission
 from .Notification import Notification
 from .NotificationNewAnalysisComment import NotificationNewAnalysisComment
 from .NotificationNewAnalysisFromGroup import NotificationNewAnalysisFromGroup
