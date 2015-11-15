@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from app.mod_profiles.models import Analysis, User
+from .group import has_shared_analysis
 
 
 def get_permission_by_user(analysis, user, action):
@@ -33,17 +34,40 @@ def get_permission_by_user(analysis, user, action):
     if user.id == analysis.profile.user.first().id:
         return True
 
+    # Recopila los tipos de permiso sobre el análisis, tanto de usuario como de
+    # grupo, existentes para el usuario.
+    permission_types = []
+
     # Obtiene el permiso asociado al análisis y al usuario.
     analysis_permission = analysis.permissions.filter_by(user_id=user.id).first()
+    if analysis_permission is not None:
+        # Añade el tipo de permiso asociado, a la lista de tipos de permiso.
+        analysis_permission_type = analysis_permission.permission_type
+        permission_types.append(analysis_permission_type)
 
-    # Verifica si hay algún permiso existente para ese usuario con respecto al
-    # análisis especificado. Si no lo hay, retorna falso.
-    if analysis_permission is None:
-        return False
+    # Obtiene las membresías de grupo del usuario.
+    user_group_memberships = user.group_memberships.all()
+    # Recorre las membresías, en busca de aquellos grupos que tengan compartido
+    # el análisis.
+    for membership in user_group_memberships:
+        group = membership.group
+        # Verifica que el grupo tenga compartido el análisis.
+        if has_shared_analysis(group, analysis):
+            # Añade el tipo de permiso asociado, a la lista de tipos de permiso.
+            group_permission_type = membership.permission_type
+            permission_types.append(group_permission_type)
 
-    # Obtiene el tipo de permiso asociado.
-    permission_type = analysis_permission.permission_type
+    # Recorre los tipos de permiso recopilados, en busca de alguno que permita
+    # la acción requerida.
+    for permission_type in permission_types:
+        if get_permission_from_type(permission_type, action):
+            return True
 
+    return False
+
+
+def get_permission_from_type(permission_type, action):
+    # Crea la lista de permisos especificados por el tipo de permiso.
     permissions = {
         'view_analysis_files': permission_type.can_view_analysis_files,
         'view_comments': permission_type.can_view_comments,
