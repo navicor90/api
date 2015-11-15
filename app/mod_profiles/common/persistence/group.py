@@ -1,6 +1,40 @@
 # -*- coding: utf-8 -*-
 
-from app.mod_profiles.models import Group, User
+from app.mod_profiles.models import Analysis, Group, User
+
+
+def has_shared_analysis(group, analysis):
+    """ Indica si el análisis especificado se le ha compartido al grupo.
+
+    :param group: Instancia de grupo sobre la que se determina si existe un
+    permiso.
+    :param analysis: Instancia de análisis por la que se corrobora su
+    compartición con el grupo.
+    :return: Valor booleano que indica si el análisis especificado se le ha
+    compartido al grupo.
+    """
+
+    # Valida que el grupo sea correcto.
+    if not isinstance(group, Group):
+        raise ValueError("El grupo especificado es incorrecto.")
+
+    # Valida que el usuario sea correcto.
+    if not isinstance(analysis, Analysis):
+        raise ValueError("El análisis especificado es incorrecto.")
+
+    # Obtiene todos los permisos de grupo del análisis.
+    analysis_group_permissions = analysis.group_permissions.all()
+
+    is_shared_analysis = False
+
+    # Verifica cada permiso de grupo, determinando si pertenece al grupo
+    # especificado.
+    for permission in analysis_group_permissions:
+        if permission.group.id == group.id:
+            is_shared_analysis = True
+            break
+
+    return is_shared_analysis
 
 
 def is_group_admin(group, user):
