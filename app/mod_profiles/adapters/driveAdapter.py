@@ -29,7 +29,7 @@ class DriveAdapter(object):
         :return: id de la carpeta en drive
         """
         param = {}
-        param['q'] = "title = '{0}' and mimeType = 'application/vnd.google-apps.folder'".formta(folder_name)
+        param['q'] = "title = '{0}' and mimeType = 'application/vnd.google-apps.folder'".format(folder_name)
         try:
             folder_metadata = drive_service.files().list(**param).execute()
             folder_id = folder_metadata['items'][0]['id']
@@ -70,7 +70,7 @@ class DriveAdapter(object):
             folder_id = self.get_folder_id(folder_name, drive_service)
             # Compruebo que me devuelva un id para la carpeta
             # Si no la encuentra, creo la carpeta YesDoc en el directorio raíz
-            if folder_id == None:
+            if folder_id is None:
                 body = {
                     'title': 'YesDoc',
                     'description': 'Carpeta de YesDoc: Asistente médico personal.',
@@ -107,11 +107,11 @@ class DriveAdapter(object):
         :param path: ruta del archivo en drive
         :return: archivo
         """
-        list = path.split('/')
+        path_list = path.split('/')
         # Obtengo de la ruta el nombre de la carpeta que contiene el archivo
-        folder_name = list[len(list)-2]
+        folder_name = path_list[len(path_list)-2]
         # Obtengo de la ruta el nombre del archivo
-        file_name = list[len(list)-1]
+        file_name = path_list[len(path_list)-1]
         drive_service = self.get_service()
         folder_id = self.get_folder_id(folder_name, drive_service)
         file_id = self.get_file_id(file_name, folder_id, drive_service)
@@ -129,9 +129,9 @@ class DriveAdapter(object):
         :param path: ruta del archivo en drive
         :return: nombre del archivo
         """
-        list = path.split('/')
-        folder_name = list[len(list)-2]
-        file_name = list[len(list)-1]
+        path_list = path.split('/')
+        folder_name = path_list[len(path_list)-2]
+        file_name = path_list[len(path_list)-1]
         drive_service = self.get_service()
         folder_id = self.get_folder_id(folder_name, drive_service)
         file_id = self.get_file_id(file_name, folder_id, drive_service)
@@ -150,9 +150,9 @@ class DriveAdapter(object):
         :param path: ruta del archivo en drive
         :return: imágen de vista previa
         """
-        list = path.split('/')
-        folder_name = list[len(list)-2]
-        file_name = list[len(list)-1]
+        path_list = path.split('/')
+        folder_name = path_list[len(path_list)-2]
+        file_name = path_list[len(path_list)-1]
         drive_service = self.get_service()
         folder_id = self.get_folder_id(folder_name, drive_service)
         file_id = self.get_file_id(file_name, folder_id, drive_service)
