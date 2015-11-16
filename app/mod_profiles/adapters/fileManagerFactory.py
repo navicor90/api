@@ -2,7 +2,7 @@
 
 import os
 
-from app.mod_profiles.adapters import DropboxAdapter, YesDocAdapter
+from app.mod_profiles.adapters import DropboxAdapter, YesDocAdapter, DriveAdapter
 
 
 class FileManagerFactory(object):
@@ -40,8 +40,10 @@ class FileManagerFactory(object):
             token = os.environ.get('DROPBOX_STORAGE_TOKEN', '')
 
         if (file_manager_name is not None
-                and file_manager_name == 'Dropbox'
                 and token is not None):
-            return DropboxAdapter(token)
+            if file_manager_name == 'Dropbox':
+                return DropboxAdapter(token)
+            elif file_manager_name == 'Drive':
+                return DriveAdapter(token)
         else:
             return YesDocAdapter()
