@@ -45,11 +45,11 @@ def get_permission_by_user(analysis, user, action):
         analysis_permission_type = analysis_permission.permission_type
         permission_types.append(analysis_permission_type)
 
-    # Obtiene las membresías de grupo del usuario.
-    user_group_memberships = user.group_memberships.all()
+    # Obtiene las membresías de grupo, del perfil del usuario.
+    profile_group_memberships = user.profile.memberships.all()
     # Recorre las membresías, en busca de aquellos grupos que tengan compartido
     # el análisis.
-    for membership in user_group_memberships:
+    for membership in profile_group_memberships:
         group = membership.group
         # Verifica que el grupo tenga compartido el análisis.
         if has_shared_analysis(group, analysis):
