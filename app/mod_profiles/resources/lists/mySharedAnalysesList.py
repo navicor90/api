@@ -36,20 +36,36 @@ class MySharedAnalysesList(Resource):
     @auth.login_required
     @marshal_with(AnalysisFields.resource_fields, envelope='resource')
     def get(self):
-        # Obtiene los permisos asociados al usuario.
-        permissions = g.user.permissions.all()
-
         # Obtiene los valores de los argumentos recibidos en la petición.
         args = parser_get.parse_args()
         profile_id = args['profile']
 
+        analyses = set()
+
+        # Obtiene los permisos asociados al usuario.
+        permissions = g.user.permissions.all()
+
         # Por cada permiso, obtiene el análisis asociado al mismo.
-        analyses = []
         for permission in permissions:
             # Verifica que no se haya especificado un perfil, o que el perfil
             # especificado coincida con el dueño del análisis.
             if (profile_id is None or
                     permission.analysis.profile.id == profile_id):
-                analyses.append(permission.analysis)
+                analyses.add(permission.analysis)
 
+        # Obtiene las membresías de grupo del usuario.
+        group_memberships = g.user.profile.memberships.all()
+
+        # Por cada membresía, analiza el grupo asociado, y obtiene todos los
+        # análisis compartidos con el mismo.
+        for membership in group_memberships:
+            group = membership.group
+            for permission in group.group_permissions.all():
+                # Verifica que no se haya especificado un perfil, o que el perfil
+                # especificado coincida con el dueño del análisis.
+                if (profile_id is None or
+                        permission.analysis.profile.id == profile_id):
+                    analyses.add(permission.analysis)
+
+        analyses = list(analyses)
         return analyses
