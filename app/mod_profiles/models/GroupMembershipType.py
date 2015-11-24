@@ -9,7 +9,7 @@ class GroupMembershipType(db.Model):
     name        = db.Column(db.String(50))
     description = db.Column(db.String(255))
 
-    def __init__(self, name, description):
+    def __init__(self, name='', description=''):
         self.name        = name
         self.description = description
 
