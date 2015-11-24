@@ -10,7 +10,7 @@ class MeasurementUnit(db.Model):
     symbol = db.Column(db.String(10))
     suffix = db.Column(db.Boolean)
 
-    def __init__(self, name, symbol, suffix):
+    def __init__(self, name='', symbol='', suffix=False):
         self.name   = name
         self.symbol = symbol
         self.suffix = suffix

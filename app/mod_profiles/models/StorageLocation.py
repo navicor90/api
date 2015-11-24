@@ -10,7 +10,7 @@ class StorageLocation(db.Model):
     description = db.Column(db.String(255))
     website     = db.Column(db.String(50))
 
-    def __init__(self, name, description, website):
+    def __init__(self, name='', description='', website=''):
         self.name        = name
         self.description = description
         self.website     = website

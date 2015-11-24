@@ -15,9 +15,9 @@ class PermissionType(db.Model):
     can_edit_comments       = db.Column(db.Boolean)
     can_edit_measurements   = db.Column(db.Boolean)
 
-    def __init__(self, name, description, can_view_analysis_files, can_view_comments,
-                 can_view_measurements, can_edit_analysis_files, can_edit_comments,
-                 can_edit_measurements):
+    def __init__(self, name='', description='', can_view_analysis_files=False, can_view_comments=False,
+                 can_view_measurements=False, can_edit_analysis_files=False, can_edit_comments=False,
+                 can_edit_measurements=False):
         self.name                    = name
         self.description             = description
         self.can_view_analysis_files = can_view_analysis_files

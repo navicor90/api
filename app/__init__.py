@@ -207,9 +207,16 @@ def init_login():
 
 # Create customized model view class
 class MyModelView(sqla.ModelView):
-
     def is_accessible(self):
         return login.current_user.is_authenticated
+
+
+# Create customized model view class
+class UserView(MyModelView):
+    can_create = False
+    column_exclude_list = [
+        'rsa_private_key',
+    ]
 
 
 # Create customized index view class that handles login & registration
@@ -266,6 +273,6 @@ admin.add_view(MyModelView(models.MeasurementUnit, db.session))
 admin.add_view(MyModelView(models.PermissionType, db.session))
 admin.add_view(MyModelView(models.StorageLocation, db.session))
 admin.add_view(MyModelView(models.TypeUnitValidation, db.session))
-admin.add_view(MyModelView(models.User, db.session))
+admin.add_view(UserView(models.User, db.session))
 
 from . import views

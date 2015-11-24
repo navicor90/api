@@ -17,7 +17,7 @@ class TypeUnitValidation(db.Model):
     measurement_unit = db.relationship('MeasurementUnit',
                                        backref=db.backref('validations', lazy='dynamic'))
 
-    def __init__(self, min_value, max_value, type_id, unit_id):
+    def __init__(self, min_value=0, max_value=0, type_id=None, unit_id=None):
         self.min_value           = min_value
         self.max_value           = max_value
         self.measurement_type_id = type_id
