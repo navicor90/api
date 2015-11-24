@@ -2,10 +2,13 @@
 
 import os
 import sys
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 from flask import Flask
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 from flask_restful import Api
 from flask_restful_swagger import swagger
 from flask.ext.restful.representations.json import output_json
@@ -14,7 +17,16 @@ from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from flaskext.uploads import configure_uploads
 
+# Configuración de Flask-Admin con Flask-Login
+from flask import url_for, redirect, render_template, request
+from wtforms import form, fields, validators
+import flask_admin as admin
+import flask_login as login
+from flask_admin.contrib import sqla
+from flask_admin import helpers, expose
+
 from app.mod_shared.models.db import db
+from app.mod_profiles import models
 from app.mod_profiles.resources.lists import *
 from app.mod_profiles.resources.views import *
 from . import config
@@ -157,5 +169,103 @@ api.add_resource(MyStorageCredentialList, '/my/storage_credentials')
 api.add_resource(MyUserView, '/my/user')
 api.add_resource(ProfileLatestMeasurementList, '/profiles/<int:profile_id>/measurements/latest')
 api.add_resource(ProfileMeasurementList, '/profiles/<int:profile_id>/measurements')
+
+
+
+# Configuración de Flask-Admin con Flask-Login
+
+# Define login and registration forms (for flask-login)
+class LoginForm(form.Form):
+    login = fields.TextField(validators=[validators.required()])
+    password = fields.PasswordField(validators=[validators.required()])
+
+    def validate_login(self, field):
+        user = self.get_user()
+
+        if user is None:
+            raise validators.ValidationError('Invalid user')
+
+        # we're comparing the plaintext pw with the the hash from the db
+        if not user.verify_password(self.password.data):
+        # to compare plain text passwords use
+        # if user.password != self.password.data:
+            raise validators.ValidationError('Invalid password')
+
+    def get_user(self):
+        return db.session.query(models.User).filter_by(username=self.login.data).first()
+
+# Initialize flask-login
+def init_login():
+    login_manager = login.LoginManager()
+    login_manager.init_app(app)
+
+    # Create user loader function
+    @login_manager.user_loader
+    def load_user(user_id):
+        return db.session.query(models.User).get(user_id)
+
+
+# Create customized model view class
+class MyModelView(sqla.ModelView):
+
+    def is_accessible(self):
+        return login.current_user.is_authenticated
+
+
+# Create customized index view class that handles login & registration
+class MyAdminIndexView(admin.AdminIndexView):
+
+    @expose('/')
+    def index(self):
+        if not login.current_user.is_authenticated:
+            return redirect(url_for('.login_view'))
+        return super(MyAdminIndexView, self).index()
+
+    @expose('/login/', methods=('GET', 'POST'))
+    def login_view(self):
+        # handle user login
+        form = LoginForm(request.form)
+        if helpers.validate_form_on_submit(form):
+            user = form.get_user()
+            login.login_user(user)
+
+        if login.current_user.is_authenticated:
+            return redirect(url_for('.index'))
+        self._template_args['form'] = form
+        return super(MyAdminIndexView, self).index()
+
+    @expose('/logout/')
+    def logout_view(self):
+        login.logout_user()
+        return redirect(url_for('.index'))
+
+
+# Flask views
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+# Initialize flask-login
+init_login()
+
+# Crea el sitio de administración.
+# Create admin
+admin = Admin(app,
+              name='YesDoc Admin',
+              index_view=MyAdminIndexView(),
+              base_template='my_master.html',
+              template_mode='bootstrap3')
+
+# Add view
+admin.add_view(MyModelView(models.Gender, db.session))
+admin.add_view(MyModelView(models.GroupMembershipType, db.session))
+admin.add_view(MyModelView(models.MeasurementSource, db.session))
+admin.add_view(MyModelView(models.MeasurementType, db.session))
+admin.add_view(MyModelView(models.MeasurementUnit, db.session))
+admin.add_view(MyModelView(models.PermissionType, db.session))
+admin.add_view(MyModelView(models.StorageLocation, db.session))
+admin.add_view(MyModelView(models.TypeUnitValidation, db.session))
+admin.add_view(MyModelView(models.User, db.session))
 
 from . import views
