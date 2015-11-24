@@ -17,17 +17,19 @@ class User(db.Model):
     password_hash   = db.Column(db.String(128))
     rsa_private_key = db.Column(db.Text)
     rsa_public_key  = db.Column(db.Text)
+    is_admin        = db.Column(db.Boolean)
     # Foreign keys
     profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
     # Relationships
     profile = db.relationship('Profile',
                               backref=db.backref('user', lazy='dynamic'))
 
-    def __init__(self, username, email, password, profile_id):
+    def __init__(self, username, email, password, profile_id, is_admin=False):
         self.username = username
         self.email = email
         self.hash_password(password)
         self.profile_id = profile_id
+        self.is_admin = is_admin
         self.create_rsa_keys(2048)
 
     def __repr__(self):
@@ -67,3 +69,19 @@ class User(db.Model):
             # Asocia las claves al usuario.
             self.rsa_private_key = private_key.exportKey()
             self.rsa_public_key = public_key.exportKey()
+
+    # Flask-Login integration
+    @property
+    def is_authenticated(self):
+        return self.is_admin
+
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id

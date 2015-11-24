@@ -19,7 +19,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 
-@app.route('/')
-@app.route('/index')
-def index():
-    return "Hello, World!"
+#@app.route('/')
+#@app.route('/index')
+#def index():
+#    return "Hello, World!"
